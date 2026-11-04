@@ -22,7 +22,7 @@ const RecipeStorage = {
             }
             list = JSON.parse(raw);
 
-            // 기존 사용자(스마트폰 등)에게 뼈해장국이 아직 없다면 자동으로 상단에 추가 병합!
+            // 기존 사용자(스마트폰 등)에게 뼈해장국이 아직 없다면 자동으로 상단에 최초 1회만 등록!
             const hasHaejangguk = list.some(r => 
                 r.id === "recipe_bone_haejangguk_001" || 
                 (r.koreaName && r.koreaName.includes("뼈해장국")) ||
@@ -32,17 +32,8 @@ const RecipeStorage = {
             if (!hasHaejangguk && window.INITIAL_RECIPES && window.INITIAL_RECIPES[0]) {
                 list.unshift(window.INITIAL_RECIPES[0]); // 뼈해장국 레시피 최상단에 쏙 추가
                 this.saveAllRecipes(list);
-            } else if (hasHaejangguk && window.INITIAL_RECIPES && window.INITIAL_RECIPES[0]) {
-                // 기존 저장소의 뼈해장국 조리법을 최신 1안(프로 요약본)으로 즉시 갱신!
-                const target = list.find(r => 
-                    r.id === "recipe_bone_haejangguk_001" || 
-                    (r.koreaName && (r.koreaName.includes("뼈해장국") || r.koreaName.includes("뼈 해장국")))
-                );
-                if (target) {
-                    target.cookingTechnique = window.INITIAL_RECIPES[0].cookingTechnique;
-                    this.saveAllRecipes(list);
-                }
             }
+            // ★ 중요: 사용자가 수정한 소중한 조리과정이나 레시피 데이터는 절대 기본값으로 덮어쓰지 않고 100% 영구 보존합니다!
 
             return list;
         } catch (err) {
@@ -123,26 +114,33 @@ const RecipeStorage = {
     saveRecipe(recipeData) {
         const list = this.getAllRecipes();
         const now = new Date().toISOString();
+        let savedResult = null;
 
         if (recipeData.id) {
             // 기존 레시피 수정
             const index = list.findIndex(r => r.id === recipeData.id);
             if (index !== -1) {
-                list[index] = { ...recipeData, updatedAt: now };
+                // 기존 데이터와 합쳐서 수정일시(updatedAt) 최신화
+                savedResult = { ...list[index], ...recipeData, updatedAt: now };
+                list[index] = savedResult;
             } else {
-                list.unshift({ ...recipeData, updatedAt: now });
+                savedResult = { ...recipeData, updatedAt: now };
+                list.unshift(savedResult);
             }
         } else {
             // 신규 레시피 생성 (고유 ID 발급)
             const newId = "recipe_" + Date.now();
-            recipeData.id = newId;
-            recipeData.createdAt = now;
-            recipeData.updatedAt = now;
-            list.unshift(recipeData);
+            savedResult = {
+                ...recipeData,
+                id: newId,
+                createdAt: now,
+                updatedAt: now
+            };
+            list.unshift(savedResult);
         }
 
         this.saveAllRecipes(list);
-        return recipeData;
+        return savedResult;
     },
 
     /**

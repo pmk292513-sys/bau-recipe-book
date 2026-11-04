@@ -1635,8 +1635,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const saved = RecipeStorage.saveRecipe(recipeData);
             currentRecipeId = saved.id;
             updateBadgeCount();
+            renderRecipeBookList(); // 레시피 북 서재 목록 즉각 갱신
 
-            alert(`🎉 레시피 [${saved.italianoName || saved.englishName || "레시피"}]가 영구 보관되었습니다!\n언제든 '내 레시피 북' 탭에서 찾아보실 수 있습니다.`);
+            alert(`🎉 레시피 [${saved.italianoName || saved.englishName || "레시피"}]가 영구 보관되었습니다!\n수정한 모든 내용이 안전하게 저장되었으며, 언제든 '내 레시피 북' 탭에서 확인하실 수 있습니다.`);
             populateFormWithData(saved);
         } catch (err) {
             alert("저장 중 오류가 발생했습니다: " + err.message);
@@ -1986,15 +1987,17 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
             `;
 
-            // 열기/수정 버튼
+            // 열기/수정 버튼 (언제나 최신 영구 보관 데이터를 불러옴)
             card.querySelector(".btn-open-recipe").addEventListener("click", () => {
-                populateFormWithData(recipe);
+                const latest = RecipeStorage.getRecipeById(recipe.id) || recipe;
+                populateFormWithData(latest);
                 switchTab("tab-editor");
             });
 
             // 즉시 인쇄 버튼
             card.querySelector(".btn-print-card").addEventListener("click", () => {
-                populateFormWithData(recipe);
+                const latest = RecipeStorage.getRecipeById(recipe.id) || recipe;
+                populateFormWithData(latest);
                 switchTab("tab-preview");
                 setTimeout(() => {
                     window.print();
@@ -2075,7 +2078,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 서비스 워커 등록 (인터넷 없이 오프라인 구동 지원 & 최신 버전 자동 체크)
     if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./sw.js?v=10.3")
+        navigator.serviceWorker.register("./sw.js?v=10.4")
             .then((registration) => {
                 console.log("[PWA] 서비스 워커가 정상 등록되었습니다:", registration.scope);
                 // 앱 실행 시 서버에 새로운 코드가 있는지 즉시 확인
