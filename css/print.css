@@ -284,16 +284,17 @@
         -webkit-text-stroke: 0.4px #000000 !important;
     }
 
-    /* 7. 사진 규격: 가로 12.8cm x 세로 9.5cm 엄격 유지 */
+    /* 7. 사진 규격: [사용자 요청] 가로 13.0cm x 세로 9.5cm 완벽 밀착 및 여백 0% 적용 */
     .recipe-card-frame table.recipe-table td.photo-cell,
     .photo-cell {
-        width: 12.8cm !important;
-        height: 9.0cm !important;
-        min-width: 12.8cm !important;
-        max-width: 12.8cm !important;
-        min-height: 9.0cm !important;
-        max-height: 9.0cm !important;
+        width: 13.0cm !important;
+        height: 9.5cm !important;
+        min-width: 13.0cm !important;
+        max-width: 13.0cm !important;
+        min-height: 9.5cm !important;
+        max-height: 9.5cm !important;
         padding: 0 !important;
+        margin: 0 !important;
         border-left: none !important;
         border-top: none !important;
         border-right: 3.5px solid #000000 !important;
@@ -329,40 +330,44 @@
 
     /* 우측 메타데이터 5개 행 높이를 1.9cm로 고정 (5 x 1.9cm = 사진 세로 9.5cm 일치) */
     .recipe-card-frame .photo-info-table tr {
-        height: 1.8cm !important;
+        height: 1.9cm !important;
     }
 
     .recipe-card-frame .photo-info-table th.info-label,
     .recipe-card-frame .photo-info-table td.info-value {
-        height: 1.8cm !important;
+        height: 1.9cm !important;
     }
 
     .photo-container {
-        width: 12.8cm !important;
-        height: 9.0cm !important;
-        min-width: 12.8cm !important;
-        max-width: 12.8cm !important;
-        min-height: 9.0cm !important;
-        max-height: 9.0cm !important;
+        width: 13.0cm !important;
+        height: 9.5cm !important;
+        min-width: 13.0cm !important;
+        max-width: 13.0cm !important;
+        min-height: 9.5cm !important;
+        max-height: 9.5cm !important;
         box-sizing: border-box !important;
         border: none !important;
         outline: none !important;
         box-shadow: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
         overflow: hidden !important;
         background-color: #ffffff !important;
         position: relative !important;
     }
 
     .photo-container img {
-        width: 12.8cm !important;
-        height: 9.0cm !important;
-        max-width: 12.8cm !important;
-        max-height: 9.0cm !important;
+        width: 100% !important;
+        height: 100% !important;
+        min-width: 100% !important;
+        min-height: 100% !important;
         object-fit: cover !important;
         object-position: center center !important;
         image-rendering: -webkit-optimize-contrast !important;
         image-rendering: crisp-edges !important;
         display: block !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     /* 8. [사용자 요청] 토핑(TOPPING): 사각 테두리 박스 완전 제거 & 깔끔한 텍스트형 노출 */
@@ -443,8 +448,8 @@
     }
 
     .recipe-card-frame .main-content-table tbody tr {
-        height: 20.5px !important;
-        max-height: 20.5px !important;
+        height: 20px !important;
+        max-height: 20px !important;
         line-height: 1.2 !important;
     }
 
@@ -454,8 +459,8 @@
     .td-ingredient-name,
     .td-ingredient-amount,
     .td-ingredient-un {
-        height: 20.5px !important;
-        max-height: 20.5px !important;
+        height: 20px !important;
+        max-height: 20px !important;
         padding: 0px 6px !important;
         font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
         font-size: 13.5px !important;
