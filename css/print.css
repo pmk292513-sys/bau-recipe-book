@@ -10,8 +10,8 @@
 @page {
     /* A4 정규격 (210mm x 297mm) 지정 */
     size: A4 portrait;
-    /* 상하 9mm, 좌우 10mm로 칼같이 대칭 여백 설정 -> 좌우 쏠림 완벽 해결 */
-    margin: 9mm 10mm 7mm 10mm;
+    /* 상하 5mm, 좌우 9mm로 최적화하여 A4 1장에 모든 내용이 100% 쏙 들어가도록 가용 높이 극대화 */
+    margin: 5mm 9mm 5mm 9mm;
 }
 
 @media print {
@@ -89,7 +89,7 @@
     /* 4. 대제목 간격 및 진한 타이틀 (A4 최상단 정렬) */
     .recipe-header {
         margin-top: 0 !important;
-        margin-bottom: 5mm !important;
+        margin-bottom: 2.5mm !important;
         text-align: center !important;
     }
 
@@ -216,13 +216,24 @@
     }
 
     /* 상단 메뉴명 표: 내용 글자 크기와 굵기를 소제목과 1:1 완벽 일치 (칸 크기는 그대로 유지) */
-    .name-table th,
-    .name-table td {
-        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
-        font-weight: 850 !important;
+    .name-table th {
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
+        font-weight: 900 !important;
         font-size: 13px !important;
         letter-spacing: 0.5px !important;
         color: #000000 !important;
+        -webkit-text-stroke: 0.4px #000000 !important;
+        padding: 4px 6px !important;
+    }
+
+    .name-table td {
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
+        font-weight: 900 !important;
+        font-size: 13px !important;
+        letter-spacing: 0.5px !important;
+        color: #000000 !important;
+        -webkit-text-stroke: 0.4px #000000 !important;
+        padding: 4px 8px !important;
     }
 
     .recipe-card-frame .photo-info-table {
@@ -245,45 +256,43 @@
         width: 85px !important;
         white-space: nowrap !important;
         border: 1px solid #000000 !important;
-        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
-        font-weight: 850 !important;
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
+        font-weight: 900 !important;
         font-size: 13.5px !important;
         letter-spacing: 0.5px !important;
         text-align: center !important;
         color: #000000 !important;
+        -webkit-text-stroke: 0.4px #000000 !important;
     }
 
     .info-value {
-        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
-        font-weight: 850 !important;
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
+        font-weight: 900 !important;
         font-size: 13.5px !important;
         letter-spacing: 0.5px !important;
         color: #000000 !important;
         text-align: center !important;
-        -webkit-font-smoothing: antialiased !important;
-        -webkit-text-stroke: none !important;
-        text-shadow: none !important;
+        -webkit-text-stroke: 0.4px #000000 !important;
     }
 
     .info-value * {
-        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
-        font-weight: 850 !important;
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
+        font-weight: 900 !important;
         font-size: 13.5px !important;
         letter-spacing: 0.5px !important;
         color: #000000 !important;
-        -webkit-text-stroke: none !important;
-        text-shadow: none !important;
+        -webkit-text-stroke: 0.4px #000000 !important;
     }
 
     /* 7. 사진 규격: 가로 12.8cm x 세로 9.5cm 엄격 유지 */
     .recipe-card-frame table.recipe-table td.photo-cell,
     .photo-cell {
         width: 12.8cm !important;
-        height: 9.5cm !important;
+        height: 9.0cm !important;
         min-width: 12.8cm !important;
         max-width: 12.8cm !important;
-        min-height: 9.5cm !important;
-        max-height: 9.5cm !important;
+        min-height: 9.0cm !important;
+        max-height: 9.0cm !important;
         padding: 0 !important;
         border-left: none !important;
         border-top: none !important;
@@ -301,36 +310,40 @@
     .recipe-card-frame .caution-table th.th-caution {
         border-right: 3.5px solid #000000 !important;
         font-weight: 900 !important;
-        font-size: 14.5px !important;
+        font-size: 14px !important;
         color: #000000 !important;
+        -webkit-text-stroke: 0.4px #000000 !important;
+        padding: 4px 6px !important;
     }
 
     .recipe-card-frame .caution-table td.td-caution {
         border-left: 3.5px solid #000000 !important;
         font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
         font-weight: 900 !important;
-        font-size: 15px !important;
+        font-size: 14.5px !important;
         color: #000000 !important;
-        line-height: 1.48 !important;
+        -webkit-text-stroke: 0.4px #000000 !important;
+        line-height: 1.35 !important;
+        padding: 4px 8px !important;
     }
 
     /* 우측 메타데이터 5개 행 높이를 1.9cm로 고정 (5 x 1.9cm = 사진 세로 9.5cm 일치) */
     .recipe-card-frame .photo-info-table tr {
-        height: 1.9cm !important;
+        height: 1.8cm !important;
     }
 
     .recipe-card-frame .photo-info-table th.info-label,
     .recipe-card-frame .photo-info-table td.info-value {
-        height: 1.9cm !important;
+        height: 1.8cm !important;
     }
 
     .photo-container {
         width: 12.8cm !important;
-        height: 9.5cm !important;
+        height: 9.0cm !important;
         min-width: 12.8cm !important;
         max-width: 12.8cm !important;
-        min-height: 9.5cm !important;
-        max-height: 9.5cm !important;
+        min-height: 9.0cm !important;
+        max-height: 9.0cm !important;
         box-sizing: border-box !important;
         border: none !important;
         outline: none !important;
@@ -342,9 +355,9 @@
 
     .photo-container img {
         width: 12.8cm !important;
-        height: 9.5cm !important;
+        height: 9.0cm !important;
         max-width: 12.8cm !important;
-        max-height: 9.5cm !important;
+        max-height: 9.0cm !important;
         object-fit: cover !important;
         object-position: center center !important;
         image-rendering: -webkit-optimize-contrast !important;
@@ -424,27 +437,31 @@
         break-inside: avoid !important;
     }
 
-    /* 10. [사용자 요청] 재료 행: 소제목과 동일한 850 볼드 굵기 & 슬림한 23px 규격 유지 */
+    /* 10. [사용자 요청] 재료 행: A4 1장에 쏙 들어가도록 20.5px 슬림화 & 900 슈퍼 볼드 잉크 부스팅 */
     .recipe-card-frame .main-content-table {
         table-layout: fixed !important;
     }
 
     .recipe-card-frame .main-content-table tbody tr {
-        height: 23px !important;
-        max-height: 23px !important;
+        height: 20.5px !important;
+        max-height: 20.5px !important;
         line-height: 1.2 !important;
     }
 
+    .recipe-card-frame table.recipe-table td.td-ingredient-name,
+    .recipe-card-frame table.recipe-table td.td-ingredient-amount,
+    .recipe-card-frame table.recipe-table td.td-ingredient-un,
     .td-ingredient-name,
     .td-ingredient-amount,
     .td-ingredient-un {
-        height: 23px !important;
-        max-height: 23px !important;
-        padding: 1px 6px !important;
+        height: 20.5px !important;
+        max-height: 20.5px !important;
+        padding: 0px 6px !important;
         font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
-        font-size: 14px !important;
+        font-size: 13.5px !important;
         font-weight: 900 !important;
         color: #000000 !important;
+        -webkit-text-stroke: 0.4px #000000 !important;
         line-height: 1.2 !important;
         box-sizing: border-box !important;
         overflow: hidden !important;

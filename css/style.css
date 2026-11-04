@@ -1221,7 +1221,7 @@ body {
 .recipe-card-frame table.recipe-table td.photo-cell,
 .photo-cell {
     width: 13cm !important;
-    height: 9.5cm !important;
+    height: 9.0cm !important;
     min-width: 13cm;
     max-width: 13cm;
     min-height: 9.5cm;
@@ -1261,17 +1261,17 @@ body {
 
 /* 우측 메타데이터 5개 행 높이를 1.9cm로 고정 (5 x 1.9cm = 사진 세로 9.5cm와 칼같이 일치) */
 .recipe-card-frame .photo-info-table tr {
-    height: 1.9cm !important;
+    height: 1.8cm !important;
 }
 
 .recipe-card-frame .photo-info-table th.info-label,
 .recipe-card-frame .photo-info-table td.info-value {
-    height: 1.9cm !important;
+    height: 1.8cm !important;
 }
 
 .photo-container {
     width: 13cm !important;
-    height: 9.5cm !important;
+    height: 9.0cm !important;
     min-width: 13cm;
     max-width: 13cm;
     min-height: 9.5cm;
@@ -1287,9 +1287,9 @@ body {
 
 .photo-container img {
     width: 13cm !important;
-    height: 9.5cm !important;
+    height: 9.0cm !important;
     max-width: 13cm !important;
-    max-height: 9.5cm !important;
+    max-height: 9.0cm !important;
     object-fit: cover !important;
     object-position: center center !important; /* 어떤 사진이든 가로 13cm x 세로 9.5cm 정중앙에 꽉 차게 자동 최적화 */
     display: block;
