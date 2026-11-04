@@ -107,7 +107,7 @@ const FlipBookEngine = {
                     <div class="cover-gold-logo">
                         <img src="icons/brand_logo.png" alt="BAU Logo" class="cover-logo-img" onerror="this.style.display='none'">
                         <h1 class="cover-title">BAU RECIPE BOOK</h1>
-                        <p class="cover-subtitle">LA MANCHA SPECIAL COLLECTION</p>
+                        <p class="cover-subtitle">BAU SPECIAL COLLECTION</p>
                     </div>
                     <div class="cover-divider">✦ ✦ ✦</div>
                     <p class="cover-meta">총 <strong>${this.recipes.length}</strong>개의 특급 레시피 수록</p>
@@ -181,7 +181,7 @@ const FlipBookEngine = {
         const page = document.createElement("div");
         page.className = "flipbook-sheet sheet-recipe";
         page.dataset.recipeId = recipe.id || "";
-        page.dataset.recipeName = (recipe.koreaName || recipe.englishName || recipe.italianoName || "").toLowerCase();
+        page.dataset.recipeName = `${recipe.koreaName || ""} ${recipe.englishName || ""} ${recipe.italianoName || ""} ${recipe.category || ""}`.toLowerCase();
 
         // 1. 재료 요약
         let ingPreview = "";
@@ -511,13 +511,17 @@ const FlipBookEngine = {
      */
     searchAndRapidFlip(keyword) {
         if (!keyword || !keyword.trim()) return;
-        const kw = keyword.trim().toLowerCase();
+        // [사용자 요청] 띄어쓰기(공백)를 완전히 무시하고 검색할 수 있도록 모든 공백 제거
+        const cleanKw = keyword.replace(/\s+/g, "").toLowerCase();
 
         let targetIndex = -1;
         for (let i = 1; i < this.pages.length - 1; i++) {
             const p = this.pages[i];
-            const name = p.dataset.recipeName || "";
-            if (name.includes(kw)) {
+            const rawName = p.dataset.recipeName || "";
+            // 대상 레시피의 요리명/카테고리에서도 모든 공백 제거 후 비교
+            const cleanName = rawName.replace(/\s+/g, "").toLowerCase();
+            
+            if (cleanName.includes(cleanKw)) {
                 targetIndex = i;
                 break;
             }
