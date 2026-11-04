@@ -1353,7 +1353,15 @@ body {
 .th-ingredients { width: 140px; text-align: center; font-weight: 900 !important; white-space: nowrap; font-size: 13px; letter-spacing: 0.6px; border: 1px solid #000000; }
 .th-amount { width: 75px; text-align: center; font-weight: 900 !important; white-space: nowrap; font-size: 13px; letter-spacing: 0.6px; border: 1px solid #000000; }
 .th-un { width: 55px; text-align: center; font-weight: 900 !important; white-space: nowrap; font-size: 13px; letter-spacing: 0.6px; border: 1px solid #000000; }
-.th-cooking { text-align: center; font-weight: 900 !important; font-size: 13px; letter-spacing: 0.6px; border: 1px solid #000000; }
+/* [사용자 요청] 재료(UN)와 조리과정(COOKING TECHNIQUE) 사이 세로 경계선 3.5px 굵은 실선 적용 */
+.th-cooking { 
+    text-align: center; 
+    font-weight: 900 !important; 
+    font-size: 13px; 
+    letter-spacing: 0.6px; 
+    border: 1px solid #000000; 
+    border-left: 3.5px solid #000000 !important; 
+}
 
 /* [사용자 요청] 재료 행: 소제목과 동일한 850 볼드 굵기 & 슬림한 23px 규격 유지 */
 .recipe-card-frame .main-content-table tbody tr {
@@ -1407,12 +1415,13 @@ body {
     vertical-align: middle;
 }
 
-/* [사용자 요청] 2번 이미지 (COOKING TECHNIQUE 조리법): 변경 전의 크고 시원한 사이즈로 100% 복원 */
+/* [사용자 요청] 재료와 조리과정 사이 세로 경계선 3.5px 굵은 실선 적용 */
 .td-cooking-container {
     vertical-align: top !important;
     padding: 6px 10px !important;
     height: 100%;
     border: 1px solid #000000;
+    border-left: 3.5px solid #000000 !important;
     box-sizing: border-box;
 }
 

@@ -451,11 +451,16 @@
         vertical-align: middle !important;
     }
 
-    /* [사용자 요청] 2번 이미지 (COOKING TECHNIQUE 조리법): 변경 전의 크고 시원한 사이즈로 100% 복원 */
+    /* [사용자 요청] 재료와 조리과정 사이 세로 경계선 3.5px 굵은 실선 적용 */
+    .th-cooking {
+        border-left: 3.5px solid #000000 !important;
+    }
+
     .td-cooking-container {
         vertical-align: top !important;
         padding: 6px 10px !important;
         overflow: visible !important;
+        border-left: 3.5px solid #000000 !important;
         box-sizing: border-box !important;
     }
 
