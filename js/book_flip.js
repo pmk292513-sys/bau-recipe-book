@@ -1,8 +1,7 @@
 /**
- * [3D 책자 플립 북 & 초고속 타라락 검색 엔진 - js/book_flip.js]
- * 손가락 드래그/스와이프로 실제 종이책을 넘기는 듯한 3D 플립 효과와,
- * 검색 시 책장이 타라라락-! 고속으로 넘어가며 목표 레시피를 찾아 멈추는 리얼 연출을 제공합니다.
- * (100% 순수 바닐라 자바스크립트 & 오프라인 완벽 구동)
+ * [초고품질 3D 리얼 종이책 플립 엔진 - js/book_flip.js]
+ * 손끝 1:1 밀착 추적, 종이 휨 곡선(Curvature), 양면(Two-Sided) 3D 회전,
+ * 실시간 빛과 그림자 및 120Hz 비단결 GPU 가속을 완벽 지원합니다.
  */
 
 const FlipBookEngine = {
@@ -12,95 +11,97 @@ const FlipBookEngine = {
     pages: [],
     currentPageIndex: 0,
     isAnimating: false,
-    
-    // 터치/마우스 드래그 추적 변수
+
+    // 손끝 1:1 추적 상태
     startX: 0,
     startY: 0,
     currentX: 0,
     isDragging: false,
-    dragThreshold: 45, // 이 픽셀 이상 넘기면 페이지 플립 확정
+    dragDirection: null, // "next" 또는 "prev"
+    activePageEl: null,
+    bookWidth: 460,
 
-    /**
-     * 1. 책자 엔진 초기화
-     */
     init(containerEl) {
         this.container = containerEl;
         this.render();
     },
 
-    /**
-     * 2. 최신 레시피 목록으로 책자 렌더링
-     */
     render() {
         if (!this.container) return;
-        
-        // 최신 레시피 데이터 수집
+
         this.recipes = window.RecipeStorage ? window.RecipeStorage.getAllRecipes() : [];
         this.container.innerHTML = "";
 
-        // 플립북 3D 무대 프레임 생성
         const stage = document.createElement("div");
         stage.className = "flipbook-stage";
 
-        // 실제 책자 객체
         const book = document.createElement("div");
         book.className = "flipbook-book";
         this.bookEl = book;
 
-        // 페이지 데이터 빌드 (표지 + 레시피 페이지들 + 마지막 뒷표지)
         this.pages = [];
-        
-        // (1) 멋진 가죽 양장본 앞표지 (Front Cover)
-        const frontCover = this.createFrontCover();
+
+        // 1. 앞표지 생성
+        const frontCover = this.buildCoverPage(true);
         this.pages.push(frontCover);
 
-        // (2) 각 레시피별 본문 페이지들
+        // 2. 레시피 본문 페이지들 (앞면 + 뒷면 양면 3D 구조)
         this.recipes.forEach((recipe, idx) => {
-            const recipePage = this.createRecipePage(recipe, idx + 1);
-            this.pages.push(recipePage);
+            const page = this.buildRecipePage(recipe, idx + 1);
+            this.pages.push(page);
         });
 
-        // (3) 뒷표지 (Back Cover - 신규 레시피 작성 안내)
-        const backCover = this.createBackCover();
+        // 3. 뒷표지 생성
+        const backCover = this.buildCoverPage(false);
         this.pages.push(backCover);
 
-        // z-index 역순 배치 및 초기 클래스 설정
+        // 페이지들을 책자에 z-index 순서대로 주입
         const total = this.pages.length;
-        this.pages.forEach((page, idx) => {
-            page.style.zIndex = total - idx;
-            book.appendChild(page);
+        this.pages.forEach((p, idx) => {
+            p.style.zIndex = total - idx;
+            book.appendChild(p);
         });
 
         stage.appendChild(book);
 
-        // 하단 안내 텍스트 & 현재 페이지 인디케이터 (지저분한 버튼 없는 세련된 디자인)
+        // 하단 안내 바 (지저분한 버튼 없는 미니멀 스타일)
         const footer = document.createElement("div");
         footer.className = "flipbook-footer-bar";
         footer.innerHTML = `
-            <span class="flipbook-hint">👈 손가락으로 책장을 넘겨보세요 👉</span>
+            <span class="flipbook-hint">📖 손가락으로 책장을 슥- 넘겨보세요</span>
             <span id="flipbookPageCounter" class="flipbook-counter">1 / ${total}</span>
         `;
         stage.appendChild(footer);
 
         this.container.appendChild(stage);
 
-        // 현재 페이지 상태 반영
-        this.updatePagePositions();
+        // 초기 페이지 위치 및 책 너비 계산
+        this.updateBookWidth();
+        this.updatePagePositions(false);
 
-        // 터치 및 마우스 제스처 이벤트 장착
-        this.attachGestures(book);
+        // 1:1 손끝 밀착 제스처 장착
+        this.attachPhysicsGestures(book);
+
+        // 화면 회전/리사이즈 시 책 너비 자동 재계산
+        window.addEventListener("resize", () => this.updateBookWidth());
+    },
+
+    updateBookWidth() {
+        if (this.bookEl) {
+            this.bookWidth = this.bookEl.offsetWidth || 460;
+        }
     },
 
     /**
-     * (A) 양장본 앞표지 생성
+     * 표지 빌더 (앞표지 or 뒷표지)
      */
-    createFrontCover() {
+    buildCoverPage(isFront) {
         const page = document.createElement("div");
-        page.className = "flipbook-page flipbook-cover-front";
-        page.dataset.pageIndex = "0";
+        page.className = `flipbook-sheet ${isFront ? "sheet-cover-front" : "sheet-cover-back"}`;
+        page.dataset.pageIndex = isFront ? "0" : String(this.pages.length);
 
-        page.innerHTML = `
-            <div class="page-inner cover-inner">
+        const frontContent = isFront ? `
+            <div class="sheet-side side-front cover-leather">
                 <div class="cover-emboss-border">
                     <div class="cover-badge">CHEF'S MASTERPIECE</div>
                     <div class="cover-gold-logo">
@@ -109,28 +110,80 @@ const FlipBookEngine = {
                         <p class="cover-subtitle">LA MANCHA SPECIAL COLLECTION</p>
                     </div>
                     <div class="cover-divider">✦ ✦ ✦</div>
-                    <p class="cover-meta">총 <strong>${this.recipes.length}</strong>개의 특급 레시피 보관 중</p>
+                    <p class="cover-meta">총 <strong>${this.recipes.length}</strong>개의 특급 레시피 수록</p>
                     <div class="cover-touch-guide">
-                        <div class="guide-hand-icon">👉</div>
-                        <span>손가락으로 왼쪽으로 슥 밀어<br>비법 책을 펼쳐보세요!</span>
+                        <span class="guide-hand">👉</span>
+                        <span>책장 모서리를 잡고<br>왼쪽으로 스르륵 넘겨보세요!</span>
                     </div>
                 </div>
+                <div class="spine-shade"></div>
+                <div class="curl-shadow"></div>
             </div>
-            <div class="page-shadow"></div>
+        ` : `
+            <div class="sheet-side side-front cover-leather-back">
+                <div class="cover-emboss-border">
+                    <div style="font-size: 2.8rem; margin-bottom: 6px;">👨‍🍳📖</div>
+                    <h2 class="cover-title" style="font-size: 1.45rem;">THE END OF BOOK</h2>
+                    <p style="color:#cbd5e1; font-size:0.88rem; line-height:1.5; margin: 6px 0 16px;">
+                        모든 레시피를 둘러보셨습니다.<br>나만의 새로운 비법 레시피를 추가해보세요!
+                    </p>
+                    <button type="button" id="btnBookAddNew" class="btn-book-new-recipe">
+                        ✨ 새 레시피 작성하기
+                    </button>
+                    <div style="color:#d4af37; font-size:0.75rem; letter-spacing:2px; margin-top:20px;">BAU MASTER RECIPE SYSTEM</div>
+                </div>
+                <div class="spine-shade"></div>
+                <div class="curl-shadow"></div>
+            </div>
         `;
+
+        // 종이 뒷면 (양장본 표지 안쪽의 앤틱 양피지 질감)
+        const backContent = `
+            <div class="sheet-side side-back parchment-back">
+                <div class="parchment-pattern">
+                    <div class="parchment-watermark">BAU RECIPE</div>
+                </div>
+                <div class="spine-shade-back"></div>
+                <div class="curl-shadow-back"></div>
+            </div>
+        `;
+
+        page.innerHTML = frontContent + backContent;
+
+        if (!isFront) {
+            const btnNew = page.querySelector("#btnBookAddNew");
+            if (btnNew) {
+                btnNew.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    if (window.switchTab && window.populateFormWithData) {
+                        window.currentRecipeId = null;
+                        window.populateFormWithData({
+                            title: "LA MANCHA RECIPE",
+                            category: "SOUP",
+                            portion: "1 인분",
+                            ingredients: [{ name: "", amount: "", unit: "g" }],
+                            cookingTechnique: ["", "", ""],
+                            photoData: "sample_images/funghi_pasta.jpg"
+                        });
+                        window.switchTab("tab-editor");
+                    }
+                });
+            }
+        }
+
         return page;
     },
 
     /**
-     * (B) 레시피 본문 페이지 생성 (한눈에 쏙 들어오는 명품 요리책 내지 디자인)
+     * 레시피 페이지 빌더 (앞면: 요리정보 / 뒷면: 고급 크림지 질감)
      */
-    createRecipePage(recipe, pageNum) {
+    buildRecipePage(recipe, pageNum) {
         const page = document.createElement("div");
-        page.className = "flipbook-page flipbook-recipe-page";
+        page.className = "flipbook-sheet sheet-recipe";
         page.dataset.recipeId = recipe.id || "";
         page.dataset.recipeName = (recipe.koreaName || recipe.englishName || recipe.italianoName || "").toLowerCase();
 
-        // 재료 목록 요약 (상위 5~6개)
+        // 1. 재료 요약
         let ingPreview = "";
         if (Array.isArray(recipe.ingredients) && recipe.ingredients.length > 0) {
             const topIngs = recipe.ingredients.slice(0, 5);
@@ -139,10 +192,10 @@ const FlipBookEngine = {
                 ingPreview += ` <span class="book-ing-more">+외 ${recipe.ingredients.length - 5}가지</span>`;
             }
         } else {
-            ingPreview = `<span style="color:#94a3b8;">등록된 재료 정보 없음</span>`;
+            ingPreview = `<span style="color:#94a3b8; font-size:12px;">재료 정보 없음</span>`;
         }
 
-        // 조리 순서 요약 (앞 3단계)
+        // 2. 조리 순서 요약
         let stepPreview = "";
         let stepsList = [];
         if (Array.isArray(recipe.cookingTechnique)) {
@@ -158,73 +211,80 @@ const FlipBookEngine = {
                 </div>
             `).join("");
             if (stepsList.length > 3) {
-                stepPreview += `<div class="book-step-more">...외 ${stepsList.length - 3}개 조리 과정 포함</div>`;
+                stepPreview += `<div class="book-step-more">...외 ${stepsList.length - 3}개 조리 과정 수록</div>`;
             }
         } else {
-            stepPreview = `<div style="color:#94a3b8; font-size:12px;">조리법 요약 정보 없음</div>`;
+            stepPreview = `<div style="color:#94a3b8; font-size:12px;">조리법 정보 없음</div>`;
         }
 
-        // 토핑 또는 셰프 킥 요약
+        // 3. 셰프 시그니처
         let signatureBadge = "";
         if (recipe.signatureEnabled && recipe.signature && recipe.signature.length > 0) {
             const sigText = Array.isArray(recipe.signature) ? recipe.signature[0] : recipe.signature;
             signatureBadge = `<div class="book-signature-callout">⭐ <b>SIGNATURE:</b> ${sigText}</div>`;
         }
 
-        page.innerHTML = `
-            <div class="page-inner recipe-page-inner">
-                <!-- 상단 헤더: 카테고리, 날짜, 인분 -->
-                <div class="book-page-header">
-                    <span class="book-badge-cat">${recipe.category || 'RECIPE'}</span>
-                    <span class="book-header-meta">🗓️ ${recipe.date || '2026'} | 👥 ${recipe.portion || '1인분'}</span>
-                </div>
-
-                <!-- 요리명 (한국어 & 영어/이탈리아어) -->
-                <div class="book-title-box">
-                    <h2 class="book-recipe-title">${recipe.koreaName || recipe.englishName || '이름 없는 레시피'}</h2>
-                    <p class="book-recipe-sub">${recipe.italianoName || recipe.englishName || ''}</p>
-                </div>
-
-                <!-- 대표 이미지 -->
-                <div class="book-photo-wrap">
-                    <img src="${recipe.photoData || 'sample_images/funghi_pasta.jpg'}" alt="요리 사진" class="book-recipe-photo" onerror="this.src='sample_images/funghi_pasta.jpg'">
-                </div>
-
-                <!-- 핵심 재료 요약 -->
-                <div class="book-section-block">
-                    <div class="book-section-label">🧂 KEY INGREDIENTS (핵심 재료)</div>
-                    <div class="book-ing-chips-wrap">
-                        ${ingPreview}
+        // 앞면 (Front Face)
+        const frontHtml = `
+            <div class="sheet-side side-front recipe-sheet-front">
+                <div class="recipe-page-inner">
+                    <div class="book-page-header">
+                        <span class="book-badge-cat">${recipe.category || 'RECIPE'}</span>
+                        <span class="book-header-meta">🗓️ ${recipe.date || '2026'} | 👥 ${recipe.portion || '1인분'}</span>
                     </div>
-                </div>
 
-                <!-- 조리법 프리뷰 -->
-                <div class="book-section-block">
-                    <div class="book-section-label">🍳 COOKING PREVIEW (조리 순서)</div>
-                    <div class="book-steps-preview">
-                        ${stepPreview}
+                    <div class="book-title-box">
+                        <h2 class="book-recipe-title">${recipe.koreaName || recipe.englishName || '이름 없는 레시피'}</h2>
+                        <p class="book-recipe-sub">${recipe.italianoName || recipe.englishName || ''}</p>
                     </div>
+
+                    <div class="book-photo-wrap">
+                        <img src="${recipe.photoData || 'sample_images/funghi_pasta.jpg'}" alt="요리 사진" class="book-recipe-photo" onerror="this.src='sample_images/funghi_pasta.jpg'">
+                    </div>
+
+                    <div class="book-section-block">
+                        <div class="book-section-label">🧂 KEY INGREDIENTS (핵심 재료)</div>
+                        <div class="book-ing-chips-wrap">${ingPreview}</div>
+                    </div>
+
+                    <div class="book-section-block">
+                        <div class="book-section-label">🍳 COOKING TECHNIQUE (조리 순서)</div>
+                        <div class="book-steps-preview">${stepPreview}</div>
+                    </div>
+
+                    ${signatureBadge}
+
+                    <div class="book-actions-bar">
+                        <button type="button" class="book-action-btn btn-edit-this" data-id="${recipe.id}">
+                            ✍️ 이 레시피 수정하기
+                        </button>
+                        <button type="button" class="book-action-btn btn-print-this" data-id="${recipe.id}">
+                            🖨️ A4 규격 인쇄
+                        </button>
+                    </div>
+
+                    <div class="book-page-number">- ${pageNum} -</div>
                 </div>
-
-                ${signatureBadge}
-
-                <!-- 책장 하단 감성 책갈피 액션 바 -->
-                <div class="book-actions-bar">
-                    <button type="button" class="book-action-btn btn-edit-this" data-id="${recipe.id}">
-                        ✍️ 이 레시피 수정하기
-                    </button>
-                    <button type="button" class="book-action-btn btn-print-this" data-id="${recipe.id}">
-                        🖨️ A4 규격 인쇄
-                    </button>
-                </div>
-
-                <!-- 페이지 번호 -->
-                <div class="book-page-number">- ${pageNum} -</div>
+                <div class="spine-shade"></div>
+                <div class="curl-shadow"></div>
             </div>
-            <div class="page-shadow"></div>
         `;
 
-        // 버튼 클릭 이벤트 연결
+        // 뒷면 (Back Face - 뒤집혔을 때 보이는 은은한 크림지 양피지 질감)
+        const backHtml = `
+            <div class="sheet-side side-back recipe-sheet-back">
+                <div class="sheet-back-content">
+                    <div class="sheet-back-ornament">✦ BAU SPECIAL RECIPE ✦</div>
+                    <div class="sheet-back-pagenum">- ${pageNum} -</div>
+                </div>
+                <div class="spine-shade-back"></div>
+                <div class="curl-shadow-back"></div>
+            </div>
+        `;
+
+        page.innerHTML = frontHtml + backHtml;
+
+        // 수정 및 인쇄 버튼 이벤트
         const btnEdit = page.querySelector(".btn-edit-this");
         if (btnEdit) {
             btnEdit.addEventListener("click", (e) => {
@@ -254,186 +314,188 @@ const FlipBookEngine = {
     },
 
     /**
-     * (C) 양장본 뒷표지 (새 레시피 작성 유도)
+     * 1:1 손끝 밀착 물리 제스처 (Physics Drag Gesture)
      */
-    createBackCover() {
-        const page = document.createElement("div");
-        page.className = "flipbook-page flipbook-cover-back";
-        page.dataset.pageIndex = String(this.pages.length);
-
-        page.innerHTML = `
-            <div class="page-inner cover-inner back-inner">
-                <div class="cover-emboss-border">
-                    <div class="back-cover-icon">👨‍🍳📖</div>
-                    <h2 class="back-title">THE END OF BOOK</h2>
-                    <p class="back-desc">모든 비법 레시피를 둘러보셨습니다.<br>새로운 나만의 시그니처 요리를 추가해보세요!</p>
-                    <button type="button" id="btnBookAddNew" class="btn-book-new-recipe">
-                        ✨ 새 레시피 추가 작성하기
-                    </button>
-                    <div class="back-footer-mark">BAU MASTER RECIPE SYSTEM</div>
-                </div>
-            </div>
-            <div class="page-shadow"></div>
-        `;
-
-        const btnNew = page.querySelector("#btnBookAddNew");
-        if (btnNew) {
-            btnNew.addEventListener("click", (e) => {
-                e.stopPropagation();
-                if (window.switchTab && window.populateFormWithData) {
-                    window.currentRecipeId = null;
-                    window.populateFormWithData({
-                        title: "LA MANCHA RECIPE",
-                        category: "SOUP",
-                        portion: "1 인분",
-                        ingredients: [{ name: "", amount: "", unit: "g" }],
-                        cookingTechnique: ["", "", ""],
-                        photoData: "sample_images/funghi_pasta.jpg"
-                    });
-                    window.switchTab("tab-editor");
-                }
-            });
-        }
-
-        return page;
-    },
-
-    /**
-     * 3. 손가락 터치 및 마우스 드래그 제스처 바인딩
-     */
-    attachGestures(el) {
-        // --- 모바일 터치 이벤트 ---
-        el.addEventListener("touchstart", (e) => this.onDragStart(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
-        el.addEventListener("touchmove", (e) => this.onDragMove(e.touches[0].clientX, e.touches[0].clientY), { passive: true });
-        el.addEventListener("touchend", () => this.onDragEnd());
-
-        // --- 데스크톱 마우스 드래그 이벤트 ---
-        el.addEventListener("mousedown", (e) => {
-            // 버튼 클릭 시에는 드래그 방지
+    attachPhysicsGestures(el) {
+        // 모바일 터치 이벤트
+        el.addEventListener("touchstart", (e) => {
             if (e.target.closest("button") || e.target.closest("input")) return;
-            this.onDragStart(e.clientX, e.clientY);
+            const touch = e.touches[0];
+            this.handleDragStart(touch.clientX, touch.clientY);
+        }, { passive: true });
+
+        el.addEventListener("touchmove", (e) => {
+            if (!this.isDragging) return;
+            const touch = e.touches[0];
+            this.handleDragMove(touch.clientX, touch.clientY);
+        }, { passive: true });
+
+        el.addEventListener("touchend", () => this.handleDragEnd());
+
+        // 데스크톱 마우스 이벤트
+        el.addEventListener("mousedown", (e) => {
+            if (e.target.closest("button") || e.target.closest("input")) return;
+            this.handleDragStart(e.clientX, e.clientY);
         });
+
         window.addEventListener("mousemove", (e) => {
-            if (this.isDragging) this.onDragMove(e.clientX, e.clientY);
+            if (this.isDragging) this.handleDragMove(e.clientX, e.clientY);
         });
+
         window.addEventListener("mouseup", () => {
-            if (this.isDragging) this.onDragEnd();
+            if (this.isDragging) this.handleDragEnd();
         });
     },
 
-    onDragStart(x, y) {
+    handleDragStart(x, y) {
         if (this.isAnimating) return;
-        this.isDragging = true;
+        this.updateBookWidth();
         this.startX = x;
         this.startY = y;
         this.currentX = x;
+        this.isDragging = true;
+        this.dragDirection = null;
+        this.activePageEl = null;
     },
 
-    onDragMove(x, y) {
+    handleDragMove(x, y) {
         if (!this.isDragging || this.isAnimating) return;
         this.currentX = x;
         const deltaX = this.currentX - this.startX;
 
-        // 현재 넘기려는 페이지를 손가락 따라 살짝 기울여서 들리는 리얼 손맛 연출!
-        if (deltaX < 0 && this.currentPageIndex < this.pages.length - 1) {
-            // 다음 장으로 넘기려는 중 (왼쪽으로 드래그)
-            const activePage = this.pages[this.currentPageIndex];
-            const ratio = Math.min(Math.abs(deltaX) / 180, 0.45);
-            activePage.style.transition = "none";
-            activePage.style.transform = `rotateY(-${ratio * 120}deg)`;
-        } else if (deltaX > 0 && this.currentPageIndex > 0) {
-            // 이전 장으로 되돌리려는 중 (오른쪽으로 드래그)
-            const prevPage = this.pages[this.currentPageIndex - 1];
-            const ratio = Math.min(deltaX / 180, 0.45);
-            prevPage.style.transition = "none";
-            prevPage.style.transform = `rotateY(-${180 - ratio * 120}deg)`;
+        // 드래그 방향 결정 (한 번 결정되면 드래그 끝날 때까지 유지)
+        if (!this.dragDirection) {
+            if (deltaX < -8 && this.currentPageIndex < this.pages.length - 1) {
+                // 다음 페이지로 넘기는 방향 (오른쪽 -> 왼쪽)
+                this.dragDirection = "next";
+                this.activePageEl = this.pages[this.currentPageIndex];
+                this.activePageEl.style.transition = "none";
+                this.activePageEl.style.zIndex = this.pages.length + 10;
+            } else if (deltaX > 8 && this.currentPageIndex > 0) {
+                // 이전 페이지로 되돌리는 방향 (왼쪽 -> 오른쪽)
+                this.dragDirection = "prev";
+                this.activePageEl = this.pages[this.currentPageIndex - 1];
+                this.activePageEl.style.transition = "none";
+                this.activePageEl.style.zIndex = this.pages.length + 10;
+            }
+        }
+
+        if (!this.activePageEl || !this.dragDirection) return;
+
+        // ★ 손끝 1:1 실시간 회전 각도 및 휨(Bend) 계산
+        if (this.dragDirection === "next") {
+            // progress: 0 (시작) ~ 1.0 (완전히 넘김)
+            const progress = Math.min(Math.max(-deltaX / this.bookWidth, 0), 1.0);
+            const deg = progress * 180;
+            // 살짝 들어올리는 원근 효과와 곡선 휨
+            const liftZ = Math.sin(progress * Math.PI) * 22;
+            const skew = Math.sin(progress * Math.PI) * -3;
+
+            this.activePageEl.style.transform = `rotateY(-${deg}deg) translateZ(${liftZ}px) skewY(${skew}deg)`;
+            this.updateShadow(this.activePageEl, progress);
+        } else if (this.dragDirection === "prev") {
+            const progress = Math.min(Math.max(deltaX / this.bookWidth, 0), 1.0);
+            const deg = 180 - (progress * 180);
+            const liftZ = Math.sin(progress * Math.PI) * 22;
+            const skew = Math.sin(progress * Math.PI) * 3;
+
+            this.activePageEl.style.transform = `rotateY(-${deg}deg) translateZ(${liftZ}px) skewY(${skew}deg)`;
+            this.updateShadow(this.activePageEl, 1.0 - progress);
         }
     },
 
-    onDragEnd() {
+    updateShadow(sheetEl, progress) {
+        // 넘겨지는 각도에 따라 그림자 투명도를 부드럽게 조절
+        const shadowEl = sheetEl.querySelector(".curl-shadow");
+        if (shadowEl) {
+            const opacity = Math.sin(progress * Math.PI) * 0.75;
+            shadowEl.style.opacity = opacity.toFixed(2);
+        }
+    },
+
+    handleDragEnd() {
         if (!this.isDragging) return;
         this.isDragging = false;
+        if (!this.activePageEl || !this.dragDirection) return;
+
         const deltaX = this.currentX - this.startX;
+        const commitDistance = this.bookWidth * 0.22; // 22% 이상 넘기면 확정 플립
 
-        if (deltaX < -this.dragThreshold) {
-            // 왼쪽으로 확 밀었을 때: 다음 페이지로 부드럽게 넘김!
-            this.nextPage();
-        } else if (deltaX > this.dragThreshold) {
-            // 오른쪽으로 확 밀었을 때: 이전 페이지로 되돌림!
-            this.prevPage();
-        } else {
-            // 살짝 밀다 놓았을 때: 원래 자리로 부드럽게 복귀
-            this.cancelDrag();
-        }
-    },
-
-    cancelDrag() {
-        if (this.pages[this.currentPageIndex]) {
-            this.pages[this.currentPageIndex].style.transition = "transform 0.3s ease";
-            this.pages[this.currentPageIndex].style.transform = "rotateY(0deg)";
-        }
-        if (this.currentPageIndex > 0 && this.pages[this.currentPageIndex - 1]) {
-            this.pages[this.currentPageIndex - 1].style.transition = "transform 0.3s ease";
-            this.pages[this.currentPageIndex - 1].style.transform = "rotateY(-180deg)";
+        if (this.dragDirection === "next") {
+            if (-deltaX > commitDistance) {
+                // 부드럽게 다음 장으로 착지
+                this.finishFlip(this.activePageEl, -180, () => {
+                    this.currentPageIndex++;
+                    this.updatePagePositions(true);
+                });
+            } else {
+                // 원래 자리로 부드럽게 복귀
+                this.finishFlip(this.activePageEl, 0, () => {
+                    this.updatePagePositions(true);
+                });
+            }
+        } else if (this.dragDirection === "prev") {
+            if (deltaX > commitDistance) {
+                // 부드럽게 이전 장으로 착지
+                this.finishFlip(this.activePageEl, 0, () => {
+                    this.currentPageIndex--;
+                    this.updatePagePositions(true);
+                });
+            } else {
+                // 뒤집힌 상태로 다시 복귀
+                this.finishFlip(this.activePageEl, -180, () => {
+                    this.updatePagePositions(true);
+                });
+            }
         }
     },
 
     /**
-     * 4. 다음 페이지로 플립 (부드러운 3D 종이 넘김 효과)
+     * 손을 놓았을 때의 부드러운 스프링 감속 착지 애니메이션 (120Hz 최적화)
      */
-    nextPage() {
-        if (this.currentPageIndex >= this.pages.length - 1 || this.isAnimating) return;
+    finishFlip(sheetEl, targetDeg, onComplete) {
         this.isAnimating = true;
+        sheetEl.style.transition = "transform 0.45s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.45s ease";
+        sheetEl.style.transform = `rotateY(${targetDeg}deg) translateZ(0px) skewY(0deg)`;
 
-        const currentPage = this.pages[this.currentPageIndex];
-        currentPage.style.transition = "transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)";
-        currentPage.classList.add("flipped");
-        currentPage.style.transform = "rotateY(-180deg)";
-
-        this.currentPageIndex++;
-        this.updatePagePositions();
+        const shadowEl = sheetEl.querySelector(".curl-shadow");
+        if (shadowEl) {
+            shadowEl.style.transition = "opacity 0.45s ease";
+            shadowEl.style.opacity = "0";
+        }
 
         setTimeout(() => {
             this.isAnimating = false;
-        }, 600);
+            if (onComplete) onComplete();
+        }, 460);
     },
 
     /**
-     * 5. 이전 페이지로 플립 (되돌리기)
+     * 모든 페이지의 z-index 및 3D 배치 정돈
      */
-    prevPage() {
-        if (this.currentPageIndex <= 0 || this.isAnimating) return;
-        this.isAnimating = true;
-
-        this.currentPageIndex--;
-        const targetPage = this.pages[this.currentPageIndex];
-        targetPage.style.transition = "transform 0.6s cubic-bezier(0.25, 1, 0.5, 1)";
-        targetPage.classList.remove("flipped");
-        targetPage.style.transform = "rotateY(0deg)";
-
-        this.updatePagePositions();
-
-        setTimeout(() => {
-            this.isAnimating = false;
-        }, 600);
-    },
-
-    /**
-     * 6. 페이지 상태 및 번호 카운터 갱신
-     */
-    updatePagePositions() {
+    updatePagePositions(animated = false) {
         const total = this.pages.length;
         this.pages.forEach((p, idx) => {
+            if (!animated) p.style.transition = "none";
+            
+            const shadowEl = p.querySelector(".curl-shadow");
+            if (shadowEl) shadowEl.style.opacity = "0";
+
             if (idx < this.currentPageIndex) {
-                // 이미 넘어간 페이지 (왼쪽에 접힘)
+                // 이미 넘어간 페이지 (왼쪽에 180도 회전되어 차곡차곡 쌓임)
                 p.classList.add("flipped");
-                p.style.zIndex = idx;
-                p.style.transform = "rotateY(-180deg)";
-            } else {
-                // 아직 안 넘어간 페이지 (오른쪽에 쌓임)
+                p.style.zIndex = idx + 1;
+                p.style.transform = "rotateY(-180deg) translateZ(0px) skewY(0deg)";
+            } else if (idx === this.currentPageIndex) {
+                // 현재 펼쳐져 있는 페이지 (맨 위)
                 p.classList.remove("flipped");
-                p.style.zIndex = total - idx;
-                p.style.transform = "rotateY(0deg)";
+                p.style.zIndex = total;
+                p.style.transform = "rotateY(0deg) translateZ(0px) skewY(0deg)";
+            } else {
+                // 아직 안 넘어간 다음 페이지들 (오른쪽에 역순으로 쌓임)
+                p.classList.remove("flipped");
+                p.style.zIndex = total - (idx - this.currentPageIndex);
+                p.style.transform = "rotateY(0deg) translateZ(0px) skewY(0deg)";
             }
         });
 
@@ -445,14 +507,12 @@ const FlipBookEngine = {
     },
 
     /**
-     * 7. 🚀 [핵심 요청] 고속 자동 책장 넘김 검색 엔진 (타라라락-! 착!)
-     * 사용자가 검색어를 입력하면 책장이 고속으로 타라라락 넘어가며 해당 페이지를 찾아 착 멈춥니다!
+     * 🚀 [타라라락 고속 검색 엔진]
      */
     searchAndRapidFlip(keyword) {
         if (!keyword || !keyword.trim()) return;
         const kw = keyword.trim().toLowerCase();
 
-        // 1. 키워드와 일치하는 레시피 페이지 찾기 (표지 0번 이후부터 탐색)
         let targetIndex = -1;
         for (let i = 1; i < this.pages.length - 1; i++) {
             const p = this.pages[i];
@@ -464,58 +524,53 @@ const FlipBookEngine = {
         }
 
         if (targetIndex === -1) {
-            // 못 찾았을 때: 책자를 살짝 도리도리(Shake)하며 안내
             if (this.bookEl) {
                 this.bookEl.classList.remove("shake-effect");
-                void this.bookEl.offsetWidth; // reflow
+                void this.bookEl.offsetWidth;
                 this.bookEl.classList.add("shake-effect");
             }
             alert(`🔍 "${keyword}" 관련 레시피를 찾을 수 없습니다. 철자를 확인해주세요! 😊`);
             return;
         }
 
-        // 이미 그 페이지에 있다면 펄스 강조만 제공
         if (this.currentPageIndex === targetIndex) {
             this.highlightFoundPage(this.pages[targetIndex]);
             return;
         }
 
-        // 2. 타라라락 고속 플립 애니메이션 시작!
+        // 고속으로 타라라락-! 넘기기
         this.isAnimating = true;
         const isForward = targetIndex > this.currentPageIndex;
-        const stepDelay = 90; // 한 장 넘길 때 걸리는 초고속 시간 (90ms)
+        const stepDelay = 80;
 
-        const flipInterval = setInterval(() => {
+        const interval = setInterval(() => {
             if (isForward && this.currentPageIndex < targetIndex) {
                 const cur = this.pages[this.currentPageIndex];
                 cur.style.transition = `transform ${stepDelay}ms linear`;
-                cur.classList.add("flipped");
                 cur.style.transform = "rotateY(-180deg)";
+                cur.classList.add("flipped");
                 this.currentPageIndex++;
-                this.updatePagePositions();
+                this.updatePagePositions(false);
             } else if (!isForward && this.currentPageIndex > targetIndex) {
                 this.currentPageIndex--;
                 const cur = this.pages[this.currentPageIndex];
                 cur.style.transition = `transform ${stepDelay}ms linear`;
-                cur.classList.remove("flipped");
                 cur.style.transform = "rotateY(0deg)";
-                this.updatePagePositions();
+                cur.classList.remove("flipped");
+                this.updatePagePositions(false);
             } else {
-                // 목표 페이지 도착! 즉시 인터벌 중단 및 탁! 멈춤 강조
-                clearInterval(flipInterval);
+                clearInterval(interval);
                 this.isAnimating = false;
+                this.updatePagePositions(true);
                 this.highlightFoundPage(this.pages[targetIndex]);
             }
         }, stepDelay);
     },
 
-    /**
-     * 목표 레시피 발견 시 '탁!' 멈추며 골드 펄스 강조 효과
-     */
     highlightFoundPage(pageEl) {
         if (!pageEl) return;
         pageEl.classList.remove("found-pulse");
-        void pageEl.offsetWidth; // reflow
+        void pageEl.offsetWidth;
         pageEl.classList.add("found-pulse");
     }
 };
