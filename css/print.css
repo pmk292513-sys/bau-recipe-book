@@ -1,0 +1,535 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+/**
+ * [A4 및 맞춤 용지 인쇄 전용 스타일 - css/print.css]
+ * 모바일 및 PC 브라우저에서 인쇄 / 컬러 복사기 출력 시
+ * A4 용지 정중앙에 완벽하게 대칭 정렬되고, 주방에서도 한눈에 들어오도록
+ * 선명하고 굵은 텍스트(600~900)와 사각 박스 없는 깔끔한 토핑/시그니처를 제공합니다.
+ */
+
+@page {
+    /* A4 정규격 (210mm x 297mm) 지정 */
+    size: A4 portrait;
+    /* 상하 9mm, 좌우 10mm로 칼같이 대칭 여백 설정 -> 좌우 쏠림 완벽 해결 */
+    margin: 9mm 10mm 7mm 10mm;
+}
+
+@media print {
+    /* 1. 모든 요소에 컬러 인쇄 강제 옵션 부여 (컬러 복사기 및 컬러 프린터 최적화) */
+    * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    /* 2. 화면 전용 UI(상단바, 네비게이션 탭, 입력 폼, 버튼, 배경 등) 완벽 제거 */
+    .no-print,
+    .app-header,
+    .nav-tabs,
+    .form-container,
+    .book-container,
+    .preview-control-bar,
+    .btn,
+    .floating-refresh-btn {
+        display: none !important;
+    }
+
+    /* 탭 페인 인쇄 시 강제 표시 */
+    #tab-preview {
+        display: block !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    html, body {
+        width: 100% !important;
+        height: auto !important;
+        background-color: #ffffff !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .main-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .paper-wrapper {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        overflow: visible !important;
+        box-shadow: none !important;
+        background: transparent !important;
+        display: flex !important;
+        justify-content: center !important;
+    }
+
+    /* 3. A4 용지 정중앙 190mm 고정 (좌 10mm + 본문 190mm + 우 10mm = 210mm 완벽 대칭) */
+    .recipe-page {
+        width: 190mm !important;
+        max-width: 190mm !important;
+        min-width: 190mm !important;
+        min-height: auto !important;
+        margin: 0 auto !important; /* 좌우 정중앙 배치 */
+        padding: 0 !important;
+        box-shadow: none !important;
+        border: none !important;
+        page-break-after: avoid !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", Arial, sans-serif !important;
+        -webkit-font-smoothing: antialiased !important;
+    }
+
+    /* 4. 대제목 간격 및 진한 타이틀 (A4 최상단 정렬) */
+    .recipe-header {
+        margin-top: 0 !important;
+        margin-bottom: 5mm !important;
+        text-align: center !important;
+    }
+
+    .recipe-title {
+        font-size: 28px !important;
+        font-weight: 800 !important;
+        font-family: "Georgia", "Times New Roman", serif !important;
+        letter-spacing: 2px !important;
+        color: #000000 !important;
+    }
+
+    /* 5. 일체형 마스터 프레임 (외곽 3.5px 통일 & 사진 3.5px 동일 굵기 적용) */
+    .recipe-card-frame {
+        width: 190mm !important;
+        max-width: 190mm !important;
+        border: 3.5px solid #000000 !important;
+        box-sizing: border-box !important;
+        background-color: #000000 !important;
+        display: block !important;
+        margin: 0 auto !important;
+        padding: 0 !important;
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+        overflow: hidden !important;
+    }
+
+    .recipe-card-frame table.recipe-table {
+        width: 100% !important;
+        table-layout: fixed !important;
+        border-collapse: collapse !important;
+        margin: 0 !important;
+        background-color: #ffffff !important;
+        border: none !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 데이터 셀: 글자 크기 13.5px, 두께 600으로 선명하고 진하게 강화 */
+    .recipe-card-frame table.recipe-table td {
+        border: 1px solid #000000 !important;
+        color: #000000 !important;
+        font-weight: 600 !important;
+        font-size: 13.5px !important;
+        padding: 5px 8px !important;
+        line-height: 1.4 !important;
+        word-break: break-all !important;
+        background-color: #ffffff !important;
+        box-sizing: border-box !important;
+    }
+
+    /* 헤더 셀: 글자 크기 13px, 두께 900(블랙)으로 묵직하고 뚜렷하게 */
+    .recipe-card-frame table.recipe-table th {
+        border: 1px solid #000000 !important;
+        color: #000000 !important;
+        font-weight: 900 !important;
+        font-size: 13px !important;
+        letter-spacing: 0.5px !important;
+        text-align: center !important;
+        padding: 5px 6px !important;
+        background-color: #ffffff !important;
+        box-sizing: border-box !important;
+    }
+
+    /* [외곽선 울퉁불퉁함 원천 차단] 테이블 좌측/우측 최외곽 셀 테두리를 제거하여 3.5px 외곽선만 매끄럽게 노출 */
+    .recipe-card-frame .name-table tr:first-child th,
+    .recipe-card-frame .name-table tr:first-child td,
+    .recipe-card-frame .name-table tr.first-visible-row th,
+    .recipe-card-frame .name-table tr.first-visible-row td {
+        border-top: none !important;
+    }
+
+    .recipe-card-frame .name-table th:first-child,
+    .recipe-card-frame td.photo-cell,
+    .recipe-card-frame .main-content-table th:first-child,
+    .recipe-card-frame .main-content-table td.td-ingredient-name,
+    .recipe-card-frame .caution-table th:first-child {
+        border-left: none !important;
+    }
+
+    .recipe-card-frame .name-table td:last-child,
+    .recipe-card-frame .photo-info-table td.info-value,
+    .recipe-card-frame .main-content-table th:last-child,
+    .recipe-card-frame .main-content-table td.td-cooking-container,
+    .recipe-card-frame .caution-table td.td-caution {
+        border-right: none !important;
+    }
+
+    .recipe-card-frame .caution-table tr:last-child th,
+    .recipe-card-frame .caution-table tr:last-child td {
+        border-bottom: none !important;
+    }
+
+    /* [테이블 간 맞닿는 경계선 단차/이중선 방지] */
+    .recipe-card-frame .main-content-table thead th {
+        border-top: none !important;
+        border-bottom: 3.5px solid #000000 !important;
+    }
+
+    .recipe-card-frame .main-content-table {
+        border-bottom: none !important;
+    }
+
+    .recipe-card-frame .main-content-table tr:last-child td,
+    .recipe-card-frame .main-content-table td.td-cooking-container {
+        border-bottom: none !important;
+    }
+
+    .recipe-card-frame .caution-table {
+        border-top: 3.5px solid #000000 !important;
+    }
+
+    .recipe-card-frame .caution-table tr:first-child th,
+    .recipe-card-frame .caution-table tr:first-child td {
+        border-top: 3.5px solid #000000 !important;
+    }
+
+    /* 6. 섹션 구분선 및 사진 테두리: 외곽선과 100% 동일한 3.5px 통일 */
+    .recipe-card-frame .name-table {
+        border-bottom: 3.5px solid #000000 !important;
+    }
+
+    .recipe-card-frame .name-table tr:last-child th,
+    .recipe-card-frame .name-table tr:last-child td {
+        border-bottom: 3.5px solid #000000 !important;
+    }
+
+    /* 상단 메뉴명 표: 내용 글자 크기와 굵기를 소제목과 1:1 완벽 일치 (칸 크기는 그대로 유지) */
+    .name-table th,
+    .name-table td {
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
+        font-weight: 850 !important;
+        font-size: 13px !important;
+        letter-spacing: 0.5px !important;
+        color: #000000 !important;
+    }
+
+    .recipe-card-frame .photo-info-table {
+        border-top: none !important;
+        border-bottom: 3.5px solid #000000 !important;
+    }
+
+    .recipe-card-frame .photo-info-table tr:first-child th,
+    .recipe-card-frame .photo-info-table tr:first-child td {
+        border-top: none !important;
+    }
+
+    .recipe-card-frame .photo-info-table tr:last-child th,
+    .recipe-card-frame .photo-info-table tr:last-child td {
+        border-bottom: 3.5px solid #000000 !important;
+    }
+
+    /* 메타데이터 소제목(info-label)과 값(info-value) 규격 통일 (Pretendard Black 850으로 영문/숫자/한글 모두 묵직하게 두껍게 일치) */
+    .info-label {
+        width: 85px !important;
+        white-space: nowrap !important;
+        border: 1px solid #000000 !important;
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
+        font-weight: 850 !important;
+        font-size: 13.5px !important;
+        letter-spacing: 0.5px !important;
+        text-align: center !important;
+        color: #000000 !important;
+    }
+
+    .info-value {
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
+        font-weight: 850 !important;
+        font-size: 13.5px !important;
+        letter-spacing: 0.5px !important;
+        color: #000000 !important;
+        text-align: center !important;
+        -webkit-font-smoothing: antialiased !important;
+        -webkit-text-stroke: none !important;
+        text-shadow: none !important;
+    }
+
+    .info-value * {
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
+        font-weight: 850 !important;
+        font-size: 13.5px !important;
+        letter-spacing: 0.5px !important;
+        color: #000000 !important;
+        -webkit-text-stroke: none !important;
+        text-shadow: none !important;
+    }
+
+    /* 7. 사진 규격: 가로 12.8cm x 세로 9.5cm 엄격 유지 */
+    .recipe-card-frame table.recipe-table td.photo-cell,
+    .photo-cell {
+        width: 12.8cm !important;
+        height: 9.5cm !important;
+        min-width: 12.8cm !important;
+        max-width: 12.8cm !important;
+        min-height: 9.5cm !important;
+        max-height: 9.5cm !important;
+        padding: 0 !important;
+        border-left: none !important;
+        border-top: none !important;
+        border-right: 3.5px solid #000000 !important;
+        border-bottom: 3.5px solid #000000 !important;
+        overflow: hidden !important;
+        box-sizing: border-box !important;
+        background-color: #ffffff !important;
+    }
+
+    .recipe-card-frame .photo-info-table th.info-label {
+        border-left: 3.5px solid #000000 !important;
+    }
+
+    .recipe-card-frame .caution-table th.th-caution {
+        border-right: 3.5px solid #000000 !important;
+        font-weight: 900 !important;
+        font-size: 13px !important;
+    }
+
+    .recipe-card-frame .caution-table td.td-caution {
+        border-left: 3.5px solid #000000 !important;
+        font-weight: 600 !important;
+        font-size: 13px !important;
+    }
+
+    /* 우측 메타데이터 5개 행 높이를 1.9cm로 고정 (5 x 1.9cm = 사진 세로 9.5cm 일치) */
+    .recipe-card-frame .photo-info-table tr {
+        height: 1.9cm !important;
+    }
+
+    .recipe-card-frame .photo-info-table th.info-label,
+    .recipe-card-frame .photo-info-table td.info-value {
+        height: 1.9cm !important;
+    }
+
+    .photo-container {
+        width: 12.8cm !important;
+        height: 9.5cm !important;
+        min-width: 12.8cm !important;
+        max-width: 12.8cm !important;
+        min-height: 9.5cm !important;
+        max-height: 9.5cm !important;
+        box-sizing: border-box !important;
+        border: none !important;
+        outline: none !important;
+        box-shadow: none !important;
+        overflow: hidden !important;
+        background-color: #ffffff !important;
+        position: relative !important;
+    }
+
+    .photo-container img {
+        width: 12.8cm !important;
+        height: 9.5cm !important;
+        max-width: 12.8cm !important;
+        max-height: 9.5cm !important;
+        object-fit: cover !important;
+        object-position: center center !important;
+        image-rendering: -webkit-optimize-contrast !important;
+        image-rendering: crisp-edges !important;
+        display: block !important;
+    }
+
+    /* 8. [사용자 요청] 토핑(TOPPING): 사각 테두리 박스 완전 제거 & 깔끔한 텍스트형 노출 */
+    .topping-card-box {
+        margin-top: 8px !important;
+        border: none !important; /* 사각 박스 테두리 제거 */
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        page-break-inside: avoid !important;
+    }
+
+    .topping-card-title {
+        background: transparent !important; /* 배경색 제거 */
+        border: none !important;           /* 밑줄 테두리 제거 */
+        padding: 0 0 2px 0 !important;
+        font-size: 12px !important;
+        font-weight: 900 !important;       /* 진하고 또렷한 제목 */
+        color: #000000 !important;
+        letter-spacing: 0.5px !important;
+        display: inline-block !important;
+    }
+
+    .topping-card-content {
+        padding: 0 !important;
+        font-size: 12.5px !important;      /* 글자 크기 확대 */
+        font-weight: 600 !important;       /* 진하고 선명한 글씨 */
+        color: #000000 !important;
+        line-height: 1.4 !important;
+        background: transparent !important;
+    }
+
+    /* 9. [사용자 요청] 시그니처(SIGNATURE): 사각 테두리 박스 완전 제거 & 깔끔한 텍스트형 노출 */
+    .signature-card-box {
+        margin-top: 6px !important;
+        border: none !important; /* 사각 박스 테두리 제거 */
+        background: transparent !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        page-break-inside: avoid !important;
+    }
+
+    .signature-card-title {
+        background: transparent !important; /* 노란 배경색 제거 */
+        border: none !important;           /* 밑줄 테두리 제거 */
+        padding: 0 0 2px 0 !important;
+        font-size: 12px !important;
+        font-weight: 900 !important;       /* 진하고 또렷한 제목 */
+        color: #000000 !important;
+        letter-spacing: 0.5px !important;
+        display: inline-block !important;
+    }
+
+    .signature-card-content {
+        padding: 0 !important;
+        font-size: 12.5px !important;      /* 글자 크기 확대 */
+        font-weight: 600 !important;       /* 진하고 선명한 글씨 */
+        color: #000000 !important;
+        line-height: 1.4 !important;
+        background: transparent !important;
+    }
+
+    /* 10. 겹침 및 짤림 현상 원천 차단 */
+    table.recipe-table th,
+    table.recipe-table td {
+        overflow: visible !important;
+        box-sizing: border-box !important;
+    }
+
+    tr {
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+    }
+
+    /* 10. [사용자 요청] 재료 행: 소제목과 동일한 850 볼드 굵기 & 슬림한 23px 규격 유지 */
+    .recipe-card-frame .main-content-table {
+        table-layout: fixed !important;
+    }
+
+    .recipe-card-frame .main-content-table tbody tr {
+        height: 23px !important;
+        max-height: 23px !important;
+        line-height: 1.2 !important;
+    }
+
+    .td-ingredient-name,
+    .td-ingredient-amount,
+    .td-ingredient-un {
+        height: 23px !important;
+        max-height: 23px !important;
+        padding: 1px 6px !important;
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
+        font-size: 13px !important;
+        font-weight: 850 !important;
+        color: #000000 !important;
+        line-height: 1.2 !important;
+        box-sizing: border-box !important;
+        overflow: hidden !important;
+        vertical-align: middle !important;
+    }
+
+    /* [사용자 요청] 2번 이미지 (COOKING TECHNIQUE 조리법): 변경 전의 크고 시원한 사이즈로 100% 복원 */
+    .td-cooking-container {
+        vertical-align: top !important;
+        padding: 6px 10px !important;
+        overflow: visible !important;
+        box-sizing: border-box !important;
+    }
+
+    .cooking-wrapper {
+        display: block !important;
+        height: auto !important;
+        min-height: auto !important;
+        overflow: visible !important;
+    }
+
+    .cooking-steps-content {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 5px !important; /* 딱 좋았던 조리 단계 간격 복원 */
+        margin-bottom: 4px !important;
+        overflow: visible !important;
+    }
+
+    .cooking-step-item {
+        display: flex !important;
+        align-items: flex-start !important;
+        gap: 5px !important;
+        line-height: 1.45 !important; /* 딱 좋았던 줄간격 복원 */
+    }
+
+    /* [사용자 요청 2번] 조리 순서 번호: 숫자 1. 2. 굵고 선명한 900, 14.8px */
+    .step-num {
+        font-weight: 900 !important;
+        font-size: 14.8px !important;
+        color: #000000 !important;
+        flex-shrink: 0 !important;
+        min-width: 21px !important;
+        letter-spacing: -0.3px !important;
+        text-align: left !important;
+        line-height: 1.48 !important;
+    }
+
+    /* [사용자 요청 2번] 조리법 본문: 숫자와 한글 굵기를 700(Bold)으로 칼같이 1:1 일치, 14.8px 유지 */
+    .step-desc {
+        flex: 1 !important;
+        font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", sans-serif !important;
+        font-size: 14.8px !important;
+        font-weight: 700 !important; /* 숫자와 한글이 완전히 동일한 굵기로 자연스럽게 통일 */
+        color: #000000 !important;
+        line-height: 1.48 !important;
+        letter-spacing: -0.2px !important;
+        word-break: break-all !important;
+        white-space: pre-wrap !important;
+    }
+
+    /* 토핑 및 시그니처: 본문과 균형을 맞춘 선명한 텍스트 */
+    .topping-card-box {
+        margin-top: 6px !important;
+    }
+
+    .topping-card-title {
+        font-size: 13px !important;
+        font-weight: 900 !important;
+    }
+
+    .topping-card-content {
+        font-size: 13.5px !important;
+        font-weight: 750 !important;
+        line-height: 1.42 !important;
+    }
+
+    .signature-card-box {
+        margin-top: 5px !important;
+    }
+
+    .signature-card-title {
+        font-size: 13px !important;
+        font-weight: 900 !important;
+    }
+
+    .signature-card-content {
+        font-size: 13.5px !important;
+        font-weight: 750 !important;
+        line-height: 1.42 !important;
+    }
+}

@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>BAU RECIPE BOOK - 모바일 최적화 &amp; A4 인쇄 시스템</title>
+    <!-- PWA 앱 매니페스트 및 모바일 홈 화면 아이콘 설정 -->
+    <link rel="manifest" href="manifest.json?v=6.2">
+    <meta name="theme-color" content="#080808">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="BAU">
+    <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- 한글·영문·숫자 900(Black) 슈퍼 굵기를 완벽 지원하는 Pretendard 글꼴 로드 -->
+    <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
+
+    <!-- 외부 스타일시트 분리 (모듈화 및 강력 캐시 갱신 버전 9.5 적용) -->
+    <link rel="stylesheet" href="css/style.css?v=9.8">
+    <link rel="stylesheet" href="css/print.css?v=9.8" media="print">
+</head>
+
+<body>
+
+    <!-- PWA 스마트폰 앱 설치 안내 바 (모바일에서 미설치 상태일 때 노출) -->
+    <div id="pwaInstallBanner" class="pwa-install-banner no-print" style="display: none;">
+        <div class="pwa-banner-text">
+            <strong>📲 스마트폰에 앱으로 설치하기</strong>
+            <small>인터넷 없이도 언제 어디서나 바로 켤 수 있습니다!</small>
+        </div>
+        <button id="btnPwaInstall" class="btn btn-sm btn-install-app">홈 화면에 설치</button>
+    </div>
+
+    <!-- 1. 앱 헤더 및 모바일 내비게이션 탭 (인쇄 시 숨김) -->
+    <header class="app-header no-print">
+        <div class="header-main">
+            <h1 class="app-title">
+                <img src="icons/brand_logo.png" alt="BAU Logo" class="brand-logo-img">
+                <span>BAU RECIPE BOOK</span>
+            </h1>
+            <div class="header-actions">
+                <button type="button" id="btnAppRefresh" class="btn btn-refresh-header" title="최신 데이터로 즉시 새로고침 및 동기화합니다">
+                    <span class="btn-icon">🔄</span><span class="btn-text">새로고침</span>
+                </button>
+                <button id="btnHeaderInstall" class="btn btn-install-header" title="스마트폰에 앱으로 설치하거나 다른 사람에게 공유">
+                    <span class="btn-icon">📲</span><span class="btn-text">공유/설치</span>
+                </button>
+                <button id="btnQuickPrint" class="btn btn-print-quick" title="현재 레시피를 바로 인쇄합니다">
+                    <span class="btn-icon">🖨️</span><span class="btn-text">인쇄</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- 모바일 친화적 탭 메뉴 -->
+        <nav class="nav-tabs">
+            <button class="nav-tab active" data-tab="tab-editor">✍️ 레시피 작성</button>
+            <button class="nav-tab" data-tab="tab-book">📚 내 레시피 북 (<span id="recipeCountBadge">0</span>)</button>
+            <button class="nav-tab" data-tab="tab-preview">🖨️ A4 미리보기</button>
+        </nav>
+    </header>
+
+    <!-- 2. 메인 컨텐츠 영역 -->
+    <main class="main-content">
+
+        <!-- ================= [탭 1: 레시피 작성 폼] ================= -->
+        <section id="tab-editor" class="tab-pane active no-print">
+            <div class="form-container">
+
+                <!-- 상단 액션 바 -->
+                <div class="form-action-header">
+                    <span id="currentEditingStatus" class="status-badge">✨ 신규 레시피 작성 중</span>
+                    <div class="btn-group">
+                        <button id="btnNewRecipe" class="btn btn-sm btn-outline">새 레시피</button>
+                        <button id="btnSaveToBook" class="btn btn-sm btn-save">💾 레시피 북에 저장</button>
+                    </div>
+                </div>
+
+                <!-- (1) 기본 정보 -->
+                <div class="form-card">
+                    <h3 class="form-card-title">1. 레시피 기본 명칭</h3>
+                    <div class="form-group">
+                        <label for="formTitle">대제목 (서식 타이틀)</label>
+                        <input type="text" id="formTitle" value="LA MANCHA RECIPE" placeholder="예: LA MANCHA RECIPE">
+                    </div>
+
+                    <!-- 이탈리아어/원어 명 (체크박스로 온/오프) -->
+                    <div class="form-group" id="groupItalianoName">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+                            <label for="formItaliano" style="margin-bottom: 0; font-weight: 700;">ITALIANO NAME (이탈리아어/원어 명)</label>
+                            <label style="display: inline-flex; align-items: center; gap: 5px; cursor: pointer; font-size: 13px; font-weight: 700; color: #0284c7; margin-bottom: 0;">
+                                <input type="checkbox" id="checkUseItaliano" style="width: 16px; height: 16px; cursor: pointer;">
+                                <span>이탈리아어명 사용</span>
+                            </label>
+                        </div>
+                        <div id="wrapItalianoInput" style="display: none;">
+                            <div style="display: flex; gap: 6px;">
+                                <input type="text" id="formItaliano" placeholder="예: Funghi" style="flex: 1;">
+                                <button type="button" id="btnTranslateToIt" class="btn btn-sm btn-outline-translate"
+                                    title="한국어 요리명을 바탕으로 이탈리아어 메뉴명을 개별 자동 완성합니다">
+                                    🇮🇹 이탈리아어 변환
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 영어 메뉴명 (개별 변환 버튼 탑재) -->
+                    <div class="form-group">
+                        <label for="formEnglish">ENGLISH NAME (영어 메뉴명)</label>
+                        <div style="display: flex; gap: 6px;">
+                            <input type="text" id="formEnglish"
+                                placeholder="예: Spaghetti With Garlic, Various, Mushroom &amp; Cream Sauce." style="flex: 1;">
+                            <button type="button" id="btnTranslateToEn" class="btn btn-sm btn-translate"
+                                title="한국어 요리명을 바탕으로 영어 메뉴명을 개별 자동 완성합니다">
+                                🇺🇸 영어 변환
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 한국어 요리명 및 역번역 -->
+                    <div class="form-group">
+                        <label for="formKorea">KOREA NAME (한국어 요리 설명/명칭)</label>
+                        <textarea id="formKorea" rows="2"
+                            placeholder="예: 양송이, 느타리, 표고, 새 송이 등 야채만으로 조리한 버섯 스파게티"></textarea>
+                        <div class="translate-btn-wrap"
+                            style="margin-top: 6px; display: flex; flex-wrap: wrap; gap: 6px;">
+                            <button type="button" id="btnTranslateNamesToKo" class="btn btn-sm btn-outline-translate"
+                                title="영어 또는 이탈리아어 메뉴명을 바탕으로 한글 요리 설명을 생성합니다">
+                                🇰🇷 영어/원어 ➔ 한글 변환
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- (2) 요리 사진 및 분류 정보 -->
+                <div class="form-card">
+                    <h3 class="form-card-title">2. 요리 사진 &amp; 상세 정보</h3>
+
+                    <div class="photo-upload-box">
+                        <div class="photo-preview-wrap" id="formPhotoClickArea">
+                            <img id="formPhotoPreview" src="sample_images/funghi_pasta.jpg" alt="미리보기">
+                            <div class="photo-touch-guide">
+                                <span>📷 터치하여 사진 촬영 또는 앨범 선택</span>
+                                <small>(A4 규격: 가로 13cm × 세로 9.5cm 자동 최적화)</small>
+                            </div>
+                        </div>
+                        <input type="file" id="formPhotoFile" accept="image/*" style="display: none;">
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label for="formCategory">CLASS (분류)</label>
+                            <input type="text" id="formCategory" placeholder="예: PASTA">
+                        </div>
+                        <div class="form-group">
+                            <label for="formDate">DATE (날짜)</label>
+                            <input type="text" id="formDate" placeholder="예: 2026. 11">
+                        </div>
+
+                        <!-- 통화 단위 선택 및 원가(COST) -->
+                        <div class="form-group">
+                            <label for="formCost">COST (원가)</label>
+                            <div class="currency-input-wrap">
+                                <select id="formCostCurrency" class="currency-select" title="원가 통화 선택">
+                                    <option value="원" selected>원 (원)</option>
+                                    <option value="$">달러 ($)</option>
+                                    <option value="€">유로 (€)</option>
+                                    <option value="¥">엔 (¥)</option>
+                                    <option value="元">위안 (元)</option>
+                                    <option value="£">파운드 (£)</option>
+                                </select>
+                                <input type="text" id="formCost" placeholder="예: 1,200">
+                            </div>
+                        </div>
+
+                        <!-- 통화 단위 선택 및 판매가(PRICE) -->
+                        <div class="form-group">
+                            <label for="formPrice">PRICE (판매가)</label>
+                            <div class="currency-input-wrap">
+                                <select id="formPriceCurrency" class="currency-select" title="판매가 통화 선택">
+                                    <option value="원" selected>원 (원)</option>
+                                    <option value="$">달러 ($)</option>
+                                    <option value="€">유로 (€)</option>
+                                    <option value="¥">엔 (¥)</option>
+                                    <option value="元">위안 (元)</option>
+                                    <option value="£">파운드 (£)</option>
+                                </select>
+                                <input type="text" id="formPrice" placeholder="예: 8,500">
+                            </div>
+                        </div>
+
+                        <!-- PORTION (인분) 숫자 전용 입력 & 단위 고정 -->
+                        <div class="form-group" style="grid-column: span 2;">
+                            <label for="formPortionNum">PORTION (인분 / 인원)</label>
+                            <div class="portion-input-wrap">
+                                <input type="number" id="formPortionNum" min="1" max="99999" placeholder="2">
+                                <select id="formPortionUnit" class="portion-unit-select" title="인분 단위 선택">
+                                    <option value="인분" selected>인분</option>
+                                    <option value="명">명 (인원)</option>
+                                    <option value="인용">인용</option>
+                                    <option value="판">판 (피자)</option>
+                                    <option value="개">개 (피스)</option>
+                                </select>
+                            </div>
+                            <small class="form-hint">💡 '인분' 글자를 일일이 적거나 지울 필요 없이, 숫자만 치시면 A4에 자동으로 결합됩니다.</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- (3) 재료 목록 (드롭다운 & 추가/삭제) -->
+                <div class="form-card">
+                    <div class="card-header-flex">
+                        <h3 class="form-card-title">3. 재료 목록 (INGREDIENTS)</h3>
+                        <div class="header-btns" style="display: flex; flex-wrap: wrap; gap: 6px; align-items: center;">
+                            <button type="button" id="btnTranslateAllIngredients"
+                                class="btn btn-sm btn-outline-translate" title="입력된 한글 재료명들을 영어로 한 번에 자동 변환합니다">
+                                🌐 전체 영어 변환
+                            </button>
+                            <button type="button" id="btnTranslateAllIngredientsKo"
+                                class="btn btn-sm btn-outline-translate"
+                                style="color: #059669 !important; border-color: #a7f3d0; background-color: #ecfdf5;"
+                                title="영어/외국어로 된 재료명들을 한국어로 한 번에 다시 되돌립니다">
+                                🇰🇷 전체 한국어 변환
+                            </button>
+                            <button id="formBtnAddIngredient" class="btn btn-sm btn-primary">➕ 재료 추가</button>
+                        </div>
+                    </div>
+
+                    <!-- 🚀 스마트 인분 변환기 (본래 기본 레시피 인분 기준 연동) -->
+                    <div class="portion-scaler-card">
+                        <div class="scaler-header">
+                            <span class="scaler-title">⚡ 스마트 인분 자동 비례 계산기</span>
+                            <span class="scaler-base-info">이 요리의 본래 기준: <strong
+                                    id="scalerCurrentPortionText">1</strong>인분</span>
+                        </div>
+                        <div class="scaler-body">
+                            <!-- 배율 및 인분 선택 -->
+                            <div class="scaler-btn-row">
+                                <span class="scaler-label">배율로 늘리기:</span>
+                                <div class="scaler-quick-buttons">
+                                    <button type="button" class="btn-scale-mul" data-mul="2">x 2배</button>
+                                    <button type="button" class="btn-scale-mul" data-mul="3">x 3배</button>
+                                    <button type="button" class="btn-scale-mul" data-mul="5">x 5배</button>
+                                    <button type="button" class="btn-scale-mul" data-mul="10">x 10배</button>
+                                    <button type="button" class="btn-scale-mul" data-mul="20">x 20배</button>
+                                </div>
+                            </div>
+                            <div class="scaler-btn-row">
+                                <span class="scaler-label">목표 인분 지정:</span>
+                                <div class="scaler-quick-buttons">
+                                    <button type="button" class="btn-scale" data-scale="2">2인분</button>
+                                    <button type="button" class="btn-scale" data-scale="4">4인분</button>
+                                    <button type="button" class="btn-scale" data-scale="6">6인분</button>
+                                    <button type="button" class="btn-scale" data-scale="10">10인분</button>
+                                    <button type="button" class="btn-scale" data-scale="20">20인분</button>
+                                    <button type="button" class="btn-scale" data-scale="50">50인분</button>
+                                    <button type="button" class="btn-scale" data-scale="100">100인분</button>
+                                </div>
+                            </div>
+                            <div class="scaler-custom-input-wrap">
+                                <input type="number" id="scalerCustomInput" min="1" max="1000" placeholder="직접 입력 (인분)">
+                                <button type="button" id="btnApplyCustomScale" class="btn btn-sm btn-secondary">인분
+                                    적용</button>
+                                <button type="button" id="btnResetScale" class="btn btn-sm btn-reset-scale"
+                                    title="작성했던 본래 기본 레시피 양으로 100% 되돌립니다">🔄 원래 기본량으로 복원</button>
+                            </div>
+                        </div>
+                        <small class="scaler-tip">💡 2인분이나 4인분 등 본래 레시피 양을 기준으로 정확히 비례 계산됩니다.</small>
+                    </div>
+
+                    <p class="form-guide-text">
+                        단위는 <strong>밥숟가락, 단, 한 꼬집, 종이컵, g, Oz</strong> 등 드롭다운으로 쉽게 고를 수 있습니다.
+                    </p>
+
+                    <div id="ingredientItemsContainer" class="ingredient-items-list">
+                        <!-- 동적으로 재료 행들이 생성됩니다 -->
+                    </div>
+                </div>
+
+                <!-- (4) 조리법 및 토핑 (분리 구성) -->
+                <div class="form-card">
+                    <div class="card-header-flex">
+                        <h3 class="form-card-title">4. 조리 순서 (COOKING TECHNIQUE)</h3>
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                            <button id="btnSummarizeCooking" type="button" class="btn btn-sm btn-outline-translate"
+                                style="font-weight: 700;" title="작성한 조리법의 군더더기를 없애고 주방 실전 핵심 문장으로 자동 정돈합니다">
+                                ✨ 조리법 핵심 요약 정리
+                            </button>
+                            <button id="formBtnAddCookingStep" type="button" class="btn btn-sm btn-primary">➕ 조리 단계
+                                추가</button>
+                        </div>
+                    </div>
+                    <p class="form-guide-text">
+                        숫자(1., 2., 3...)는 <strong>자동으로 고정</strong>됩니다. 순수 요리 내용만 편하게 적어주세요!
+                    </p>
+
+                    <div id="cookingStepsContainer" class="cooking-steps-list">
+                        <!-- 자바스크립트로 1., 2., 3. 자동 번호가 붙은 단계들이 생성됩니다 -->
+                    </div>
+
+                    <!-- 토핑 전용 독립 필드 (줄 추가/삭제 지원) -->
+                    <div class="form-card highlight-group">
+                        <div class="card-header-flex">
+                            <label for="formTopping">
+                                <strong>⭐ TOPPING (토핑 항목 관리)</strong>
+                            </label>
+                            <button id="formBtnAddTopping" type="button" class="btn btn-sm btn-primary">➕ 토핑 줄
+                                추가</button>
+                        </div>
+                        <p class="form-guide-text">요리나 소스에 따라 토핑 항목을 원하는 만큼 추가하거나 삭제할 수 있습니다.</p>
+
+                        <!-- 강조 기호 빠른 삽입 바 -->
+                        <div class="symbol-quick-bar" data-target="topping">
+                            <span class="symbol-bar-label">강조 기호:</span>
+                            <button type="button" class="btn-sym" data-sym="★" title="별표">★</button>
+                            <button type="button" class="btn-sym" data-sym="※" title="당구장 마크">※</button>
+                            <button type="button" class="btn-sym" data-sym="💡" title="아이디어/팁">💡</button>
+                            <button type="button" class="btn-sym" data-sym="📌" title="고정/핵심">📌</button>
+                            <button type="button" class="btn-sym" data-sym="✔" title="체크">✔</button>
+                            <button type="button" class="btn-sym" data-sym="▶" title="화살표">▶</button>
+                        </div>
+
+                        <div id="toppingItemsContainer" class="topping-items-list">
+                            <!-- 자바스크립트로 토핑 입력 행들이 동적으로 생성됩니다 -->
+                        </div>
+                    </div>
+
+                    <!-- SIGNATURE (시그니처) 독립 필드 (체크박스 On/Off 지원) -->
+                    <div class="form-card signature-group">
+                        <div class="card-header-flex">
+                            <label class="toggle-checkbox-label">
+                                <input type="checkbox" id="formSignatureEnable" class="toggle-checkbox">
+                                <strong>🏆 SIGNATURE (시그니처 포함하기)</strong>
+                            </label>
+                            <button id="formBtnAddSignature" type="button" class="btn btn-sm btn-primary"
+                                style="display: none;">➕ 시그니처 줄 추가</button>
+                        </div>
+                        <p class="form-guide-text">체크하면 A4 레시피의 TOPPING 바로 밑에 SIGNATURE 칸이 나타납니다. (체크하지 않으면 숨겨집니다)</p>
+
+                        <div id="signatureControlsWrap" style="display: none;">
+                            <!-- 강조 기호 빠른 삽입 바 -->
+                            <div class="symbol-quick-bar" data-target="signature">
+                                <span class="symbol-bar-label">강조 기호:</span>
+                                <button type="button" class="btn-sym" data-sym="★" title="별표">★</button>
+                                <button type="button" class="btn-sym" data-sym="※" title="당구장 마크">※</button>
+                                <button type="button" class="btn-sym" data-sym="💡" title="아이디어/팁">💡</button>
+                                <button type="button" class="btn-sym" data-sym="📌" title="고정/핵심">📌</button>
+                                <button type="button" class="btn-sym" data-sym="✔" title="체크">✔</button>
+                                <button type="button" class="btn-sym" data-sym="▶" title="화살표">▶</button>
+                            </div>
+
+                            <div id="signatureItemsContainer" class="signature-items-list">
+                                <!-- 자바스크립트로 시그니처 입력 행들이 동적으로 생성됩니다 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- (5) 주의사항 (CAUTION - 줄 추가/삭제 지원) -->
+                <div class="form-card">
+                    <div class="card-header-flex">
+                        <h3 class="form-card-title">5. 주의사항 (CAUTION)</h3>
+                        <button id="formBtnAddCaution" type="button" class="btn btn-sm btn-primary">➕ 주의사항 줄 추가</button>
+                    </div>
+                    <p class="form-guide-text">조리 시 지켜야 할 핵심 주의사항을 원하는 만큼 줄을 추가하여 작성하세요.</p>
+
+                    <!-- 강조 기호 빠른 삽입 바 -->
+                    <div class="symbol-quick-bar" data-target="caution">
+                        <span class="symbol-bar-label">강조 기호:</span>
+                        <button type="button" class="btn-sym" data-sym="★" title="별표">★</button>
+                        <button type="button" class="btn-sym" data-sym="※" title="당구장 마크">※</button>
+                        <button type="button" class="btn-sym" data-sym="💡" title="아이디어/팁">💡</button>
+                        <button type="button" class="btn-sym" data-sym="📌" title="고정/핵심">📌</button>
+                        <button type="button" class="btn-sym" data-sym="✔" title="체크">✔</button>
+                        <button type="button" class="btn-sym" data-sym="▶" title="화살표">▶</button>
+                    </div>
+
+                    <div id="cautionItemsContainer" class="caution-items-list">
+                        <!-- 자바스크립트로 주의사항 입력 행들이 동적으로 생성됩니다 -->
+                    </div>
+                </div>
+
+                <!-- 하단 고정 저장 & 인쇄 바 -->
+                <div class="form-footer-bar">
+                    <button id="btnSaveBottom" class="btn btn-save btn-block">💾 내 레시피 북에 영구 저장</button>
+                    <button id="btnPrintFromForm" class="btn btn-print-quick btn-block">🖨️ A4 인쇄 / PDF 저장</button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= [탭 2: 내 레시피 북 목록 (영구 보존)] ================= -->
+        <section id="tab-book" class="tab-pane no-print">
+            <div class="book-container">
+                <div class="book-header">
+                    <h2>📚 영구 보관된 레시피 목록</h2>
+                    <p>작성한 모든 레시피가 안전하게 보관되어 있습니다. 언제든 터치하여 바로 열람하고 수정하거나 인쇄할 수 있습니다.</p>
+                </div>
+
+                <div class="book-search-bar">
+                    <input type="text" id="bookSearchInput" placeholder="🔍 요리 이름으로 검색...">
+                </div>
+
+                <div id="recipeBookGrid" class="recipe-grid">
+                    <!-- 자바스크립트로 저장된 레시피 카드들이 나열됩니다 -->
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= [탭 3: A4 미리보기 & 실물 인쇄] ================= -->
+        <section id="tab-preview" class="tab-pane">
+
+            <div class="preview-control-bar no-print">
+                <div class="preview-scaler-wrap">
+                    <span>⚡ 조리 인분:</span>
+                    <select id="previewPortionSelect" class="preview-portion-select" title="인분 변경 시 재료량이 자동으로 비례 계산됩니다">
+                        <option value="1">1인분 (기본)</option>
+                        <option value="2">2인분</option>
+                        <option value="4">4인분</option>
+                        <option value="10">10인분 (대량)</option>
+                        <option value="20">20인분 (단체)</option>
+                        <option value="50">50인분 (급식/연회)</option>
+                        <option value="100">100인분</option>
+                    </select>
+                </div>
+
+                <!-- 🔍 모바일 스마트 줌 & 상하좌우 스크롤 뷰어 툴바 -->
+                <div class="preview-actions-flex">
+                    <div class="viewer-zoom-toolbar no-print">
+                        <button type="button" id="btnZoomOut" class="btn-zoom-step" title="배율 축소">➖</button>
+                        <button type="button" id="btnZoomReset" class="btn-zoom-val" title="원클릭 100% 실물 배율 복귀">100%</button>
+                        <button type="button" id="btnZoomIn" class="btn-zoom-step" title="배율 확대">➕</button>
+                        <button type="button" id="btnMobileFitToggle" class="btn-zoom-fit" title="스마트폰 화면 너비에 A4를 쏙 맞춤">📱 화면 맞춤</button>
+                    </div>
+                    <button id="btnPrintPreview" class="btn btn-primary btn-print-main">🖨️ 인쇄 / PDF</button>
+                </div>
+            </div>
+
+            <!-- 모바일 손가락 상하좌우 드래그 안내 팁 바 -->
+            <div class="mobile-scroll-guide-tip no-print">
+                <span>👆 <strong>손가락으로 상·하·좌·우 자유롭게 밀어서</strong> 100% 실물 크기를 확인하세요! (<strong>[📱 화면 맞춤]</strong> 클릭 시 한눈에 쏙 들어옵니다)</span>
+            </div>
+
+            <!-- 인쇄 최적화 가이드 배너 -->
+            <div class="print-guide-banner no-print">
+                <span>🖨️ <strong>A4 꽉 찬 고화질 컬러 인쇄 안내:</strong> 인쇄 화면에서 <strong>[설정 더보기] ➔ [여백: 기본 또는 없음/최소]</strong>,
+                    <strong>[배율: 기본(100%)]</strong>, <strong>[배경 그래픽: 반드시 체크 ✔]</strong>를 확인하시면 용지에 축소 없이 100% 꽉 차고 선명한
+                    컬러로 인쇄됩니다!</span>
+            </div>
+
+            <!-- 실제 A4 인쇄 대상 시트 (상하좌우 자유 터치 스크롤 & 패닝 컨테이너) -->
+            <div class="paper-wrapper" id="paperWrapper">
+                <article class="recipe-page" id="printableRecipeCard">
+
+                    <!-- (1) 대제목 영역 (적당한 간격 띄움) -->
+                    <header class="recipe-header">
+                        <h1 class="recipe-title" id="viewTitle">LA MANCHA RECIPE</h1>
+                    </header>
+
+                    <!-- 사방 2.5px 일체형 마스터 프레임 (인쇄 시 선 사라짐 및 틈새 버그 완전 해결) -->
+                    <div class="recipe-card-frame">
+
+                        <!-- (2) 상단 요리 이름 표 -->
+                        <table class="recipe-table name-table">
+                            <colgroup>
+                                <col style="width: 155px;">
+                                <col style="width: auto;">
+                            </colgroup>
+                            <tbody>
+                                <tr id="rowItalianoName" style="display: none;">
+                                    <th>ITALIANO NAME</th>
+                                    <td id="viewItaliano">Funghi</td>
+                                </tr>
+                                <tr id="rowEnglishName">
+                                    <th>ENGLISH NAME</th>
+                                    <td id="viewEnglish">Spaghetti With Garlic, Various, Mushroom &amp; Cream Sauce.
+                                    </td>
+                                </tr>
+                                <tr id="rowKoreaName">
+                                    <th>KOREA NAME</th>
+                                    <td id="viewKorea">양송이, 느타리, 표고, 새 송이 등 야채만으로 조리한 버섯 스파게티</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- (3) 중간 사진칸(가로 13cm x 세로 9.5cm) 및 메타 정보 표 -->
+                        <table class="recipe-table photo-info-table">
+                            <colgroup>
+                                <col style="width: 13cm;">
+                                <col style="width: 90px;">
+                                <col style="width: auto;">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <!-- 사진칸: 가로 13cm x 세로 9.5cm 엄격 고정, 테두리 1.8px 도톰하고 세련되게 -->
+                                    <td class="photo-cell" rowspan="5">
+                                        <div class="photo-container">
+                                            <img id="viewPhotoImg" src="sample_images/funghi_pasta.jpg" alt="요리 사진">
+                                        </div>
+                                    </td>
+                                    <th class="info-label">CLASS</th>
+                                    <td class="info-value" id="viewCategory">PASTA</td>
+                                </tr>
+                                <tr>
+                                    <th class="info-label">DATE</th>
+                                    <td class="info-value" id="viewDate">2006. 9</td>
+                                </tr>
+                                <tr>
+                                    <th class="info-label">COST</th>
+                                    <td class="info-value" id="viewCost">1,200 원</td>
+                                </tr>
+                                <tr>
+                                    <th class="info-label">PRICE</th>
+                                    <td class="info-value" id="viewPrice">8,500 원</td>
+                                </tr>
+                                <tr>
+                                    <th class="info-label">PORTION</th>
+                                    <td class="info-value" id="viewPortion">1 인분</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <!-- (4) 하단 재료 목록 및 조리법 & 토핑 일체형 영역 -->
+                        <table class="recipe-table main-content-table">
+                            <colgroup>
+                                <col style="width: 140px;">
+                                <col style="width: 75px;">
+                                <col style="width: 55px;">
+                                <col style="width: auto;">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th class="th-ingredients">INGREDIENTS</th>
+                                    <th class="th-amount">AMOUNT</th>
+                                    <th class="th-un">UN</th>
+                                    <th class="th-cooking">COOKING TECHNIQUE</th>
+                                </tr>
+                            </thead>
+                            <tbody id="viewIngredientsTbody">
+                                <!-- 재료와 우측 조리법/토핑이 동적으로 결합됩니다 -->
+                            </tbody>
+                        </table>
+
+                        <!-- (5) 최하단 주의사항 (CAUTION) -->
+                        <table class="recipe-table caution-table">
+                            <colgroup>
+                                <col style="width: 155px;">
+                                <col style="width: auto;">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th class="th-caution">CAUTION</th>
+                                    <td class="td-caution" id="viewCaution">
+                                        적어도 4가지 이상의 버섯을 사용해야 한다.<br>
+                                        색감있는 야채와 후실리를 이용하여 여러 가지 색이 나오도록 한다.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div> <!-- /.recipe-card-frame -->
+
+                </article>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 앱 설치 및 카카오톡/이메일 공유 모달 (안내 팝업) -->
+    <div id="shareModal" class="modal-backdrop no-print" style="display: none;">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3>📲 모바일 앱 설치 &amp; 카톡 공유</h3>
+                <button type="button" class="btn-close-modal" id="btnCloseShareModal">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="share-step-card">
+                    <h4>1. 카카오톡 / 문자 / 이메일로 보내기</h4>
+                    <p class="modal-desc">아래 버튼을 누르면 상대방에게 링크를 바로 전송할 수 있습니다.</p>
+                    <button type="button" id="btnNativeShare" class="btn btn-kakao-share">
+                        💬 카카오톡 / 메시지로 링크 공유
+                    </button>
+                    <button type="button" id="btnCopyLink" class="btn btn-outline"
+                        style="margin-top: 6px; width: 100%;">
+                        📋 주소 링크 복사
+                    </button>
+                </div>
+
+                <div class="share-step-card" style="margin-top: 14px;">
+                    <h4>2. 내 스마트폰에 앱 아이콘 설치</h4>
+                    <p class="modal-desc">홈 화면에 아이콘을 설치하면 인터넷 연결 없이도 진짜 앱처럼 바로 열립니다.</p>
+                    <button type="button" id="btnModalInstall" class="btn btn-primary" style="width: 100%;">
+                        📲 홈 화면에 앱 설치하기
+                    </button>
+
+                    <div class="os-guide-box" style="margin-top: 10px;">
+                        <small><strong>🍎 아이폰 (Safari):</strong> 브라우저 하단 [공유] ➔ <strong>'홈 화면에 추가'</strong></small><br>
+                        <small><strong>🤖 갤럭시 (Chrome/삼성):</strong> 브라우저 상단 [⋮ 더보기] ➔ <strong>'앱 설치'</strong> 또는
+                            <strong>'홈 화면에 추가'</strong></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 모바일 / 데스크탑 화면 우측 하단 고정 플로팅 새로고침 버튼 (항상 눈에 띔) -->
+    <button type="button" id="btnFloatingRefresh" class="floating-refresh-btn no-print" title="최신 데이터로 즉시 동기화 및 새로고침">
+        <span class="fab-icon">🔄</span>
+        <span class="fab-text">동기화</span>
+    </button>
+
+    <!-- 모듈화된 자바스크립트 파일 로드 -->
+    <script src="js/units.js?v=9.8"></script>
+    <script src="js/recipe_data.js?v=9.8"></script>
+    <script src="js/translator.js?v=9.8"></script>
+    <script src="js/storage.js?v=9.8"></script>
+    <script src="js/app.js?v=9.8"></script>
+</body>
+
+</html>

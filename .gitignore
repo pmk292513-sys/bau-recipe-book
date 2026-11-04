@@ -1,0 +1,6 @@
+.env
+.env.local
+.gemini
+scratch/
+__pycache__/
+*.log

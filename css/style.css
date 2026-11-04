@@ -1,0 +1,2253 @@
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
+
+/**
+ * [모바일 최적화 및 에디터 스타일 - css/style.css]
+ * 모바일 친화적 탭 UI, 터치 폼, 또렷하고 두꺼운 텍스트, 실시간 A4 프리뷰
+ */
+
+/* 1. 기본 초기화 및 가독성 높은 폰트 설정 */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: #f4f6f9;
+    font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "Nanum Gothic", sans-serif;
+    color: #111111;
+    font-size: 15px;
+    line-height: 1.5;
+    padding-bottom: 60px;
+}
+
+/* PWA 스마트폰 홈 화면 설치 배너 */
+.pwa-install-banner {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    position: sticky;
+    top: 0;
+    z-index: 2000;
+}
+
+.pwa-banner-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.pwa-banner-text strong {
+    font-size: 0.92rem;
+}
+
+.pwa-banner-text small {
+    font-size: 0.78rem;
+    color: #e0f2fe;
+}
+
+.btn-install-app {
+    background-color: #f59e0b;
+    color: #ffffff;
+    font-weight: 700;
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.btn-install-app:hover {
+    background-color: #d97706;
+}
+
+/* 2. 상단 고정 헤더 & 모바일 탭 메뉴 */
+.app-header {
+    background-color: #1e293b;
+    color: #ffffff;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+}
+
+.header-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.app-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+/* 상단 골드 브랜드 로고 이미지 */
+.brand-logo-img {
+    height: 32px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+    vertical-align: middle;
+}
+
+.nav-tabs {
+    display: flex;
+    background-color: #0f172a;
+    max-width: 900px;
+    margin: 0 auto;
+    border-top: 1px solid #334155;
+}
+
+.nav-tab {
+    flex: 1;
+    padding: 12px 6px;
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-align: center;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.nav-tab.active {
+    color: #38bdf8;
+    border-bottom-color: #38bdf8;
+    background-color: rgba(56, 189, 248, 0.08);
+}
+
+/* 3. 탭 전환 컨테이너 */
+.main-content {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 14px;
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+}
+
+/* 4. [탭 1] 모바일 친화적 입력 폼 카드 스타일 */
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.form-action-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.status-badge {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #0284c7;
+    background-color: #e0f2fe;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.form-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    padding: 18px 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.card-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.form-card-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.form-group {
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.form-group label {
+    font-size: 0.88rem;
+    font-weight: 700; /* 라벨 두껍고 또렷하게 */
+    color: #334155;
+}
+
+.form-group input[type="text"],
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 0.95rem;
+    font-weight: 550; /* 사용자 입력 글자도 굵고 명확하게 */
+    border: 1.5px solid #cbd5e1;
+    border-radius: 8px;
+    background-color: #f8fafc;
+    color: #0f172a;
+    transition: all 0.2s ease;
+    font-family: inherit;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #0284c7;
+    background-color: #ffffff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+.form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+/* 통화 선택 드롭다운 & 금액 입력 랩 */
+.currency-input-wrap {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.currency-select {
+    width: 95px !important;
+    flex-shrink: 0;
+    background-color: #ffffff !important;
+    font-weight: 700 !important;
+    color: #0369a1 !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 10px 8px !important;
+    cursor: pointer;
+}
+
+.currency-input-wrap input {
+    flex: 1;
+    min-width: 0;
+}
+
+/* 사진 업로드 터치 박스 */
+.photo-upload-box {
+    margin-bottom: 16px;
+}
+
+.photo-preview-wrap {
+    width: 100%;
+    max-width: 380px;
+    aspect-ratio: 13 / 9.5;
+    height: auto;
+    margin: 0 auto;
+    border: 2px dashed #94a3b8;
+    border-radius: 10px;
+    overflow: hidden;
+    position: relative;
+    cursor: pointer;
+    background-color: #f1f5f9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo-preview-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
+}
+
+.photo-touch-guide {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(15, 23, 42, 0.75);
+    color: #ffffff;
+    padding: 8px;
+    font-size: 0.8rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+/* PORTION 숫자 및 단위 랩 (최대 10,000 단위까지 꼭 맞게 들어가는 콤팩트 사이즈) */
+.portion-input-wrap {
+    display: inline-flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.portion-input-wrap input {
+    width: 85px !important;
+    flex: none !important;
+    text-align: center;
+    font-size: 1.05rem !important;
+    font-weight: 700 !important;
+    padding: 9px 6px !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    background-color: #ffffff !important;
+    -moz-appearance: textfield; /* 파이어폭스 화살표 제거 */
+}
+
+/* 크롬/엣지/사파리 위아래 화살표를 깔끔히 제거하여 5자리 숫자(10,000)가 시원하게 보이도록 처리 */
+.portion-input-wrap input::-webkit-outer-spin-button,
+.portion-input-wrap input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.portion-input-wrap input:focus {
+    border-color: #0284c7 !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15) !important;
+}
+
+.portion-unit-select {
+    width: 88px !important;
+    flex-shrink: 0;
+    background-color: #ffffff !important;
+    font-weight: 700 !important;
+    color: #0369a1 !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 8px !important;
+    padding: 9px 6px !important;
+    cursor: pointer;
+    text-align: center;
+}
+
+/* ⚡ 스마트 인분 배율 변환기 (Portion Scaler) 스타일 */
+.portion-scaler-card {
+    background: linear-gradient(135deg, #f0fdf4 0%, #e0f2fe 100%);
+    border: 1.5px solid #7dd3fc;
+    border-radius: 10px;
+    padding: 12px 14px;
+    margin-bottom: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.scaler-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px dashed #bae6fd;
+    padding-bottom: 6px;
+}
+
+.scaler-title {
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: #0369a1;
+}
+
+.scaler-base-info {
+    font-size: 0.85rem;
+    color: #0c4a6e;
+}
+
+.scaler-body {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.scaler-btn-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.btn-scale-mul {
+    background-color: #fef3c7;
+    border: 1.5px solid #d97706;
+    color: #92400e;
+    font-size: 0.85rem;
+    font-weight: 800;
+    padding: 5px 9px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-scale-mul:hover,
+.btn-scale-mul.active {
+    background-color: #d97706;
+    color: #ffffff;
+}
+
+.btn-reset-scale {
+    background-color: #f1f5f9;
+    border: 1.5px solid #94a3b8;
+    color: #334155;
+    font-weight: 700;
+}
+.btn-reset-scale:hover {
+    background-color: #e2e8f0;
+}
+
+.scaler-label {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #334155;
+}
+
+.scaler-quick-buttons {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+.btn-scale {
+    background-color: #ffffff;
+    border: 1.5px solid #0284c7;
+    color: #0284c7;
+    font-size: 0.85rem;
+    font-weight: 800;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-scale:hover,
+.btn-scale.active {
+    background-color: #0284c7;
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(2, 132, 199, 0.3);
+}
+
+.scaler-custom-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.scaler-custom-input-wrap input {
+    width: 130px;
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+}
+
+.scaler-tip {
+    font-size: 0.78rem;
+    color: #0284c7;
+    margin-top: 2px;
+}
+
+.preview-scaler-wrap {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.95rem;
+    font-weight: 700;
+}
+
+.preview-portion-select {
+    padding: 6px 10px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    border-radius: 6px;
+    border: 1.5px solid #38bdf8;
+    background-color: #ffffff;
+    color: #0284c7;
+    cursor: pointer;
+}
+
+/* 재료 목록 아이템 (모바일에서 한눈에 쏙 들어오도록 정렬) */
+.form-guide-text {
+    font-size: 0.83rem;
+    color: #64748b;
+    margin-bottom: 12px;
+}
+
+.ingredient-item-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+    background-color: #f8fafc;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid #e2e8f0;
+}
+
+.ing-name-input {
+    flex: 3;
+    min-width: 0;
+}
+
+.ing-amount-input {
+    flex: 1.5;
+    min-width: 0;
+    text-align: center;
+}
+
+.ing-unit-select {
+    flex: 2;
+    min-width: 0;
+    background-color: #ffffff !important;
+    font-weight: 600 !important;
+    color: #0369a1 !important;
+}
+
+.btn-remove-ing {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+    border-radius: 6px;
+    width: 32px;
+    height: 38px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 토핑 강조 그룹 */
+.highlight-group {
+    background-color: #fefce8;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1.5px solid #fef08a;
+}
+
+.form-hint {
+    font-size: 0.8rem;
+    color: #854d0e;
+    margin-top: 4px;
+}
+
+/* 조리 순서(COOKING TECHNIQUE) 자동 번호 리스트 */
+.cooking-steps-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.cooking-step-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    background-color: #f8fafc;
+    padding: 8px 10px;
+    border-radius: 8px;
+    border: 1.5px solid #e2e8f0;
+}
+
+.step-num-badge {
+    background-color: #0284c7;
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 0.9rem;
+    padding: 6px 10px;
+    border-radius: 6px;
+    flex-shrink: 0;
+    min-width: 34px;
+    text-align: center;
+    user-select: none;
+}
+
+.step-desc-input {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 10px;
+    font-size: 0.93rem;
+    font-weight: 600;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+    background-color: #ffffff;
+    font-family: inherit;
+    line-height: 1.4;
+    resize: vertical;
+}
+
+.step-desc-input:focus {
+    border-color: #0284c7;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.15);
+}
+
+.btn-remove-step {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+    border-radius: 6px;
+    width: 32px;
+    height: 38px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 토핑 입력 아이템 행 (모바일 최적화) */
+.topping-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.topping-item-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #ffffff;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid #fef08a;
+}
+
+.topping-item-input {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 10px;
+    font-size: 0.93rem;
+    font-weight: 550;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+}
+
+.topping-item-input:focus {
+    border-color: #f59e0b;
+    outline: none;
+}
+
+.btn-remove-topping {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+    border-radius: 6px;
+    width: 32px;
+    height: 36px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 주의사항(CAUTION) 다중 줄 리스트 */
+.caution-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.caution-item-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #ffffff;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+}
+
+.caution-item-input {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 10px;
+    font-size: 0.93rem;
+    font-weight: 550;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+}
+
+.caution-item-input:focus {
+    border-color: #0284c7;
+    outline: none;
+}
+
+.btn-remove-caution {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+    border-radius: 6px;
+    width: 32px;
+    height: 36px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 강조 기호 원클릭 퀵 바 */
+.symbol-quick-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+    background-color: #f1f5f9;
+    padding: 6px 10px;
+    border-radius: 6px;
+}
+
+.symbol-bar-label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: #475569;
+}
+
+.btn-sym {
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-size: 0.88rem;
+    font-weight: bold;
+    cursor: pointer;
+    color: #0f172a;
+    transition: all 0.15s ease;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.btn-sym:hover {
+    background-color: #e2e8f0;
+    border-color: #94a3b8;
+    transform: translateY(-1px);
+}
+
+.btn-sym:active {
+    transform: translateY(0);
+}
+
+/* 시그니처(SIGNATURE) 그룹 & 토글 체크박스 */
+.signature-group {
+    background-color: #fffdf5;
+    border: 1.5px solid #fde68a;
+    margin-top: 12px;
+}
+
+.toggle-checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    user-select: none;
+    font-size: 1rem;
+    color: #92400e;
+}
+
+.toggle-checkbox {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #d97706;
+}
+
+.signature-items-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.signature-item-row {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background-color: #ffffff;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid #fde68a;
+}
+
+.signature-item-input {
+    flex: 1;
+    min-width: 0;
+    padding: 8px 10px;
+    font-size: 0.93rem;
+    font-weight: 550;
+    border: 1.5px solid #cbd5e1;
+    border-radius: 6px;
+}
+
+.signature-item-input:focus {
+    border-color: #d97706;
+    outline: none;
+}
+
+.btn-remove-signature {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+    border-radius: 6px;
+    width: 32px;
+    height: 36px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 폼 하단 고정 바 */
+.form-footer-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+/* 5. [탭 2] 레시피 북 서재(목록) 스타일 */
+.book-container {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.book-header {
+    background-color: #ffffff;
+    padding: 18px 16px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.book-header h2 {
+    font-size: 1.25rem;
+    color: #0f172a;
+    margin-bottom: 6px;
+}
+
+.book-header p {
+    font-size: 0.88rem;
+    color: #64748b;
+}
+
+.book-search-bar input {
+    width: 100%;
+    padding: 12px 16px;
+    border-radius: 10px;
+    border: 1.5px solid #cbd5e1;
+    font-size: 0.95rem;
+    outline: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+}
+
+.recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 14px;
+}
+
+.recipe-card-item {
+    background-color: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.recipe-card-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+}
+
+.card-thumb {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    background-color: #e2e8f0;
+}
+
+.card-body {
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.card-cat {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: #0284c7;
+    text-transform: uppercase;
+}
+
+.card-title-main {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 4px 0;
+}
+
+.card-title-sub {
+    font-size: 0.85rem;
+    color: #64748b;
+    margin-bottom: 10px;
+    line-height: 1.3;
+}
+
+.card-meta-line {
+    font-size: 0.8rem;
+    color: #94a3b8;
+    margin-top: auto;
+    margin-bottom: 12px;
+}
+
+.card-btn-group {
+    display: flex;
+    gap: 8px;
+}
+
+/* 6. 공통 버튼 컴포넌트 */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 16px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    gap: 6px;
+}
+
+.btn-sm {
+    padding: 6px 12px;
+    font-size: 0.84rem;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+.btn-primary {
+    background-color: #0284c7;
+    color: #ffffff;
+}
+.btn-primary:hover {
+    background-color: #0369a1;
+}
+
+.btn-save {
+    background-color: #059669;
+    color: #ffffff;
+}
+.btn-save:hover {
+    background-color: #047857;
+}
+
+.btn-print-quick {
+    background-color: #2563eb;
+    color: #ffffff;
+}
+.btn-print-quick:hover {
+    background-color: #1d4ed8;
+}
+
+.btn-outline {
+    background-color: #ffffff;
+    color: #334155;
+    border: 1.5px solid #cbd5e1;
+}
+.btn-outline:hover {
+    background-color: #f1f5f9;
+}
+
+.btn-danger-sm {
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: 1px solid #fca5a5;
+    padding: 5px 10px;
+    font-size: 0.8rem;
+    border-radius: 6px;
+}
+
+/* 7. [탭 3] 실물 A4 인쇄 미리보기 영역 (모바일 반응형 핏) */
+.preview-control-bar {
+    background-color: #1e293b;
+    color: #ffffff;
+    padding: 12px 16px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-weight: 600;
+}
+
+.print-guide-banner {
+    background: linear-gradient(135deg, #eff6ff 0%, #f0fdf4 100%);
+    border: 1.5px solid #93c5fd;
+    color: #1e3a8a;
+    padding: 10px 14px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.paper-wrapper {
+    width: 100%;
+    overflow: auto; /* 상하좌우 스크롤 완전 지원 */
+    -webkit-overflow-scrolling: touch;
+    padding: 16px 14px;
+    background-color: #475569; /* A4 용지가 눈에 확 띄도록 데스크 매트 배경 */
+    border-radius: 12px;
+    box-sizing: border-box;
+    touch-action: pan-x pan-y;
+    position: relative;
+    max-height: 82vh; /* 모바일에서 위아래로 부드러운 스크롤 */
+}
+
+/* A4 실물 종이 규격 (210mm x 297mm) */
+.recipe-page {
+    width: 210mm;
+    min-height: 297mm;
+    background-color: #ffffff;
+    box-shadow: 0 4px 25px rgba(0, 0, 0, 0.35);
+    padding: 11mm 14mm 15mm 14mm; /* 상단 여백을 살짝 줄여 대제목을 위로 배치 */
+    margin: 0 auto;
+    position: relative;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    color: #000000;
+    /* 획의 굵기가 일정하고 숫자가 또렷한 프리미엄 산세리프 폰트 스택 */
+    font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    transform-origin: top left;
+    transition: transform 0.15s ease-out;
+}
+
+/* 대제목 영역: 지금보다 조금 더 위로 올림 */
+.recipe-header {
+    text-align: center;
+    margin-top: -3px;
+    margin-bottom: 22px; /* 상단 테이블과의 적절한 간격 유지 */
+}
+
+.recipe-title {
+    font-size: 26px;
+    font-weight: 700; /* 제목 두껍고 웅장하게 */
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-family: "Georgia", "Times New Roman", serif;
+}
+
+/* ========================================================
+   테이블 테두리 스타일: 외곽 2.5px 균일, 사진 2.5px 액자, 구분선 1.5px, 내부 1px
+   ======================================================== */
+
+/* 1. 최외곽 3.5px 일체형 마스터 프레임 (외곽선을 조금 더 도톰하고 반듯하게 3.5px) */
+.recipe-card-frame {
+    width: 100%;
+    border: 3.5px solid #000000 !important;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    overflow: hidden;
+    background-color: #000000;
+}
+
+/* 2. 전체 테이블 공통 */
+.recipe-card-frame table.recipe-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    table-layout: fixed !important;
+    margin: 0 !important;
+    background-color: #ffffff;
+    border: none !important;
+    box-sizing: border-box !important;
+}
+
+/* 내부 모든 셀은 1px 단정한 검정 실선 */
+.recipe-card-frame table.recipe-table td,
+.recipe-card-frame table.recipe-table th {
+    border: 1px solid #000000;
+    padding: 6px 8px;
+    vertical-align: middle;
+    box-sizing: border-box;
+    background-color: #ffffff;
+}
+
+/* [외곽선 울퉁불퉁함 원천 차단] 테이블 좌측/우측 최외곽 셀 테두리를 제거하여 3.5px 외곽선만 매끄럽게 노출 */
+.recipe-card-frame .name-table tr:first-child th,
+.recipe-card-frame .name-table tr:first-child td,
+.recipe-card-frame .name-table tr.first-visible-row th,
+.recipe-card-frame .name-table tr.first-visible-row td {
+    border-top: none !important;
+}
+
+.recipe-card-frame .name-table th:first-child,
+.recipe-card-frame td.photo-cell,
+.recipe-card-frame .main-content-table th:first-child,
+.recipe-card-frame .main-content-table td.td-ingredient-name,
+.recipe-card-frame .caution-table th:first-child {
+    border-left: none !important;
+}
+
+.recipe-card-frame .name-table td:last-child,
+.recipe-card-frame .photo-info-table td.info-value,
+.recipe-card-frame .main-content-table th:last-child,
+.recipe-card-frame .main-content-table td.td-cooking-container,
+.recipe-card-frame .caution-table td.td-caution {
+    border-right: none !important;
+}
+
+.recipe-card-frame .caution-table tr:last-child th,
+.recipe-card-frame .caution-table tr:last-child td {
+    border-bottom: none !important;
+}
+
+/* [테이블 간 맞닿는 경계선 단차/이중선 방지 - 쿠킹테크닉 윗선 이상 해결]
+   아래 테이블의 thead th들의 border-top을 제거하여 위 테이블의 3.5px 바닥선만 노출 */
+.recipe-card-frame .main-content-table thead th {
+    border-top: none !important;
+    border-bottom: 3.5px solid #000000 !important; /* [첫번째 요청] 소제목(INGREDIENTS, AMOUNT, UN, COOKING TECHNIQUE) 밑줄 3.5px 굵기 적용 */
+}
+
+/* [CAUTION 위쪽 가로선 단일 3.5px 일치]
+   위 테이블(main-content-table) 바닥선을 none으로 제거하고,
+   오직 CAUTION 상단선 3.5px 딱 하나만 단독 사용하여 아래쪽 외곽선(3.5px)과 100% 동일 굵기 일치 */
+.recipe-card-frame .main-content-table {
+    border-bottom: none !important;
+}
+
+.recipe-card-frame .main-content-table tr:last-child td,
+.recipe-card-frame .main-content-table td.td-cooking-container {
+    border-bottom: none !important;
+}
+
+.recipe-card-frame .caution-table {
+    border-top: 3.5px solid #000000 !important;
+}
+
+.recipe-card-frame .caution-table tr:first-child th,
+.recipe-card-frame .caution-table tr:first-child td {
+    border-top: 3.5px solid #000000 !important;
+}
+
+/* 3. 섹션 구분 가로선: 3.5px 단일 실선으로 완벽 통일 (테이블 간 중복 겹침 방지) */
+.recipe-card-frame .name-table {
+    border-bottom: 3.5px solid #000000 !important;
+}
+
+/* [사진 윗부분 가로줄 단일 3.5px] 위 테이블의 바닥선 3.5px 하나만 사용 */
+.recipe-card-frame .name-table tr:last-child th,
+.recipe-card-frame .name-table tr:last-child td {
+    border-bottom: 3.5px solid #000000 !important;
+}
+
+/* 아래 테이블(사진/메타정보) 상단선은 완전히 제거하여 7px로 굵어지는 이중선 원천 방지 */
+.recipe-card-frame .photo-info-table {
+    border-top: none !important;
+    border-bottom: 3.5px solid #000000 !important;
+}
+
+.recipe-card-frame .photo-info-table tr:first-child th,
+.recipe-card-frame .photo-info-table tr:first-child td {
+    border-top: none !important;
+}
+
+.recipe-card-frame .photo-info-table tr:last-child th,
+.recipe-card-frame .photo-info-table tr:last-child td {
+    border-bottom: 3.5px solid #000000 !important; /* PORTION 행 바닥선 3.5px */
+}
+
+/* .recipe-card-frame .main-content-table 바닥선은 CAUTION 상단선과 중복 방지를 위해 none 처리됨 */
+
+/* 4. 사진칸(Photo Cell): 사방 3.5px 외곽선 및 우/하 3.5px 완벽 일치 */
+.recipe-card-frame table.recipe-table td.photo-cell,
+.photo-cell {
+    width: 13cm !important;
+    height: 9.5cm !important;
+    min-width: 13cm;
+    max-width: 13cm;
+    min-height: 9.5cm;
+    max-height: 9.5cm;
+    padding: 0 !important;
+    border-left: none !important;  /* 외곽선 3.5px에 밀착 */
+    border-top: none !important;   /* 위 테이블 바닥선 3.5px 하나만 사용하여 겹침 방지 */
+    border-right: 3.5px solid #000000 !important; /* 사진 우측 3.5px 세로선 */
+    border-bottom: 3.5px solid #000000 !important; /* 사진 하단 3.5px 가로선 */
+    position: relative;
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #ffffff !important;
+}
+
+/* 사진 우측 세로선과 맞닿는 CLASS, DATE, COST, PRICE, PORTION 헤더의 왼쪽 선도 3.5px로 일치 */
+.recipe-card-frame .photo-info-table th.info-label {
+    border-left: 3.5px solid #000000 !important;
+}
+
+/* [두번째 요청] CAUTION 헤더 셀의 오른쪽 세로선 및 가로선도 밑부분 외곽선과 동일하게 3.5px 적용 */
+.recipe-card-frame .caution-table th.th-caution {
+    border-right: 3.5px solid #000000 !important;
+    font-weight: 900 !important;
+    font-size: 13px !important;
+}
+
+.recipe-card-frame .caution-table td.td-caution {
+    border-left: 3.5px solid #000000 !important;
+    font-weight: 600 !important;
+    font-size: 13px !important;
+}
+
+/* 우측 메타데이터 5개 행 높이를 1.9cm로 고정 (5 x 1.9cm = 사진 세로 9.5cm와 칼같이 일치) */
+.recipe-card-frame .photo-info-table tr {
+    height: 1.9cm !important;
+}
+
+.recipe-card-frame .photo-info-table th.info-label,
+.recipe-card-frame .photo-info-table td.info-value {
+    height: 1.9cm !important;
+}
+
+.photo-container {
+    width: 13cm !important;
+    height: 9.5cm !important;
+    min-width: 13cm;
+    max-width: 13cm;
+    min-height: 9.5cm;
+    max-height: 9.5cm;
+    box-sizing: border-box;
+    border: none !important; /* 중복 이중 테두리 완벽 제거 */
+    outline: none !important;
+    box-shadow: none !important;
+    overflow: hidden;
+    position: relative;
+    background-color: #ffffff;
+}
+
+.photo-container img {
+    width: 13cm !important;
+    height: 9.5cm !important;
+    max-width: 13cm !important;
+    max-height: 9.5cm !important;
+    object-fit: cover !important;
+    object-position: center center !important; /* 어떤 사진이든 가로 13cm x 세로 9.5cm 정중앙에 꽉 차게 자동 최적화 */
+    display: block;
+}
+
+/* 상단 이름 표: 내용 글자 크기와 굵기를 소제목과 1:1 완벽 일치 (칸 크기는 그대로 유지) */
+.name-table th {
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
+    font-weight: 850 !important;
+    font-size: 13px !important;
+    letter-spacing: 0.5px !important;
+    border: 1px solid #000000;
+    color: #000000 !important;
+}
+
+.name-table td {
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
+    font-weight: 850 !important;
+    font-size: 13px !important;
+    letter-spacing: 0.5px !important;
+    border: 1px solid #000000;
+    color: #000000 !important;
+}
+
+/* 우측 메타데이터 라벨 폭을 넉넉히 확보하여 PORTION 줄바꿈 방지 */
+.info-label {
+    width: 90px !important;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
+    font-weight: 850 !important;
+    font-size: 13.5px !important;
+    letter-spacing: 0.5px !important;
+    white-space: nowrap;
+    border: 1px solid #000000;
+    text-align: center;
+    color: #000000;
+}
+
+.info-value {
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
+    text-align: center;
+    font-weight: 850 !important;
+    font-size: 13.5px !important;
+    letter-spacing: 0.5px !important;
+    color: #000000;
+    border: 1px solid #000000;
+    -webkit-text-stroke: none !important;
+    text-shadow: none !important;
+}
+
+.info-value * {
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
+    font-weight: 850 !important;
+    font-size: 13.5px !important;
+    letter-spacing: 0.5px !important;
+    color: #000000;
+    -webkit-text-stroke: none !important;
+    text-shadow: none !important;
+}
+
+/* 재료 & 조리법 헤더 (글자 줄바꿈 방지 및 균형 잡힌 폭) */
+.th-ingredients { width: 140px; text-align: center; font-weight: 900 !important; white-space: nowrap; font-size: 13px; letter-spacing: 0.6px; border: 1px solid #000000; }
+.th-amount { width: 75px; text-align: center; font-weight: 900 !important; white-space: nowrap; font-size: 13px; letter-spacing: 0.6px; border: 1px solid #000000; }
+.th-un { width: 55px; text-align: center; font-weight: 900 !important; white-space: nowrap; font-size: 13px; letter-spacing: 0.6px; border: 1px solid #000000; }
+.th-cooking { text-align: center; font-weight: 900 !important; font-size: 13px; letter-spacing: 0.6px; border: 1px solid #000000; }
+
+/* [사용자 요청] 재료 행: 소제목과 동일한 850 볼드 굵기 & 슬림한 23px 규격 유지 */
+.recipe-card-frame .main-content-table tbody tr {
+    height: 23px;
+    max-height: 23px;
+    line-height: 1.2;
+}
+
+.td-ingredient-name {
+    height: 23px;
+    max-height: 23px;
+    padding: 1px 8px !important;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
+    font-weight: 850 !important;
+    font-size: 13px !important;
+    color: #000000 !important;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.td-ingredient-amount {
+    height: 23px;
+    max-height: 23px;
+    text-align: center;
+    padding: 1px 4px !important;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
+    font-weight: 850 !important;
+    font-size: 13px !important;
+    color: #000000 !important;
+    font-variant-numeric: tabular-nums;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+.td-ingredient-un {
+    height: 23px;
+    max-height: 23px;
+    text-align: center;
+    padding: 1px 4px !important;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
+    font-weight: 850 !important;
+    font-size: 13px !important;
+    color: #000000 !important;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+    overflow: hidden;
+    vertical-align: middle;
+}
+
+/* [사용자 요청] 2번 이미지 (COOKING TECHNIQUE 조리법): 변경 전의 크고 시원한 사이즈로 100% 복원 */
+.td-cooking-container {
+    vertical-align: top !important;
+    padding: 6px 10px !important;
+    height: 100%;
+    border: 1px solid #000000;
+    box-sizing: border-box;
+}
+
+.cooking-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 6px;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+.cooking-steps-content {
+    display: flex;
+    flex-direction: column;
+    gap: 5px; /* 딱 좋았던 조리 단계 간격 복원 */
+    flex-grow: 1;
+}
+
+/* 조리 순서 내어쓰기 행 (숫자와 내용 정렬) */
+.cooking-step-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 5px;
+    line-height: 1.45; /* 딱 좋았던 줄간격 복원 */
+}
+
+/* [사용자 요청 2번] 숫자 굵고 또렷하게 강조: 14.8px 900 */
+.step-num {
+    font-weight: 900 !important;
+    font-size: 14.8px;
+    color: #000000;
+    flex-shrink: 0;
+    min-width: 21px;
+    letter-spacing: -0.3px;
+    text-align: left;
+    line-height: 1.48;
+}
+
+/* [사용자 요청 2번] 줄바꿈 시에도 뭉치지 않도록: 숫자와 한글 굵기 700(Bold)으로 통일, 14.8px 유지 */
+.step-desc {
+    flex: 1;
+    font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", sans-serif;
+    font-size: 14.8px;
+    font-weight: 700;
+    color: #000000;
+    line-height: 1.48;
+    letter-spacing: -0.2px;
+    word-break: break-all;
+    white-space: pre-wrap;
+}
+
+/* 토핑 */
+.topping-card-box {
+    margin-top: 6px;
+    border: none;
+    background: transparent;
+    border-radius: 0;
+    overflow: visible;
+}
+
+.topping-card-title {
+    background-color: transparent;
+    border-bottom: none;
+    padding: 0 0 2px 0;
+    font-size: 13px;
+    font-weight: 900 !important;
+    letter-spacing: 0.5px;
+    color: #000000;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.topping-card-content {
+    padding: 0;
+    font-size: 13.5px;
+    font-weight: 750;
+    line-height: 1.42;
+    color: #000000;
+    min-height: auto;
+    background-color: transparent;
+}
+
+/* 시그니처 */
+.signature-card-box {
+    margin-top: 5px;
+    border: none;
+    background: transparent;
+    border-radius: 0;
+    overflow: visible;
+}
+
+.signature-card-title {
+    background-color: transparent;
+    border-bottom: none;
+    padding: 0 0 2px 0;
+    font-size: 13px;
+    font-weight: 900 !important;
+    letter-spacing: 0.5px;
+    color: #000000;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.signature-card-content {
+    padding: 0;
+    font-size: 13.5px;
+    font-weight: 750;
+    line-height: 1.42;
+    color: #000000;
+    min-height: auto;
+    background-color: transparent;
+}
+
+/* 주의사항 표 */
+.th-caution {
+    width: 155px;
+    font-weight: 800 !important; /* 소제목 강력 강조 */
+    text-align: center;
+    font-size: 13px;
+    letter-spacing: 0.6px;
+    border: 1px solid #000000;
+}
+
+.td-caution {
+    line-height: 1.5;
+    font-weight: 500;
+    padding-left: 10px !important;
+    border: 1px solid #000000;
+}
+
+/* 8. 모바일 미디어 쿼리 (스마트폰 최적화) */
+@media (max-width: 768px) {
+    .header-main {
+        padding: 10px 12px;
+    }
+    
+    .app-title {
+        font-size: 1.1rem;
+    }
+
+    .nav-tab {
+        font-size: 0.85rem;
+        padding: 10px 4px;
+    }
+
+    .main-content {
+        padding: 10px 8px;
+    }
+
+    .form-card {
+        padding: 14px 12px;
+    }
+
+    .form-grid-2 {
+        grid-template-columns: 1fr; /* 모바일에서는 1열로 정렬 */
+    }
+
+    .form-group style {
+        grid-column: span 1 !important;
+    }
+
+    /* 카드 헤더 모바일 레이아웃 (제목과 액션 버튼 그룹 분리) */
+    .card-header-flex {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+    }
+
+    .card-header-flex .form-card-title {
+        margin-bottom: 0;
+    }
+
+    .card-header-flex > div {
+        display: flex;
+        width: 100%;
+        gap: 6px;
+    }
+
+    .card-header-flex > div > button,
+    .card-header-flex > div > a {
+        flex: 1 1 auto;
+        min-height: 42px; /* 스마트폰 엄지손가락 터치 최적화 */
+        justify-content: center;
+        font-size: 0.88rem;
+    }
+
+    /* 조리법 핵심 요약 정리 버튼 모바일 전용 스타일 */
+    #btnSummarizeCooking {
+        flex: 1.2 1 auto;
+        font-size: 0.86rem;
+        padding: 8px 10px;
+        white-space: nowrap;
+    }
+
+    /* 이탈리아어명 온/오프 헤더 모바일 정돈 */
+    #groupItalianoName > div:first-child {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    #groupItalianoName label[for="formItaliano"] {
+        font-size: 0.84rem;
+    }
+
+    /* 영어 / 이탈리아어 개별 변환 버튼 모바일 높이 및 터치 타겟 확보 */
+    #wrapItalianoInput > div,
+    .form-group > div:has(#btnTranslateToEn) {
+        display: flex;
+        gap: 6px;
+        align-items: stretch;
+    }
+
+    #btnTranslateToEn,
+    #btnTranslateToIt {
+        min-height: 42px;
+        padding: 8px 12px;
+        font-size: 0.82rem;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+
+    /* 조리 순서(단계) 행 모바일 최적화 */
+    .cooking-step-row {
+        gap: 6px;
+        padding: 8px 6px;
+    }
+
+    .step-num-badge {
+        min-width: 32px;
+        height: 38px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.88rem;
+        padding: 0 4px;
+    }
+
+    .step-desc-input {
+        font-size: 0.92rem;
+        padding: 8px;
+    }
+
+    .btn-remove-step {
+        width: 36px;
+        height: 38px;
+        flex-shrink: 0;
+        font-size: 1.1rem;
+    }
+
+    /* 재료 입력 칸 모바일 간격 최적화 */
+    .ingredient-item-row {
+        gap: 4px;
+        padding: 6px 4px;
+    }
+
+    .ing-name-input {
+        flex: 2.2;
+        font-size: 0.88rem !important;
+    }
+
+    .ing-amount-input {
+        flex: 1.2;
+        font-size: 0.88rem !important;
+    }
+
+    .ing-unit-select {
+        flex: 1.8;
+        font-size: 0.82rem !important;
+    }
+
+    /* A4 미리보기 상단 바 모바일 정렬 */
+    .preview-control-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+        padding: 10px;
+    }
+
+    .preview-scaler-wrap {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .preview-scaler-wrap select {
+        flex: 1;
+        max-width: none;
+    }
+
+    .preview-actions-flex {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .viewer-zoom-toolbar {
+        flex: 1;
+        justify-content: space-between;
+    }
+
+    /* 모바일 인풋 포커스 시 아이폰 자동확대 방지 (16px 기준) */
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+
+    body {
+        padding-bottom: max(75px, env(safe-area-inset-bottom, 20px) + 60px);
+        -webkit-tap-highlight-color: transparent;
+        touch-action: manipulation;
+    }
+}
+
+/* 상단 헤더 액션 버튼 영역 */
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: nowrap;
+}
+
+/* 상단 헤더 새로고침 & 실시간 동기화 버튼 */
+.btn-refresh-header {
+    background-color: #334155;
+    color: #f8fafc;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 7px 11px;
+    border-radius: 8px;
+    border: 1px solid #475569;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+}
+
+.btn-refresh-header:hover {
+    background-color: #475569;
+    color: #38bdf8;
+    border-color: #38bdf8;
+}
+
+.btn-refresh-header.spinning,
+.floating-refresh-btn.spinning .fab-icon {
+    animation: rotateRefresh 0.6s linear infinite;
+}
+
+@keyframes rotateRefresh {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* ========================================================
+   모바일 & 데스크탑 화면 우측 하단 강력 플로팅 새로고침 버튼 (FAB)
+   ======================================================== */
+.floating-refresh-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 20px;
+    z-index: 99999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 62px;
+    height: 62px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+    color: #38bdf8;
+    border: 2.5px solid #38bdf8;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.45), 0 0 12px rgba(56, 189, 248, 0.35);
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+.floating-refresh-btn:hover {
+    transform: scale(1.08);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55), 0 0 18px rgba(56, 189, 248, 0.55);
+    color: #ffffff;
+}
+
+.floating-refresh-btn:active {
+    transform: scale(0.92);
+}
+
+.floating-refresh-btn .fab-icon {
+    font-size: 1.35rem;
+    line-height: 1;
+    display: inline-block;
+}
+
+.floating-refresh-btn .fab-text {
+    font-size: 0.68rem;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+    margin-top: 2px;
+}
+
+/* 모바일 전용 헤더 및 플로팅 버튼 반응형 */
+@media (max-width: 520px) {
+    .header-main {
+        padding: 8px 10px;
+        gap: 6px;
+    }
+
+    .app-title {
+        font-size: 1.05rem;
+        gap: 6px;
+    }
+
+    .brand-logo-img {
+        height: 26px;
+    }
+
+    .header-actions {
+        gap: 4px;
+    }
+
+    .btn-refresh-header,
+    .btn-install-header,
+    .btn-print-quick {
+        padding: 6px 8px;
+        font-size: 0.75rem;
+    }
+
+    /* 작은 폰 화면에서는 헤더 텍스트 간소화 */
+    .header-actions .btn-text {
+        font-size: 0.72rem;
+    }
+
+    .floating-refresh-btn {
+        bottom: 18px;
+        right: 14px;
+        width: 58px;
+        height: 58px;
+    }
+}
+
+/* ========================================================
+   9. 모바일 앱 설치 & 카카오톡 공유 모달 스타일
+   ======================================================== */
+.btn-install-header {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    color: #ffffff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    padding: 7px 11px;
+    border-radius: 8px;
+    border: none;
+    box-shadow: 0 2px 6px rgba(16, 185, 129, 0.3);
+    cursor: pointer;
+}
+
+.preview-actions-flex {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px;
+    box-sizing: border-box;
+}
+
+.modal-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    width: 100%;
+    max-width: 440px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    animation: modalPop 0.2s ease-out;
+}
+
+@keyframes modalPop {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+.modal-header {
+    background-color: #1e293b;
+    color: #ffffff;
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.btn-close-modal {
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.modal-body {
+    padding: 16px 18px;
+}
+
+.share-step-card {
+    background-color: #f8fafc;
+    border: 1.5px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 14px;
+}
+
+.share-step-card h4 {
+    margin: 0 0 4px 0;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.modal-desc {
+    margin: 0 0 10px 0;
+    font-size: 0.82rem;
+    color: #64748b;
+    line-height: 1.4;
+}
+
+.btn-kakao-share {
+    background-color: #fee500;
+    color: #191919;
+    font-weight: 700;
+    font-size: 0.92rem;
+    width: 100%;
+    border: none;
+    padding: 11px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.os-guide-box {
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    padding: 8px 10px;
+    border-radius: 8px;
+    line-height: 1.5;
+    color: #475569;
+}
+
+/* 10. 모바일 뷰어 상하좌우 스크롤 & 스마트 줌 툴바 스타일 */
+.mobile-scroll-guide-tip {
+    background-color: #f1f5f9;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    padding: 8px 12px;
+    font-size: 0.82rem;
+    color: #334155;
+    margin-bottom: 10px;
+    line-height: 1.4;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.viewer-zoom-toolbar {
+    display: inline-flex;
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.btn-zoom-step {
+    background: transparent;
+    border: none;
+    padding: 7px 11px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    color: #1e293b;
+    font-weight: 700;
+    transition: background-color 0.15s ease;
+}
+
+.btn-zoom-step:hover {
+    background-color: #f1f5f9;
+}
+
+.btn-zoom-val {
+    background: transparent;
+    border: none;
+    border-left: 1px solid #e2e8f0;
+    border-right: 1px solid #e2e8f0;
+    padding: 7px 12px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #0369a1;
+    cursor: pointer;
+    min-width: 55px;
+    text-align: center;
+}
+
+.btn-zoom-val:hover {
+    background-color: #e0f2fe;
+}
+
+.btn-zoom-fit {
+    background: #f8fafc;
+    border: none;
+    padding: 7px 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #0f172a;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+.btn-zoom-fit:hover {
+    background-color: #e2e8f0;
+}
+
+.btn-zoom-fit.active {
+    background-color: #0284c7;
+    color: #ffffff !important;
+}
+
+/* 모바일 화면 맞춤 뷰 모드 */
+.paper-wrapper.fit-mobile-view {
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    padding: 10px 4px !important;
+}
+
+.paper-wrapper.fit-mobile-view .recipe-page {
+    margin: 0 auto !important;
+    transform-origin: top center !important;
+}
+
+@media (max-width: 820px) {
+    .paper-wrapper {
+        padding: 10px 6px;
+    }
+    .paper-wrapper:not(.fit-mobile-view) .recipe-page {
+        margin: 0 0 !important; /* 왼쪽 잘림 방지! 왼쪽 0부터 스크롤 시작 */
+    }
+    .preview-control-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    .preview-actions-flex {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        justify-content: space-between;
+    }
+    .btn-print-main {
+        flex: 1;
+        min-width: 140px;
+    }
+}
+
+/* ====================================================
+   11. 스마트 언어 자동 변환기 UI 스타일 (영어/이탈리아어)
+   ==================================================== */
+
+/* KOREA NAME 하단 와이드 변환 버튼 */
+.btn-translate {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%);
+    color: #ffffff !important;
+    border: none;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    box-shadow: 0 2px 5px rgba(2, 132, 199, 0.25);
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn-translate:hover {
+    background: linear-gradient(135deg, #0369a1 0%, #075985 100%);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(2, 132, 199, 0.35);
+}
+
+.btn-translate:active {
+    transform: translateY(0);
+}
+
+/* 재료 목록 상단 아웃라인 변환 버튼 */
+.btn-outline-translate {
+    background-color: #f0f9ff;
+    color: #0284c7 !important;
+    border: 1px solid #bae6fd;
+    font-weight: 600;
+    padding: 6px 11px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    transition: all 0.2s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.btn-outline-translate:hover {
+    background-color: #e0f2fe;
+    border-color: #7dd3fc;
+    color: #0369a1 !important;
+}
+
+/* 각 재료 행의 미니 변환 버튼 (🌐) */
+.btn-mini-translate {
+    background-color: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+    border-radius: 6px;
+    width: 32px;
+    height: 38px;
+    font-size: 15px;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s ease;
+    padding: 0;
+}
+
+.btn-mini-translate:hover {
+    background-color: #dcfce7;
+    border-color: #86efac;
+    transform: scale(1.05);
+}
+
+.btn-mini-translate:active {
+    transform: scale(0.95);
+}
+
+/* 개별 재료 변환 팝오버 메뉴 */
+.translate-popover-menu {
+    position: absolute;
+    z-index: 1000;
+    background: #ffffff;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    padding: 8px;
+    min-width: 220px;
+    max-width: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    animation: popoverFadeIn 0.15s ease-out;
+}
+
+@keyframes popoverFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-6px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.translate-popover-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #64748b;
+    padding: 2px 6px;
+    border-bottom: 1px solid #f1f5f9;
+    margin-bottom: 2px;
+}
+
+.translate-popover-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 7px 10px;
+    background-color: #f8fafc;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    text-align: left;
+    width: 100%;
+}
+
+.translate-popover-item:hover {
+    background-color: #e0f2fe;
+    border-color: #7dd3fc;
+}
+
+.translate-popover-item.popover-item-ko {
+    background-color: #f0fdf4;
+    border-color: #bbf7d0;
+}
+
+.translate-popover-item.popover-item-ko:hover {
+    background-color: #dcfce7;
+    border-color: #86efac;
+}
+
+.translate-popover-lang {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #0284c7;
+    margin-bottom: 2px;
+}
+
+.translate-popover-val {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #1e293b;
+    word-break: break-all;
+}
+
