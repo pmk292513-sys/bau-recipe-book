@@ -17,9 +17,9 @@
     <!-- 한글·영문·숫자 900(Black) 슈퍼 굵기를 완벽 지원하는 Pretendard 글꼴 로드 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 
-    <!-- 외부 스타일시트 분리 (모듈화 및 강력 캐시 갱신 버전 9.5 적용) -->
-    <link rel="stylesheet" href="css/style.css?v=10.4">
-    <link rel="stylesheet" href="css/print.css?v=10.4" media="print">
+    <!-- 외부 스타일시트 분리 (모듈화 및 강력 캐시 갱신 버전 10.5 적용) -->
+    <link rel="stylesheet" href="css/style.css?v=10.5">
+    <link rel="stylesheet" href="css/print.css?v=10.5" media="print">
 </head>
 
 <body>
@@ -396,20 +396,25 @@
             </div>
         </section>
 
-        <!-- ================= [탭 2: 내 레시피 북 목록 (영구 보존)] ================= -->
+        <!-- ================= [탭 2: 내 레시피 북 (3D 리얼 요리책 & 타라락 검색)] ================= -->
         <section id="tab-book" class="tab-pane no-print">
             <div class="book-container">
-                <div class="book-header">
-                    <h2>📚 영구 보관된 레시피 목록</h2>
-                    <p>작성한 모든 레시피가 안전하게 보관되어 있습니다. 언제든 터치하여 바로 열람하고 수정하거나 인쇄할 수 있습니다.</p>
+                <div class="book-header" style="text-align: center; margin-bottom: 16px;">
+                    <h2>📖 BAU 리얼 레시피 북</h2>
+                    <p>손가락으로 책장을 슥- 넘겨보세요! 검색창에 요리를 입력하면 책장이 타라라락-! 넘어가며 찾아줍니다.</p>
                 </div>
 
-                <div class="book-search-bar">
-                    <input type="text" id="bookSearchInput" placeholder="🔍 요리 이름으로 검색...">
+                <!-- 검색창 및 즉시 검색 버튼 -->
+                <div class="book-search-bar" style="display: flex; gap: 8px; align-items: center; max-width: 480px; margin: 0 auto 14px;">
+                    <input type="text" id="bookSearchInput" placeholder="🔍 찾으실 요리 이름 입력... (예: 뼈해장국)" style="flex: 1; padding: 10px 14px; font-size: 0.95rem; border: 2px solid #0284c7; border-radius: 8px;">
+                    <button type="button" id="btnBookSearchTrigger" class="btn btn-primary" style="padding: 10px 16px; white-space: nowrap; font-weight: 800; border-radius: 8px;">
+                        📖 찾기
+                    </button>
                 </div>
 
-                <div id="recipeBookGrid" class="recipe-grid">
-                    <!-- 자바스크립트로 저장된 레시피 카드들이 나열됩니다 -->
+                <!-- 3D 리얼 책자(Flip Book) 마운트 영역 -->
+                <div id="flipbookContainer" class="flipbook-wrapper">
+                    <!-- FlipBookEngine에 의해 3D 책자가 렌더링됩니다 -->
                 </div>
             </div>
         </section>
@@ -630,11 +635,12 @@
     </button>
 
     <!-- 모듈화된 자바스크립트 파일 로드 -->
-    <script src="js/units.js?v=10.4"></script>
-    <script src="js/recipe_data.js?v=10.4"></script>
-    <script src="js/translator.js?v=10.4"></script>
-    <script src="js/storage.js?v=10.4"></script>
-    <script src="js/app.js?v=10.4"></script>
+    <script src="js/units.js?v=10.5"></script>
+    <script src="js/recipe_data.js?v=10.5"></script>
+    <script src="js/translator.js?v=10.5"></script>
+    <script src="js/storage.js?v=10.5"></script>
+    <script src="js/book_flip.js?v=10.5"></script>
+    <script src="js/app.js?v=10.5"></script>
 </body>
 
 </html>

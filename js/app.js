@@ -81,6 +81,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnSaveBottom = document.getElementById("btnSaveBottom");
     const btnNewRecipe = document.getElementById("btnNewRecipe");
     const bookSearchInput = document.getElementById("bookSearchInput");
+    const btnBookSearchTrigger = document.getElementById("btnBookSearchTrigger");
+    const flipbookContainer = document.getElementById("flipbookContainer");
     const recipeBookGrid = document.getElementById("recipeBookGrid");
 
     // A4 뷰어 요소
@@ -129,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
+    window.switchTab = switchTab;
 
     navTabs.forEach(tab => {
         tab.addEventListener("click", () => {
@@ -1553,6 +1556,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         syncFormToPreview();
     }
+    window.populateFormWithData = populateFormWithData;
 
     // ----------------------------------------------------
     // 7. 영구 보존(Storage) 저장 및 서재 목록 관리
@@ -1941,80 +1945,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     /**
-     * 레시피 북 서재 목록 렌더링
+     * 📖 3D 리얼 요리책(Flip Book) 렌더링 및 동기화
      */
-    function renderRecipeBookList(filterKeyword = "") {
-        const list = RecipeStorage.getAllRecipes();
-        updateBadgeCount(list.length);
-        recipeBookGrid.innerHTML = "";
+    function renderRecipeBookList() {
+        const total = RecipeStorage.getAllRecipes().length;
+        updateBadgeCount(total);
 
-        const filtered = list.filter(r => {
-            const kw = filterKeyword.toLowerCase();
-            return (r.italianoName || "").toLowerCase().includes(kw) ||
-                   (r.englishName || "").toLowerCase().includes(kw) ||
-                   (r.koreaName || "").toLowerCase().includes(kw) ||
-                   (r.category || "").toLowerCase().includes(kw);
-        });
-
-        if (filtered.length === 0) {
-            recipeBookGrid.innerHTML = `
-                <div style="grid-column: 1 / -1; text-align: center; padding: 40px 10px; color: #94a3b8;">
-                    <p style="font-size: 1.1rem; font-weight: bold; margin-bottom: 8px;">보관된 레시피가 없습니다.</p>
-                    <small>상단의 [✍️ 레시피 작성] 탭에서 나만의 멋진 레시피를 만들어보세요!</small>
-                </div>
-            `;
-            return;
+        // 신규 3D 책자 엔진 실행 (손가락 드래그로 실제 책장 넘김 지원)
+        if (window.FlipBookEngine && flipbookContainer) {
+            window.FlipBookEngine.init(flipbookContainer);
         }
-
-        filtered.forEach(recipe => {
-            const card = document.createElement("div");
-            card.className = "recipe-card-item";
-
-            card.innerHTML = `
-                <img class="card-thumb" src="${recipe.photoData || 'sample_images/funghi_pasta.jpg'}" alt="요리 사진">
-                <div class="card-body">
-                    <span class="card-cat">${recipe.category || 'RECIPE'}</span>
-                    <h4 class="card-title-main">${recipe.italianoName || recipe.englishName || '이름 없는 요리'}</h4>
-                    <p class="card-title-sub">${recipe.koreaName || recipe.englishName || '-'}</p>
-                    <div class="card-meta-line">
-                        <span>🗓️ ${recipe.date || '-'}</span> | <span>👥 ${recipe.portion || '1인분'}</span>
-                    </div>
-                    <div class="card-btn-group">
-                        <button class="btn btn-sm btn-primary btn-open-recipe" style="flex: 2;">열기/수정</button>
-                        <button class="btn btn-sm btn-print-quick btn-print-card" style="flex: 1.5;">🖨️ 인쇄</button>
-                        <button class="btn btn-sm btn-danger-sm btn-del-recipe" title="삭제">🗑️</button>
-                    </div>
-                </div>
-            `;
-
-            // 열기/수정 버튼 (언제나 최신 영구 보관 데이터를 불러옴)
-            card.querySelector(".btn-open-recipe").addEventListener("click", () => {
-                const latest = RecipeStorage.getRecipeById(recipe.id) || recipe;
-                populateFormWithData(latest);
-                switchTab("tab-editor");
-            });
-
-            // 즉시 인쇄 버튼
-            card.querySelector(".btn-print-card").addEventListener("click", () => {
-                const latest = RecipeStorage.getRecipeById(recipe.id) || recipe;
-                populateFormWithData(latest);
-                switchTab("tab-preview");
-                setTimeout(() => {
-                    window.print();
-                }, 300);
-            });
-
-            // 삭제 버튼
-            card.querySelector(".btn-del-recipe").addEventListener("click", (e) => {
-                e.stopPropagation();
-                if (confirm(`정말 [${recipe.italianoName || recipe.englishName || "이 레시피"}]를 영구 삭제하시겠습니까?`)) {
-                    RecipeStorage.deleteRecipe(recipe.id);
-                    renderRecipeBookList(bookSearchInput.value);
-                }
-            });
-
-            recipeBookGrid.appendChild(card);
-        });
     }
 
     function updateBadgeCount(count) {
@@ -2022,9 +1962,30 @@ document.addEventListener("DOMContentLoaded", () => {
         recipeCountBadge.textContent = total;
     }
 
-    bookSearchInput.addEventListener("input", (e) => {
-        renderRecipeBookList(e.target.value.trim());
-    });
+    // 🚀 [사용자 요청] 레시피 검색 시 책장이 고속으로 타라라락-! 넘어가며 목표 레시피를 찾아 멈춤!
+    if (bookSearchInput) {
+        bookSearchInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") {
+                e.preventDefault();
+                const kw = bookSearchInput.value.trim();
+                if (kw && window.FlipBookEngine) {
+                    window.FlipBookEngine.searchAndRapidFlip(kw);
+                }
+            }
+        });
+    }
+
+    if (btnBookSearchTrigger) {
+        btnBookSearchTrigger.addEventListener("click", () => {
+            const kw = bookSearchInput.value.trim();
+            if (kw && window.FlipBookEngine) {
+                window.FlipBookEngine.searchAndRapidFlip(kw);
+            } else {
+                alert("찾으실 요리 이름을 입력해주세요! (예: 뼈해장국) 😊");
+                bookSearchInput.focus();
+            }
+        });
+    }
 
     // ----------------------------------------------------
     // 8. 모바일 & PC 즉시 인쇄 트리거
@@ -2078,7 +2039,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 서비스 워커 등록 (인터넷 없이 오프라인 구동 지원 & 최신 버전 자동 체크)
     if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./sw.js?v=10.4")
+        navigator.serviceWorker.register("./sw.js?v=10.5")
             .then((registration) => {
                 console.log("[PWA] 서비스 워커가 정상 등록되었습니다:", registration.scope);
                 // 앱 실행 시 서버에 새로운 코드가 있는지 즉시 확인

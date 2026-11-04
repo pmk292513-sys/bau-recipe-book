@@ -2293,3 +2293,552 @@ body {
     word-break: break-all;
 }
 
+
+
+/* ==========================================================================
+   📖 [3D 리얼 요리책 & 초고속 타라락 검색 엔진] 스타일시트
+   ========================================================================== */
+
+/* 1. 3D 원근감 플립북 스테이지 */
+.flipbook-stage {
+    perspective: 2000px;
+    width: 100%;
+    max-width: 480px;
+    margin: 0 auto;
+    padding: 10px 0 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y; /* 수직 스크롤 허용하면서 좌우 드래그 즉각 감지 */
+}
+
+/* 2. 실제 책자 본체 (3D 보존) */
+.flipbook-book {
+    position: relative;
+    width: 100%;
+    height: 640px;
+    transform-style: preserve-3d;
+    cursor: grab;
+}
+
+.flipbook-book:active {
+    cursor: grabbing;
+}
+
+/* 검색 실패 시 책자 도리도리(Shake) 효과 */
+.flipbook-book.shake-effect {
+    animation: shakeBook 0.4s ease-in-out;
+}
+
+@keyframes shakeBook {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-10px); }
+    40%, 80% { transform: translateX(10px); }
+}
+
+/* 3. 개별 페이지 (왼쪽 축을 기준으로 3D 회전) */
+.flipbook-page {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-origin: left center; /* 왼쪽 책등을 축으로 넘김 */
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    border-radius: 4px 14px 14px 4px;
+    box-shadow: -2px 0 6px rgba(0,0,0,0.12), 4px 8px 24px rgba(0,0,0,0.22);
+    box-sizing: border-box;
+    overflow: hidden;
+    background-color: #fcfbf9;
+}
+
+/* 넘겨진 상태의 페이지 (왼쪽으로 회전) */
+.flipbook-page.flipped {
+    pointer-events: none; /* 뒤로 넘어간 페이지는 터치 방지 */
+}
+
+/* 페이지 내부 콘텐트 영역 */
+.page-inner {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 2;
+    background: linear-gradient(to right, #f4eee1 0%, #fcfbf9 4%, #ffffff 8%, #fbf9f4 100%);
+}
+
+/* 책등 종이 곡선 그림자 효과 */
+.page-shadow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 25px;
+    height: 100%;
+    background: linear-gradient(to right, rgba(0,0,0,0.22) 0%, rgba(0,0,0,0.05) 60%, transparent 100%);
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* ==========================================================================
+   (A) 양장본 앞표지 (Leather Cover)
+   ========================================================================== */
+.flipbook-cover-front .cover-inner {
+    background: radial-gradient(circle at 50% 30%, #3e2723 0%, #1a0f0a 100%);
+    padding: 16px;
+    border-radius: 4px 14px 14px 4px;
+    box-shadow: inset 0 0 30px rgba(0,0,0,0.7);
+}
+
+.cover-emboss-border {
+    border: 2px solid #d4af37;
+    border-radius: 8px;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 30px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    text-align: center;
+    box-shadow: inset 0 0 15px rgba(212,175,55,0.2), 0 0 10px rgba(212,175,55,0.25);
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.cover-badge {
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 2px;
+    color: #f3e5ab;
+    border-bottom: 1px solid #d4af37;
+    padding-bottom: 4px;
+}
+
+.cover-gold-logo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.cover-logo-img {
+    width: 76px;
+    height: 76px;
+    object-fit: contain;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+}
+
+.cover-title {
+    font-size: 1.85rem;
+    font-weight: 900;
+    color: #fdf6e2;
+    letter-spacing: 1.5px;
+    margin: 6px 0 0;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.8), 0 0 12px rgba(212,175,55,0.4);
+}
+
+.cover-subtitle {
+    font-size: 0.82rem;
+    color: #d4af37;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin: 0;
+}
+
+.cover-divider {
+    color: #d4af37;
+    font-size: 1rem;
+    letter-spacing: 6px;
+}
+
+.cover-meta {
+    color: #e2e8f0;
+    font-size: 0.92rem;
+    margin: 0;
+}
+
+.cover-meta strong {
+    color: #f3e5ab;
+    font-size: 1.15rem;
+}
+
+.cover-touch-guide {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: rgba(212,175,55,0.15);
+    border: 1px dashed rgba(212,175,55,0.4);
+    padding: 10px 16px;
+    border-radius: 8px;
+    color: #fef08a;
+    font-size: 0.85rem;
+    font-weight: 700;
+    line-height: 1.35;
+    animation: pulseGuide 2s infinite ease-in-out;
+}
+
+.guide-hand-icon {
+    font-size: 1.6rem;
+    animation: waveHand 1.5s infinite;
+}
+
+@keyframes waveHand {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(-8px); }
+}
+
+@keyframes pulseGuide {
+    0%, 100% { transform: scale(1); opacity: 0.95; }
+    50% { transform: scale(1.03); opacity: 1; }
+}
+
+/* ==========================================================================
+   (B) 레시피 본문 페이지 (Recipe Inside Page)
+   ========================================================================== */
+.recipe-page-inner {
+    padding: 16px 18px 12px 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* 상단 헤더 */
+.book-page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #1e293b;
+    padding-bottom: 6px;
+    margin-bottom: 8px;
+}
+
+.book-badge-cat {
+    background-color: #0f172a;
+    color: #ffffff;
+    font-size: 0.72rem;
+    font-weight: 900;
+    padding: 3px 8px;
+    border-radius: 4px;
+    letter-spacing: 0.5px;
+}
+
+.book-header-meta {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: #475569;
+}
+
+/* 타이틀 박스 */
+.book-title-box {
+    margin-bottom: 8px;
+}
+
+.book-recipe-title {
+    font-size: 1.35rem;
+    font-weight: 900;
+    color: #0f172a;
+    margin: 0;
+    letter-spacing: -0.5px;
+    line-height: 1.25;
+}
+
+.book-recipe-sub {
+    font-size: 0.8rem;
+    color: #0284c7;
+    font-weight: 700;
+    margin: 2px 0 0;
+}
+
+/* 대표 사진 */
+.book-photo-wrap {
+    width: 100%;
+    height: 155px;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid #cbd5e1;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    margin-bottom: 8px;
+    background-color: #e2e8f0;
+}
+
+.book-recipe-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* 섹션 블록 (재료 & 조리법) */
+.book-section-block {
+    margin-bottom: 6px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    padding: 6px 9px;
+}
+
+.book-section-label {
+    font-size: 0.72rem;
+    font-weight: 900;
+    color: #334155;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+    border-bottom: 1px dashed #e2e8f0;
+    padding-bottom: 2px;
+}
+
+.book-ing-chips-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.book-ing-chip {
+    font-size: 0.75rem;
+    background-color: #f1f5f9;
+    color: #1e293b;
+    padding: 2px 6px;
+    border-radius: 4px;
+    border: 1px solid #e2e8f0;
+}
+
+.book-ing-chip b {
+    color: #0369a1;
+}
+
+.book-ing-more {
+    font-size: 0.72rem;
+    color: #64748b;
+    align-self: center;
+}
+
+/* 조리법 프리뷰 */
+.book-steps-preview {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.book-step-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 6px;
+    font-size: 0.78rem;
+    line-height: 1.35;
+    color: #1e293b;
+}
+
+.book-step-num {
+    background-color: #f1f5f9;
+    color: #0f172a;
+    font-weight: 900;
+    font-size: 0.72rem;
+    min-width: 17px;
+    height: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    border: 1px solid #cbd5e1;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+
+.book-step-txt {
+    flex-grow: 1;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    font-weight: 600;
+}
+
+.book-step-more {
+    font-size: 0.7rem;
+    color: #64748b;
+    margin-top: 2px;
+}
+
+/* 셰프 시그니처 뱃지 */
+.book-signature-callout {
+    background-color: #fefce8;
+    border: 1px solid #fde047;
+    color: #854d0e;
+    font-size: 0.74rem;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 하단 감성 액션 바 */
+.book-actions-bar {
+    display: flex;
+    gap: 8px;
+    margin-top: 4px;
+}
+
+.book-action-btn {
+    flex: 1;
+    padding: 9px 8px;
+    font-size: 0.84rem;
+    font-weight: 800;
+    border-radius: 6px;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+}
+
+.btn-edit-this {
+    background: linear-gradient(135deg, #0284c7, #0369a1);
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(2,132,199,0.35);
+}
+
+.btn-edit-this:hover {
+    background: linear-gradient(135deg, #0369a1, #075985);
+    transform: translateY(-1px);
+}
+
+.btn-print-this {
+    background: linear-gradient(135deg, #059669, #047857);
+    color: #ffffff;
+    box-shadow: 0 2px 6px rgba(5,150,105,0.35);
+}
+
+.btn-print-this:hover {
+    background: linear-gradient(135deg, #047857, #065f46);
+    transform: translateY(-1px);
+}
+
+/* 페이지 번호 */
+.book-page-number {
+    text-align: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #94a3b8;
+    margin-top: 4px;
+}
+
+/* 검색 완료 시 착 멈추는 황금빛 펄스 강조 */
+.flipbook-page.found-pulse {
+    animation: foundPulse 0.9s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes foundPulse {
+    0% {
+        box-shadow: 0 0 0 rgba(212,175,55,0);
+        transform: rotateY(0deg) scale(1);
+    }
+    40% {
+        box-shadow: 0 0 40px rgba(212,175,55,0.95), 0 0 15px rgba(212,175,55,0.6);
+        transform: rotateY(0deg) scale(1.025);
+    }
+    100% {
+        box-shadow: -2px 0 6px rgba(0,0,0,0.12), 4px 8px 24px rgba(0,0,0,0.22);
+        transform: rotateY(0deg) scale(1);
+    }
+}
+
+/* ==========================================================================
+   (C) 양장본 뒷표지 (Back Cover)
+   ========================================================================== */
+.flipbook-cover-back .cover-inner {
+    background: radial-gradient(circle at 50% 50%, #2b170e 0%, #150a06 100%);
+    padding: 16px;
+    border-radius: 4px 14px 14px 4px;
+}
+
+.back-inner .cover-emboss-border {
+    justify-content: center;
+    gap: 16px;
+}
+
+.back-cover-icon {
+    font-size: 3rem;
+}
+
+.back-title {
+    font-size: 1.5rem;
+    font-weight: 900;
+    color: #fdf6e2;
+    margin: 0;
+    letter-spacing: 1px;
+}
+
+.back-desc {
+    font-size: 0.88rem;
+    color: #cbd5e1;
+    line-height: 1.45;
+    margin: 0;
+}
+
+.btn-book-new-recipe {
+    background: linear-gradient(135deg, #d4af37, #b8911f);
+    color: #1a0f08;
+    font-size: 0.95rem;
+    font-weight: 900;
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(212,175,55,0.4);
+    margin-top: 10px;
+    transition: all 0.2s ease;
+}
+
+.btn-book-new-recipe:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(212,175,55,0.55);
+}
+
+.back-footer-mark {
+    font-size: 0.72rem;
+    color: #d4af37;
+    letter-spacing: 2px;
+    margin-top: 14px;
+}
+
+/* ==========================================================================
+   하단 안내바 (지저분한 버튼 없는 세련된 디자인)
+   ========================================================================== */
+.flipbook-footer-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-top: 14px;
+    padding: 0 10px;
+    box-sizing: border-box;
+}
+
+.flipbook-hint {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.flipbook-counter {
+    background-color: #0f172a;
+    color: #f8fafc;
+    font-size: 0.8rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+}
