@@ -4,7 +4,7 @@
  * 버전: v70 (네트워크 우선 전략으로 변경하여 최신 코드 즉각 반영)
  */
 
-const CACHE_NAME = "bau-recipe-book-cache-v101";
+const CACHE_NAME = "bau-recipe-book-cache-v102";
 
 // 인터넷 없이도 오프라인에서 구동할 필수 리소스 목록
 const ASSETS_TO_CACHE = [
@@ -21,6 +21,7 @@ const ASSETS_TO_CACHE = [
     "./js/app.js",
     "./sample_images/funghi_pasta.jpg",
     "./icons/brand_logo.png",
+    "./icons/qr_install.png",
     "./icons/icon-192.png",
     "./icons/icon-512.png",
     "./icons/icon-maskable-192.png",

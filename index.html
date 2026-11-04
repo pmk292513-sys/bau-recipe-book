@@ -18,8 +18,8 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 
     <!-- 외부 스타일시트 분리 (모듈화 및 강력 캐시 갱신 버전 9.5 적용) -->
-    <link rel="stylesheet" href="css/style.css?v=10.1">
-    <link rel="stylesheet" href="css/print.css?v=10.1" media="print">
+    <link rel="stylesheet" href="css/style.css?v=10.2">
+    <link rel="stylesheet" href="css/print.css?v=10.2" media="print">
 </head>
 
 <body>
@@ -581,9 +581,21 @@
                 <button type="button" class="btn-close-modal" id="btnCloseShareModal">✕</button>
             </div>
             <div class="modal-body">
-                <div class="share-step-card">
-                    <h4>1. 카카오톡 / 문자 / 이메일로 보내기</h4>
-                    <p class="modal-desc">아래 버튼을 누르면 상대방에게 링크를 바로 전송할 수 있습니다.</p>
+                <!-- 1. 현장 즉시 스캔용 QR 코드 (오프라인 내장) -->
+                <div class="share-step-card" style="text-align: center;">
+                    <h4>1. 스마트폰 카메라로 QR 비추기 (현장 1초 설치 ⚡)</h4>
+                    <p class="modal-desc">직원의 스마트폰 카메라로 아래 QR 코드를 비추면 즉시 설치됩니다.</p>
+                    <div style="display: flex; justify-content: center; margin: 10px 0;">
+                        <img src="icons/qr_install.png" alt="설치 QR 코드" 
+                            style="width: 180px; height: 180px; border-radius: 12px; border: 2px solid #0f172a; padding: 6px; background-color: #ffffff; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+                    </div>
+                    <small style="color: #0284c7; font-weight: 700;">👆 직원이 카메라로 비추면 바로 앱이 열립니다!</small>
+                </div>
+
+                <!-- 2. 카카오톡 전송 -->
+                <div class="share-step-card" style="margin-top: 14px;">
+                    <h4>2. 카카오톡 / 문자로 링크 보내기</h4>
+                    <p class="modal-desc">원거리에 있는 직원에게는 링크를 바로 전송할 수 있습니다.</p>
                     <button type="button" id="btnNativeShare" class="btn btn-kakao-share">
                         💬 카카오톡 / 메시지로 링크 공유
                     </button>
@@ -593,8 +605,9 @@
                     </button>
                 </div>
 
+                <!-- 3. 내 스마트폰에 앱 아이콘 설치 -->
                 <div class="share-step-card" style="margin-top: 14px;">
-                    <h4>2. 내 스마트폰에 앱 아이콘 설치</h4>
+                    <h4>3. 내 스마트폰에 앱 아이콘 설치</h4>
                     <p class="modal-desc">홈 화면에 아이콘을 설치하면 인터넷 연결 없이도 진짜 앱처럼 바로 열립니다.</p>
                     <button type="button" id="btnModalInstall" class="btn btn-primary" style="width: 100%;">
                         📲 홈 화면에 앱 설치하기
@@ -617,11 +630,11 @@
     </button>
 
     <!-- 모듈화된 자바스크립트 파일 로드 -->
-    <script src="js/units.js?v=10.1"></script>
-    <script src="js/recipe_data.js?v=10.1"></script>
-    <script src="js/translator.js?v=10.1"></script>
-    <script src="js/storage.js?v=10.1"></script>
-    <script src="js/app.js?v=10.1"></script>
+    <script src="js/units.js?v=10.2"></script>
+    <script src="js/recipe_data.js?v=10.2"></script>
+    <script src="js/translator.js?v=10.2"></script>
+    <script src="js/storage.js?v=10.2"></script>
+    <script src="js/app.js?v=10.2"></script>
 </body>
 
 </html>
