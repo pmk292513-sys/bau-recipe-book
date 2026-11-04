@@ -61,6 +61,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const signatureItemsContainer = document.getElementById("signatureItemsContainer");
     const cautionItemsContainer = document.getElementById("cautionItemsContainer");
     const formBtnAddCaution = document.getElementById("formBtnAddCaution");
+    const btnSummarizeCaution = document.getElementById("btnSummarizeCaution");
 
     // 번역 및 변환 버튼 요소
     const checkUseItaliano = document.getElementById("checkUseItaliano");
@@ -679,6 +680,99 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert(`✨ 조리법 ${count}개 단계의 핵심 요약 정리가 완료되었습니다!\n(A4 인쇄 규격에 딱 맞는 프로 셰프 스타일로 단정하게 반영되었습니다)`);
             } else {
                 alert("✨ 이미 모든 조리법이 핵심 문장으로 잘 정돈되어 있습니다!");
+            }
+        });
+    }
+
+    // ----------------------------------------------------
+    // [100% 오프라인] 주의사항(CAUTION) 자연어 핵심 요약 정돈 알고리즘
+    // 사용자가 길게 작성한 주의사항에서 잔말과 구어체를 없애고
+    // 주방 실전 표준 안전/품질 수칙으로 간결하고 단호하게 압축합니다.
+    // ----------------------------------------------------
+    function summarizeCaution(text) {
+        if (!text || !text.trim()) return "";
+        let s = text.trim();
+
+        // 0. 앞머리에 수동으로 적은 기호나 번호 보존 (※, ★, 💡, 1. 등)
+        const prefixMatch = s.match(/^([★※💡📌✔▶■\-\d\.\)]+)\s*/);
+        let prefix = "";
+        if (prefixMatch) {
+            prefix = prefixMatch[1] + " ";
+            s = s.substring(prefixMatch[0].length);
+        }
+
+        // 1. 불필요한 접속사 및 설명조 서두 제거
+        s = s.replace(/^(특히|주의할\s*점은|반드시\s*기억해야\s*할\s*것은|참고로|추가로|조리\s*시\s*주의사항은|알아둘\s*점은)\s*[,·]?\s*/g, "");
+        s = s.replace(/(되도록(이면)?|가급적|가능하면)\s*/g, "");
+
+        // 2. 끓어넘침 및 불조절 표현 정돈
+        s = s.replace(/국물이\s*끓어넘치지\s*않도록\s*불\s*조절에\s*주의하며\s*[,·]?\s*거품과\s*기름을\s*수시로\s*걷어내야\s*국물이\s*맑고\s*깊어집니다/g, "끓어넘침 방지 불 조절 유의, 거품·기름 수시 제거로 맑은 국물 유지");
+        s = s.replace(/국물이\s*끓어넘치지\s*(않게|않도록)\s*(주의하고|주의하며|유의하고)/g, "끓어넘침 방지 불 조절 유의하고");
+        s = s.replace(/불\s*조절에\s*주의(하고|하며|하여|해야\s*한다)/g, "불 조절에 각별히 유의한다");
+        s = s.replace(/거품과\s*기름을\s*수시로\s*(걷어내야|제거해야)\s*국물이\s*(맑아진다|깔끔해진다)/g, "거품·기름을 수시로 걷어내어 맑은 국물을 유지한다");
+
+        // 3. 온도, 화상, 안전 수칙 정돈
+        s = s.replace(/(기름이나\s*국물이\s*튀어\s*)?뜨거우니\s*화상에\s*주의(하세요|하십시오|해주세요)/g, "고온 화상 위험에 각별히 유의한다");
+        s = s.replace(/손이나\s*옷에\s*튀지\s*않도록\s*(조심해서\s*다뤄야\s*합니다|주의하세요)/g, "내용물 튐에 의한 화상에 각별히 유의한다");
+        s = s.replace(/칼이나\s*도구를\s*사용할\s*때\s*다치지\s*않게\s*주의/g, "조리 도구 사용 시 안전사고에 유의한다");
+
+        // 4. 보관, 위생, 변질 방지 정돈
+        s = s.replace(/보관할\s*때는\s*냉장보관을\s*해야\s*변질되지\s*않습니다/g, "변질 방지를 위해 반드시 냉장 보관한다");
+        s = s.replace(/상온에\s*오래\s*두면\s*(상할\s*수\s*있으니|변질되니)/g, "변질 우려가 있으므로 상온 방치를 금하고");
+        s = s.replace(/한\s*김\s*식혀서\s*냉장\s*보관\s*(해주세요|하십시오|합니다)/g, "한 김 식힌 후 즉시 냉장 보관한다");
+
+        // 5. 간 및 염도, 품질 체크 정돈
+        s = s.replace(/스톡의\s*농도와\s*간을\s*반드시\s*조리\s*전에\s*체크할\s*것/g, "스톡 농도와 간을 조리 전 필히 체크한다");
+        s = s.replace(/간이\s*너무\s*세지(지\s*않도록|지\s*않게)\s*수시로\s*맛을\s*보면서\s*조절(해야\s*합니다|해주세요)/g, "간이 세지지 않도록 수시로 염도를 체크하며 조절한다");
+        s = s.replace(/적어도\s*(\d+)가지\s*이상의\s*([^\s]+)을\s*사용해야\s*한다/g, "최소 $1가지 이상의 $2을 필히 사용한다");
+
+        // 6. 종결어미 및 서술어 표준화 (~한다 / ~유의한다)
+        s = s.replace(/주의해야\s*합니다|주의해야\s*한다|주의해주세요|주의하세요|주의바랍니다/g, "유의한다");
+        s = s.replace(/조심해야\s*합니다|조심해야\s*한다|조심해주세요|조심하세요/g, "각별히 조심한다");
+        s = s.replace(/확인해야\s*합니다|확인해야\s*한다|확인해주세요|확인하세요/g, "필히 확인한다");
+        s = s.replace(/체크해야\s*합니다|체크해야\s*한다|체크해주세요|체크하세요/g, "필히 체크한다");
+        s = s.replace(/넣어야\s*합니다|넣어야\s*한다|넣어주세요/g, "넣는다");
+        s = s.replace(/버려야\s*합니다|버려야\s*한다|버려주세요/g, "폐기한다");
+
+        // 7. 부호 및 공백 정돈
+        s = s.replace(/\s+/g, " ");
+        s = s.replace(/,\s*,/g, ",");
+        s = s.replace(/\.\s*\./g, ".");
+
+        if (!s.endsWith(".") && !s.endsWith(")") && !s.endsWith("]")) {
+            s += ".";
+        }
+
+        return prefix + s.trim();
+    }
+
+    // [주의사항 핵심 요약 정리] 버튼 클릭 이벤트 (100% 완전 오프라인 즉시 정돈)
+    if (btnSummarizeCaution) {
+        btnSummarizeCaution.addEventListener("click", () => {
+            const cautionInputs = cautionItemsContainer.querySelectorAll(".caution-item-input");
+            if (!cautionInputs || cautionInputs.length === 0) {
+                alert("정리할 주의사항 항목이 없습니다. 먼저 주의사항을 작성해주세요! 😊");
+                return;
+            }
+
+            let count = 0;
+            cautionInputs.forEach(input => {
+                const original = input.value;
+                if (original && original.trim()) {
+                    const summarized = summarizeCaution(original);
+                    if (summarized && summarized !== original) {
+                        input.value = summarized;
+                        count++;
+                    }
+                }
+            });
+
+            syncFormToPreview();
+
+            if (count > 0) {
+                alert(`✨ 주의사항 ${count}개 항목의 핵심 요약 정리가 완료되었습니다!\n(주방 핵심 안전·품질 수칙으로 단정하게 반영되었습니다)`);
+            } else {
+                alert("✨ 이미 모든 주의사항이 핵심 수칙으로 잘 정돈되어 있습니다!");
             }
         });
     }
@@ -1981,7 +2075,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 서비스 워커 등록 (인터넷 없이 오프라인 구동 지원 & 최신 버전 자동 체크)
     if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./sw.js?v=9.9")
+        navigator.serviceWorker.register("./sw.js?v=10.0")
             .then((registration) => {
                 console.log("[PWA] 서비스 워커가 정상 등록되었습니다:", registration.scope);
                 // 앱 실행 시 서버에 새로운 코드가 있는지 즉시 확인

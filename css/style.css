@@ -1246,13 +1246,17 @@ body {
 .recipe-card-frame .caution-table th.th-caution {
     border-right: 3.5px solid #000000 !important;
     font-weight: 900 !important;
-    font-size: 13px !important;
+    font-size: 14.5px !important;
+    color: #000000 !important;
 }
 
 .recipe-card-frame .caution-table td.td-caution {
     border-left: 3.5px solid #000000 !important;
-    font-weight: 600 !important;
-    font-size: 13px !important;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 15px !important;
+    color: #000000 !important;
+    line-height: 1.48 !important;
 }
 
 /* 우측 메타데이터 5개 행 높이를 1.9cm로 고정 (5 x 1.9cm = 사진 세로 9.5cm와 칼같이 일치) */
@@ -1474,20 +1478,20 @@ body {
     background-color: transparent;
     border-bottom: none;
     padding: 0 0 2px 0;
-    font-size: 13px;
+    font-size: 14.5px !important;
     font-weight: 900 !important;
     letter-spacing: 0.5px;
-    color: #000000;
+    color: #000000 !important;
     text-transform: uppercase;
     display: inline-block;
 }
 
 .topping-card-content {
     padding: 0;
-    font-size: 13.5px;
-    font-weight: 750;
-    line-height: 1.42;
-    color: #000000;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+    line-height: 1.45;
+    color: #000000 !important;
     min-height: auto;
     background-color: transparent;
 }
@@ -1498,6 +1502,30 @@ body {
     border: none;
     background: transparent;
     border-radius: 0;
+    overflow: visible;
+}
+
+.signature-card-title {
+    background-color: transparent;
+    border-bottom: none;
+    padding: 0 0 2px 0;
+    font-size: 14.5px !important;
+    font-weight: 900 !important;
+    letter-spacing: 0.5px;
+    color: #000000 !important;
+    text-transform: uppercase;
+    display: inline-block;
+}
+
+.signature-card-content {
+    padding: 0;
+    font-size: 15px !important;
+    font-weight: 900 !important;
+    line-height: 1.45;
+    color: #000000 !important;
+    min-height: auto;
+    background-color: transparent;
+}
     overflow: visible;
 }
 
@@ -1526,16 +1554,20 @@ body {
 /* 주의사항 표 */
 .th-caution {
     width: 155px;
-    font-weight: 800 !important; /* 소제목 강력 강조 */
+    font-weight: 900 !important; /* 소제목 강력 강조 */
     text-align: center;
-    font-size: 13px;
+    font-size: 14.5px !important;
     letter-spacing: 0.6px;
     border: 1px solid #000000;
+    color: #000000 !important;
 }
 
 .td-caution {
-    line-height: 1.5;
-    font-weight: 500;
+    line-height: 1.48;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 15px !important;
+    color: #000000 !important;
     padding-left: 10px !important;
     border: 1px solid #000000;
 }
@@ -1596,8 +1628,9 @@ body {
         font-size: 0.88rem;
     }
 
-    /* 조리법 핵심 요약 정리 버튼 모바일 전용 스타일 */
-    #btnSummarizeCooking {
+    /* 조리법 및 주의사항 핵심 요약 정리 버튼 모바일 전용 스타일 */
+    #btnSummarizeCooking,
+    #btnSummarizeCaution {
         flex: 1.2 1 auto;
         font-size: 0.86rem;
         padding: 8px 10px;

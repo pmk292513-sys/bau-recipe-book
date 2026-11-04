@@ -18,8 +18,8 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 
     <!-- 외부 스타일시트 분리 (모듈화 및 강력 캐시 갱신 버전 9.5 적용) -->
-    <link rel="stylesheet" href="css/style.css?v=9.9">
-    <link rel="stylesheet" href="css/print.css?v=9.9" media="print">
+    <link rel="stylesheet" href="css/style.css?v=10.0">
+    <link rel="stylesheet" href="css/print.css?v=10.0" media="print">
 </head>
 
 <body>
@@ -361,7 +361,13 @@
                 <div class="form-card">
                     <div class="card-header-flex">
                         <h3 class="form-card-title">5. 주의사항 (CAUTION)</h3>
-                        <button id="formBtnAddCaution" type="button" class="btn btn-sm btn-primary">➕ 주의사항 줄 추가</button>
+                        <div style="display: flex; gap: 6px; flex-wrap: wrap;">
+                            <button id="btnSummarizeCaution" type="button" class="btn btn-sm btn-outline-translate"
+                                style="font-weight: 700;" title="작성한 주의사항의 군더더기를 없애고 주방 핵심 안전 수칙으로 자동 정돈합니다">
+                                ✨ 주의사항 핵심 요약 정리
+                            </button>
+                            <button id="formBtnAddCaution" type="button" class="btn btn-sm btn-primary">➕ 주의사항 줄 추가</button>
+                        </div>
                     </div>
                     <p class="form-guide-text">조리 시 지켜야 할 핵심 주의사항을 원하는 만큼 줄을 추가하여 작성하세요.</p>
 
@@ -611,11 +617,11 @@
     </button>
 
     <!-- 모듈화된 자바스크립트 파일 로드 -->
-    <script src="js/units.js?v=9.9"></script>
-    <script src="js/recipe_data.js?v=9.9"></script>
-    <script src="js/translator.js?v=9.9"></script>
-    <script src="js/storage.js?v=9.9"></script>
-    <script src="js/app.js?v=9.9"></script>
+    <script src="js/units.js?v=10.0"></script>
+    <script src="js/recipe_data.js?v=10.0"></script>
+    <script src="js/translator.js?v=10.0"></script>
+    <script src="js/storage.js?v=10.0"></script>
+    <script src="js/app.js?v=10.0"></script>
 </body>
 
 </html>
