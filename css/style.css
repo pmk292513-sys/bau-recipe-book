@@ -1362,9 +1362,9 @@ body {
     height: 23px;
     max-height: 23px;
     padding: 1px 8px !important;
-    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
-    font-weight: 850 !important;
-    font-size: 13px !important;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 14px !important;
     color: #000000 !important;
     border: 1px solid #000000;
     box-sizing: border-box;
@@ -1377,9 +1377,9 @@ body {
     max-height: 23px;
     text-align: center;
     padding: 1px 4px !important;
-    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
-    font-weight: 850 !important;
-    font-size: 13px !important;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 14px !important;
     color: #000000 !important;
     font-variant-numeric: tabular-nums;
     border: 1px solid #000000;
@@ -1393,9 +1393,9 @@ body {
     max-height: 23px;
     text-align: center;
     padding: 1px 4px !important;
-    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
-    font-weight: 850 !important;
-    font-size: 13px !important;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
+    font-weight: 900 !important;
+    font-size: 14px !important;
     color: #000000 !important;
     border: 1px solid #000000;
     box-sizing: border-box;
@@ -1436,26 +1436,26 @@ body {
     line-height: 1.45; /* 딱 좋았던 줄간격 복원 */
 }
 
-/* [사용자 요청 2번] 숫자 굵고 또렷하게 강조: 14.8px 900 */
+/* [사용자 요청 2번] 숫자 굵고 또렷하게 강조: 16.5px 900 슈퍼 볼드 */
 .step-num {
     font-weight: 900 !important;
-    font-size: 14.8px;
-    color: #000000;
+    font-size: 16.5px !important;
+    color: #000000 !important;
     flex-shrink: 0;
-    min-width: 21px;
+    min-width: 24px;
     letter-spacing: -0.3px;
     text-align: left;
-    line-height: 1.48;
+    line-height: 1.45;
 }
 
-/* [사용자 요청 2번] 줄바꿈 시에도 뭉치지 않도록: 숫자와 한글 굵기 700(Bold)으로 통일, 14.8px 유지 */
+/* [사용자 요청 2번] 조리법 내용: 더 크고 시원한 16.5px 크기와 900(Extra Bold) 굵기로 또렷하게 강조 */
 .step-desc {
     flex: 1;
-    font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", sans-serif;
-    font-size: 14.8px;
-    font-weight: 700;
-    color: #000000;
-    line-height: 1.48;
+    font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", sans-serif !important;
+    font-size: 16.5px !important;
+    font-weight: 900 !important;
+    color: #000000 !important;
+    line-height: 1.45;
     letter-spacing: -0.2px;
     word-break: break-all;
     white-space: pre-wrap;

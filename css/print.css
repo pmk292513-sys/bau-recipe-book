@@ -437,9 +437,9 @@
         height: 23px !important;
         max-height: 23px !important;
         padding: 1px 6px !important;
-        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif !important;
-        font-size: 13px !important;
-        font-weight: 850 !important;
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
+        font-size: 14px !important;
+        font-weight: 900 !important;
         color: #000000 !important;
         line-height: 1.2 !important;
         box-sizing: border-box !important;
@@ -477,26 +477,26 @@
         line-height: 1.45 !important; /* 딱 좋았던 줄간격 복원 */
     }
 
-    /* [사용자 요청 2번] 조리 순서 번호: 숫자 1. 2. 굵고 선명한 900, 14.8px */
+    /* [사용자 요청 2번] 조리 순서 번호: 숫자 1. 2. 굵고 선명한 900, 16.5px */
     .step-num {
         font-weight: 900 !important;
-        font-size: 14.8px !important;
+        font-size: 16.5px !important;
         color: #000000 !important;
         flex-shrink: 0 !important;
-        min-width: 21px !important;
+        min-width: 24px !important;
         letter-spacing: -0.3px !important;
         text-align: left !important;
-        line-height: 1.48 !important;
+        line-height: 1.45 !important;
     }
 
-    /* [사용자 요청 2번] 조리법 본문: 숫자와 한글 굵기를 700(Bold)으로 칼같이 1:1 일치, 14.8px 유지 */
+    /* [사용자 요청 2번] 조리법 본문: 16.5px, 900 슈퍼 볼드로 시원하고 또렷하게 */
     .step-desc {
         flex: 1 !important;
-        font-family: "Pretendard", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", sans-serif !important;
-        font-size: 14.8px !important;
-        font-weight: 700 !important; /* 숫자와 한글이 완전히 동일한 굵기로 자연스럽게 통일 */
+        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", sans-serif !important;
+        font-size: 16.5px !important;
+        font-weight: 900 !important;
         color: #000000 !important;
-        line-height: 1.48 !important;
+        line-height: 1.45 !important;
         letter-spacing: -0.2px !important;
         word-break: break-all !important;
         white-space: pre-wrap !important;
