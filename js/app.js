@@ -152,11 +152,13 @@ document.addEventListener("DOMContentLoaded", () => {
         select.className = "ing-unit-select";
         select.title = "단위 선택";
 
+        const normalizedUnit = typeof formatRecipeUnit === "function" ? formatRecipeUnit(selectedUnit) : selectedUnit;
+
         RECIPE_UNITS.forEach(u => {
             const opt = document.createElement("option");
             opt.value = u.value;
             opt.textContent = u.label;
-            if (u.value.toLowerCase() === (selectedUnit || "").toLowerCase()) {
+            if (u.value.toLowerCase() === (normalizedUnit || "").toLowerCase()) {
                 opt.selected = true;
             }
             select.appendChild(opt);
@@ -1168,7 +1170,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const tdUnit = document.createElement("td");
                 tdUnit.className = "td-ingredient-un";
-                tdUnit.textContent = item.unit;
+                tdUnit.textContent = typeof formatRecipeUnit === "function" ? formatRecipeUnit(item.unit) : item.unit;
 
                 tr.appendChild(tdName);
                 tr.appendChild(tdAmount);
@@ -2063,7 +2065,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 서비스 워커 등록 (인터넷 없이 오프라인 구동 지원 & 최신 버전 자동 체크)
     if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./sw.js?v=11.9")
+        navigator.serviceWorker.register("./sw.js?v=12.0")
             .then((registration) => {
                 console.log("[PWA] 서비스 워커가 정상 등록되었습니다:", registration.scope);
                 // 앱 실행 시 서버에 새로운 코드가 있는지 즉시 확인

@@ -30,9 +30,9 @@ const RECIPE_UNITS = [
     { label: "톨 / 알 (알밤, 마늘알 등)", value: "톨" },
     { label: "토막 (무, 생선 토막 등)", value: "토막" },
 
-    // 3. 일상 요리 및 주방 실전 계량 단위
-    { label: "밥숟가락 (큰술 / Tbsp)", value: "밥숟가락" },
-    { label: "티스푼 (작은술 / tsp)", value: "티스푼" },
+    // 3. 일상 요리 및 주방 실전 계량 단위 (요식업 표준: 큰술 TS, 작은술 ts)
+    { label: "TS (큰술 / 밥숟가락)", value: "TS" },
+    { label: "ts (작은술 / 작은숟가락)", value: "ts" },
     { label: "국자 (소스, 스프, 육수 등)", value: "국자" },
     { label: "한 꼬집 (Pinch)", value: "한 꼬집" },
     { label: "종이컵 (Cup)", value: "종이컵" },
@@ -50,3 +50,28 @@ const RECIPE_UNITS = [
     { label: "취향껏", value: "취향껏" },
     { label: "단위 없음 / 직접입력", value: "" }
 ];
+
+/**
+ * [단위 표기 정제 함수 - formatRecipeUnit]
+ * 사장님 요청 사항:
+ * 1. 단위에 들어간 () 괄호 및 괄호 안 내용 완전 삭제 (예: "개(ea)" -> "개", "g(그램)" -> "g")
+ * 2. 밥숟가락/큰술 -> "TS" (대문자), 작은숟가락/티스푼/작은술 -> "ts" (소문자) 요식업 표준 변환
+ */
+function formatRecipeUnit(unit) {
+    if (!unit) return "";
+    let clean = unit.toString().trim();
+    
+    // 괄호 () 및 （） 및 그 안의 모든 내용 완전 제거
+    clean = clean.replace(/[\(\（][^\)\）]*[\)\）]/g, "").trim();
+    
+    // 요식업 표준 변환 (밥숟가락/큰술 -> TS, 작은숟가락/티스푼/작은술 -> ts)
+    if (/^(밥숟가락|큰술|테이블스푼|tbsp|tb)$/i.test(clean) || clean === "TS") {
+        return "TS";
+    }
+    if (/^(티스푼|작은숟가락|작은술|찻술|tsp)$/i.test(clean) || clean === "ts") {
+        return "ts";
+    }
+    
+    return clean;
+}
+

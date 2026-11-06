@@ -1413,57 +1413,64 @@ body {
     border-left: 3.5px solid #000000 !important;
 }
 
-/* [사용자 요청] 재료 행: 사장님 지정 ↕ 0.7cm(약 26.5px) 규격 및 명조체 적용 */
+/* [사용자 요청] 재료 행: 사장님 지정 ↕ 0.7cm 규격 & 이전 굵기(font-weight: 700) 및 폭 맞춤 슬림 명조체 */
 .recipe-card-frame .main-content-table tbody tr {
-    height: 26.5px;
-    max-height: 26.5px;
-    line-height: 1.2;
+    height: 0.7cm !important;
+    min-height: 0.7cm !important;
+    max-height: 0.7cm !important;
+    line-height: 1.2 !important;
 }
 
 .td-ingredient-name {
     width: 140px !important;
     min-width: 140px !important;
     max-width: 140px !important;
-    height: 26.5px;
-    max-height: 26.5px;
+    height: 0.7cm !important;
+    min-height: 0.7cm !important;
+    max-height: 0.7cm !important;
     padding: 1px 8px !important;
     font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-    font-weight: 600 !important;
-    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    font-size: 14.5px !important;
+    letter-spacing: -0.3px !important;
     color: #000000 !important;
     border: 1px solid #000000;
-    box-sizing: border-box;
+    box-sizing: border-box !important;
     overflow: hidden;
     vertical-align: middle;
 }
 
 .td-ingredient-amount {
-    height: 26.5px;
-    max-height: 26.5px;
+    height: 0.7cm !important;
+    min-height: 0.7cm !important;
+    max-height: 0.7cm !important;
     text-align: center;
     padding: 1px 4px !important;
     font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-    font-weight: 600 !important;
-    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    font-size: 14.5px !important;
+    letter-spacing: -0.2px !important;
     color: #000000 !important;
     font-variant-numeric: tabular-nums;
     border: 1px solid #000000;
-    box-sizing: border-box;
+    box-sizing: border-box !important;
     overflow: hidden;
     vertical-align: middle;
 }
 
 .td-ingredient-un {
-    height: 26.5px;
-    max-height: 26.5px;
+    height: 0.7cm !important;
+    min-height: 0.7cm !important;
+    max-height: 0.7cm !important;
     text-align: center;
     padding: 1px 4px !important;
     font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-    font-weight: 600 !important;
-    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    letter-spacing: -0.2px !important;
     color: #000000 !important;
     border: 1px solid #000000;
-    box-sizing: border-box;
+    box-sizing: border-box !important;
     overflow: hidden;
     vertical-align: middle;
 }
