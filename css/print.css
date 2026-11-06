@@ -259,37 +259,37 @@
         border-bottom: 3.5px solid #000000 !important;
     }
 
-    /* 메타데이터 소제목(info-label)과 값(info-value) 규격 통일 (명조체 600~700) */
+    /* 메타데이터 소제목(info-label)과 값(info-value) 규격 통일 [사용자 요청] 14px 900 슈퍼볼드 */
     .info-label {
         width: 85px !important;
         white-space: nowrap !important;
         border: 1px solid #000000 !important;
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-        font-weight: 700 !important;
-        font-size: 13.5px !important;
-        letter-spacing: 0.5px !important;
+        font-weight: 900 !important;
+        font-size: 14px !important;
+        letter-spacing: 0.3px !important;
         text-align: center !important;
         color: #000000 !important;
-        -webkit-text-stroke: none !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
     }
 
     .info-value {
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-        font-weight: 600 !important;
-        font-size: 13.5px !important;
-        letter-spacing: 0.5px !important;
+        font-weight: 900 !important;
+        font-size: 14px !important;
+        letter-spacing: 0.3px !important;
         color: #000000 !important;
         text-align: center !important;
-        -webkit-text-stroke: none !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
     }
 
     .info-value * {
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-        font-weight: 600 !important;
-        font-size: 13.5px !important;
-        letter-spacing: 0.5px !important;
+        font-weight: 900 !important;
+        font-size: 14px !important;
+        letter-spacing: 0.3px !important;
         color: #000000 !important;
-        -webkit-text-stroke: none !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
     }
 
     /* 7. 사진 규격: [사용자 요청] 가로 13.0cm x 세로 9.5cm 완벽 밀착 및 여백 0% 적용 */
@@ -316,13 +316,20 @@
         border-left: 3.5px solid #000000 !important;
     }
 
-    /* [사용자 요청] INGREDIENTS(140px) 세로줄과 CAUTION 오른쪽 세로줄을 140px로 100% 일치 */
-    .recipe-card-frame .main-content-table .th-ingredients,
-    .recipe-card-frame .main-content-table td.td-ingredient-name {
+    /* [사용자 요청] INGREDIENTS(140px) 세로줄과 CAUTION 오른쪽 세로줄을 140px로 100% 일치 & 14px 900 슈퍼볼드 통일 */
+    .recipe-card-frame .main-content-table .th-ingredients {
         width: 140px !important;
         min-width: 140px !important;
         max-width: 140px !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        font-weight: 900 !important;
+        font-size: 14px !important;
+        letter-spacing: 0.3px !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
+        text-align: center !important;
+        color: #000000 !important;
     }
+
     .recipe-card-frame .main-content-table .th-amount,
     .th-amount {
         width: 75px !important;
@@ -333,21 +340,26 @@
         padding-right: 0 !important;
         margin: 0 !important;
         text-align: center !important;
-        letter-spacing: 0px !important;
-        font-size: 12px !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        letter-spacing: -0.8px !important;
+        font-size: 14px !important;
         font-weight: 900 !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
+        color: #000000 !important;
         box-sizing: border-box !important;
     }
-    .recipe-card-frame .main-content-table td.td-ingredient-amount {
-        width: 75px !important;
-        min-width: 75px !important;
-        max-width: 75px !important;
-    }
-    .recipe-card-frame .main-content-table .th-un,
-    .recipe-card-frame .main-content-table td.td-ingredient-un {
+
+    .recipe-card-frame .main-content-table .th-un {
         width: 55px !important;
         min-width: 55px !important;
         max-width: 55px !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        font-weight: 900 !important;
+        font-size: 14px !important;
+        letter-spacing: 0.3px !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
+        text-align: center !important;
+        color: #000000 !important;
     }
 
     .recipe-card-frame .caution-table th.th-caution {
@@ -356,13 +368,13 @@
         max-width: 140px !important;
         border-right: 3.5px solid #000000 !important;
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-        font-weight: 700 !important;
-        font-size: 13.5px !important;
+        font-weight: 900 !important;
+        font-size: 14px !important;
         letter-spacing: 0.5px !important;
         text-align: center !important;
         vertical-align: middle !important;
         color: #000000 !important;
-        -webkit-text-stroke: none !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
         padding: 4px 6px !important;
         box-sizing: border-box !important;
     }
@@ -370,11 +382,11 @@
     .recipe-card-frame .caution-table td.td-caution {
         border-left: 3.5px solid #000000 !important;
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-        font-weight: 600 !important;
+        font-weight: 900 !important;
         font-size: 14px !important;
         color: #000000 !important;
-        -webkit-text-stroke: none !important;
-        line-height: 1.35 !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
+        line-height: 1.4 !important;
         padding: 4px 8px !important;
         vertical-align: middle !important;
     }
@@ -516,9 +528,9 @@
         max-height: 0.9cm !important;
         padding: 0px 6px !important;
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-        font-size: 15.5px !important;
+        font-size: 14px !important;
         font-weight: 900 !important;
-        letter-spacing: -0.3px !important;
+        letter-spacing: -0.2px !important;
         white-space: nowrap !important;
         text-overflow: ellipsis !important;
         color: #000000 !important;
@@ -529,16 +541,17 @@
         vertical-align: middle !important;
     }
 
-    /* [사용자 요청] 재료와 조리과정 사이 세로 경계선 3.5px 굵은 실선 적용 & [소제목 크기 0.3cm 확대 및 여유있는 자간] */
+    /* [사용자 요청] 재료와 조리과정 사이 세로 경계선 3.5px 굵은 실선 적용 & [소제목 14px 900 슈퍼볼드 통일] */
     .recipe-card-frame .main-content-table .th-cooking,
     .th-cooking {
         border-left: 3.5px solid #000000 !important;
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
         font-weight: 900 !important;
-        font-size: 15px !important;
+        font-size: 14px !important;
         letter-spacing: 1.2px !important;
         word-spacing: 16px !important;
         text-align: center !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
         color: #000000 !important;
     }
 
@@ -572,27 +585,27 @@
         line-height: 1.45 !important;
     }
 
-    /* [사용자 요청] 조리 순서 번호: 세로 크기 0.3cm 확대 및 900 슈퍼볼드 */
+    /* [사용자 요청] 조리 순서 번호: 14px 900 슈퍼볼드 통일 */
     .step-num {
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
         font-weight: 900 !important;
-        font-size: 17.5px !important;
+        font-size: 14px !important;
         -webkit-text-stroke: 0.35px #000000 !important;
         color: #000000 !important;
         flex-shrink: 0 !important;
-        min-width: 26px !important;
+        min-width: 22px !important;
         letter-spacing: -0.2px !important;
         text-align: left !important;
         line-height: 1.45 !important;
     }
 
-    /* [사용자 요청] 조리법 본문: 세로 크기 0.3cm 확대 및 850 볼드 */
+    /* [사용자 요청] 조리법 본문: 14px 900 슈퍼볼드 통일 */
     .step-desc {
         flex: 1 !important;
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-        font-size: 17px !important;
-        font-weight: 850 !important;
-        -webkit-text-stroke: 0.25px #000000 !important;
+        font-size: 14px !important;
+        font-weight: 900 !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
         color: #000000 !important;
         line-height: 1.45 !important;
         letter-spacing: -0.2px !important;
@@ -600,7 +613,7 @@
         white-space: pre-wrap !important;
     }
 
-    /* 토핑 및 시그니처: 명조체 기반 본문과 조화로운 텍스트 */
+    /* 토핑 및 시그니처: 14px 900 슈퍼볼드 통일 */
     .topping-card-box {
         margin-top: 6px !important;
     }
@@ -608,14 +621,17 @@
     .topping-card-title {
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
         font-size: 14px !important;
-        font-weight: 700 !important;
+        font-weight: 900 !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
         color: #000000 !important;
     }
 
-    .topping-card-content {
+    .topping-card-content,
+    .topping-card-content * {
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-        font-size: 14.5px !important;
-        font-weight: 600 !important;
+        font-size: 14px !important;
+        font-weight: 900 !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
         line-height: 1.45 !important;
         color: #000000 !important;
     }
@@ -627,14 +643,17 @@
     .signature-card-title {
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
         font-size: 14px !important;
-        font-weight: 700 !important;
+        font-weight: 900 !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
         color: #000000 !important;
     }
 
-    .signature-card-content {
+    .signature-card-content,
+    .signature-card-content * {
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-        font-size: 14.5px !important;
-        font-weight: 600 !important;
+        font-size: 14px !important;
+        font-weight: 900 !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
         line-height: 1.45 !important;
         color: #000000 !important;
     }
