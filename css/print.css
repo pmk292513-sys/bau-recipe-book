@@ -222,24 +222,25 @@
         border-bottom: 3.5px solid #000000 !important;
     }
 
-    /* 상단 메뉴명 표: 명조체, 깔끔하고 진한 선명도 */
+    /* 상단 메뉴명 표: 명조체, [사용자 요청] 0.3cm 크기 및 900 슈퍼볼드 일치 */
     .name-table th {
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-        font-weight: 700 !important;
-        font-size: 13px !important;
-        letter-spacing: 0.5px !important;
+        font-weight: 900 !important;
+        font-size: 14px !important;
+        letter-spacing: 0.3px !important;
         color: #000000 !important;
-        -webkit-text-stroke: none !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
         padding: 4px 6px !important;
+        text-align: center !important;
     }
 
     .name-table td {
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-        font-weight: 600 !important;
-        font-size: 13px !important;
-        letter-spacing: 0.5px !important;
+        font-weight: 900 !important;
+        font-size: 14px !important;
+        letter-spacing: 0.3px !important;
         color: #000000 !important;
-        -webkit-text-stroke: none !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
         padding: 4px 8px !important;
     }
 
@@ -322,7 +323,15 @@
         min-width: 140px !important;
         max-width: 140px !important;
     }
-    .recipe-card-frame .main-content-table .th-amount,
+    .recipe-card-frame .main-content-table .th-amount {
+        width: 75px !important;
+        min-width: 75px !important;
+        max-width: 75px !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        text-align: center !important;
+        letter-spacing: 0 !important;
+    }
     .recipe-card-frame .main-content-table td.td-ingredient-amount {
         width: 75px !important;
         min-width: 75px !important;

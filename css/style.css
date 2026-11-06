@@ -1318,23 +1318,27 @@ body {
     display: block;
 }
 
-/* 상단 이름 표: 품격 높은 명조체 적용 */
+/* 상단 이름 표: 품격 높은 명조체 & [사용자 요청] 0.3cm 크기 및 재료 내용과 동일한 900 슈퍼볼드 적용 */
 .name-table th {
     font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-    font-weight: 850 !important;
-    font-size: 13px !important;
-    letter-spacing: 0.5px !important;
+    font-weight: 900 !important;
+    font-size: 14px !important;
+    letter-spacing: 0.3px !important;
+    -webkit-text-stroke: 0.35px #000000 !important;
     border: 1px solid #000000;
     color: #000000 !important;
+    text-align: center !important;
 }
 
 .name-table td {
     font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-    font-weight: 850 !important;
-    font-size: 13px !important;
-    letter-spacing: 0.5px !important;
+    font-weight: 900 !important;
+    font-size: 14px !important;
+    letter-spacing: 0.3px !important;
+    -webkit-text-stroke: 0.35px #000000 !important;
     border: 1px solid #000000;
     color: #000000 !important;
+    padding-left: 10px !important;
 }
 
 /* 우측 메타데이터 라벨 폭을 넉넉히 확보하여 PORTION 줄바꿈 방지 */
@@ -1383,13 +1387,18 @@ body {
     border: 1px solid #000000;
 }
 
+.recipe-card-frame .main-content-table .th-amount,
 .th-amount {
-    width: 75px;
-    text-align: center;
+    width: 75px !important;
+    min-width: 75px !important;
+    max-width: 75px !important;
+    text-align: center !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
     font-weight: 900 !important;
-    white-space: nowrap;
-    font-size: 13px;
-    letter-spacing: 0.6px;
+    white-space: nowrap !important;
+    font-size: 13px !important;
+    letter-spacing: 0 !important;
     border: 1px solid #000000;
 }
 
