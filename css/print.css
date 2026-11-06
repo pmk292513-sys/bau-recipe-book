@@ -10,8 +10,8 @@
 @page {
     /* A4 정규격 (210mm x 297mm) 지정 */
     size: A4 portrait;
-    /* 상하 5mm, 좌우 9mm로 최적화하여 A4 1장에 모든 내용이 100% 쏙 들어가도록 가용 높이 극대화 */
-    margin: 5mm 9mm 5mm 9mm;
+    /* [완벽한 좌우 대칭 정중앙]: 상하 5mm, 좌우 칼같이 10mm (좌 10mm + 본문 190mm + 우 10mm = 210mm) */
+    margin: 5mm 10mm 5mm 10mm;
 }
 
 @media print {
@@ -34,12 +34,13 @@
         display: none !important;
     }
 
-    /* 탭 페인 인쇄 시 강제 표시 */
+    /* 탭 페인 인쇄 시 강제 표시 및 정중앙 정렬 */
     #tab-preview {
         display: block !important;
         width: 100% !important;
-        margin: 0 !important;
+        margin: 0 auto !important;
         padding: 0 !important;
+        text-align: center !important;
     }
 
     html, body {
@@ -57,25 +58,28 @@
         padding: 0 !important;
     }
 
+    /* [쏠림 원천 차단] 인쇄 엔진에서 flex 버그로 인한 좌측 쏠림을 방지하고 전통적 블록 센터링 적용 */
     .paper-wrapper {
         width: 100% !important;
         max-width: 100% !important;
         padding: 0 !important;
-        margin: 0 !important;
+        margin: 0 auto !important;
         overflow: visible !important;
         box-shadow: none !important;
         background: transparent !important;
-        display: flex !important;
-        justify-content: center !important;
+        display: block !important;
+        text-align: center !important; /* 자식 inline-block을 A4 정중앙으로 완벽 정렬 */
     }
 
     /* 3. A4 용지 정중앙 190mm 고정 (좌 10mm + 본문 190mm + 우 10mm = 210mm 완벽 대칭) */
     .recipe-page {
+        display: inline-block !important; /* 부모 text-align: center 안에서 100% 정중앙 안착 */
+        text-align: left !important;      /* 내부 콘텐츠는 정상 좌측 정렬 */
         width: 190mm !important;
         max-width: 190mm !important;
         min-width: 190mm !important;
         min-height: auto !important;
-        margin: 0 auto !important; /* 좌우 정중앙 배치 */
+        margin: 0 auto !important;        /* 좌우 정중앙 배치 */
         padding: 0 !important;
         box-shadow: none !important;
         border: none !important;
