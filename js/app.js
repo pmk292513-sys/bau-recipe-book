@@ -154,15 +154,26 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const normalizedUnit = typeof formatRecipeUnit === "function" ? formatRecipeUnit(selectedUnit) : selectedUnit;
 
+        let matched = false;
         RECIPE_UNITS.forEach(u => {
             const opt = document.createElement("option");
             opt.value = u.value;
             opt.textContent = u.label;
             if (u.value.toLowerCase() === (normalizedUnit || "").toLowerCase()) {
                 opt.selected = true;
+                matched = true;
             }
             select.appendChild(opt);
         });
+
+        // 목록에 없는 단위인 경우에도 드롭다운에 자동으로 추가하여 표시
+        if (!matched && normalizedUnit) {
+            const customOpt = document.createElement("option");
+            customOpt.value = normalizedUnit;
+            customOpt.textContent = normalizedUnit;
+            customOpt.selected = true;
+            select.insertBefore(customOpt, select.firstChild);
+        }
 
         select.addEventListener("change", syncFormToPreview);
         return select;
@@ -2065,7 +2076,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 서비스 워커 등록 (인터넷 없이 오프라인 구동 지원 & 최신 버전 자동 체크)
     if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./sw.js?v=12.0")
+        navigator.serviceWorker.register("./sw.js?v=12.1")
             .then((registration) => {
                 console.log("[PWA] 서비스 워커가 정상 등록되었습니다:", registration.scope);
                 // 앱 실행 시 서버에 새로운 코드가 있는지 즉시 확인

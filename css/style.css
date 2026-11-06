@@ -1433,14 +1433,19 @@ body {
     font-weight: 700 !important;
     font-size: 14.5px !important;
     letter-spacing: -0.3px !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
     color: #000000 !important;
     border: 1px solid #000000;
     box-sizing: border-box !important;
-    overflow: hidden;
     vertical-align: middle;
 }
 
 .td-ingredient-amount {
+    width: 75px !important;
+    min-width: 75px !important;
+    max-width: 75px !important;
     height: 0.7cm !important;
     min-height: 0.7cm !important;
     max-height: 0.7cm !important;
@@ -1450,15 +1455,20 @@ body {
     font-weight: 700 !important;
     font-size: 14.5px !important;
     letter-spacing: -0.2px !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
     color: #000000 !important;
     font-variant-numeric: tabular-nums;
     border: 1px solid #000000;
     box-sizing: border-box !important;
-    overflow: hidden;
     vertical-align: middle;
 }
 
 .td-ingredient-un {
+    width: 55px !important;
+    min-width: 55px !important;
+    max-width: 55px !important;
     height: 0.7cm !important;
     min-height: 0.7cm !important;
     max-height: 0.7cm !important;
@@ -1468,10 +1478,12 @@ body {
     font-weight: 700 !important;
     font-size: 14px !important;
     letter-spacing: -0.2px !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    overflow: hidden !important;
     color: #000000 !important;
     border: 1px solid #000000;
     box-sizing: border-box !important;
-    overflow: hidden;
     vertical-align: middle;
 }
 

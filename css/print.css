@@ -504,6 +504,8 @@
         font-size: 14.5px !important;
         font-weight: 700 !important;
         letter-spacing: -0.3px !important;
+        white-space: nowrap !important;
+        text-overflow: ellipsis !important;
         color: #000000 !important;
         -webkit-text-stroke: 0.2px #000000 !important;
         line-height: 1.2 !important;
