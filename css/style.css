@@ -30,7 +30,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     position: sticky;
     top: 0;
     z-index: 2000;
@@ -60,8 +60,9 @@ body {
     padding: 6px 12px;
     cursor: pointer;
     white-space: nowrap;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
 .btn-install-app:hover {
     background-color: #d97706;
 }
@@ -206,7 +207,8 @@ body {
 
 .form-group label {
     font-size: 0.88rem;
-    font-weight: 700; /* 라벨 두껍고 또렷하게 */
+    font-weight: 700;
+    /* 라벨 두껍고 또렷하게 */
     color: #334155;
 }
 
@@ -216,7 +218,8 @@ body {
     width: 100%;
     padding: 10px 12px;
     font-size: 0.95rem;
-    font-weight: 550; /* 사용자 입력 글자도 굵고 명확하게 */
+    font-weight: 550;
+    /* 사용자 입력 글자도 굵고 명확하게 */
     border: 1.5px solid #cbd5e1;
     border-radius: 8px;
     background-color: #f8fafc;
@@ -325,7 +328,8 @@ body {
     border: 1.5px solid #cbd5e1 !important;
     border-radius: 8px !important;
     background-color: #ffffff !important;
-    -moz-appearance: textfield; /* 파이어폭스 화살표 제거 */
+    -moz-appearance: textfield;
+    /* 파이어폭스 화살표 제거 */
     appearance: textfield;
 }
 
@@ -422,6 +426,7 @@ body {
     color: #334155;
     font-weight: 700;
 }
+
 .btn-reset-scale:hover {
     background-color: #e2e8f0;
 }
@@ -756,7 +761,7 @@ body {
     cursor: pointer;
     color: #0f172a;
     transition: all 0.15s ease;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
 .btn-sym:hover {
@@ -880,7 +885,7 @@ body {
     border: 1.5px solid #cbd5e1;
     font-size: 0.95rem;
     outline: none;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
 }
 
 .recipe-grid {
@@ -980,6 +985,7 @@ body {
     background-color: #0284c7;
     color: #ffffff;
 }
+
 .btn-primary:hover {
     background-color: #0369a1;
 }
@@ -988,6 +994,7 @@ body {
     background-color: #059669;
     color: #ffffff;
 }
+
 .btn-save:hover {
     background-color: #047857;
 }
@@ -996,6 +1003,7 @@ body {
     background-color: #2563eb;
     color: #ffffff;
 }
+
 .btn-print-quick:hover {
     background-color: #1d4ed8;
 }
@@ -1005,6 +1013,7 @@ body {
     color: #334155;
     border: 1.5px solid #cbd5e1;
 }
+
 .btn-outline:hover {
     background-color: #f1f5f9;
 }
@@ -1047,15 +1056,18 @@ body {
 
 .paper-wrapper {
     width: 100%;
-    overflow: auto; /* 상하좌우 스크롤 완전 지원 */
+    overflow: auto;
+    /* 상하좌우 스크롤 완전 지원 */
     -webkit-overflow-scrolling: touch;
     padding: 16px 14px;
-    background-color: #475569; /* A4 용지가 눈에 확 띄도록 데스크 매트 배경 */
+    background-color: #475569;
+    /* A4 용지가 눈에 확 띄도록 데스크 매트 배경 */
     border-radius: 12px;
     box-sizing: border-box;
     touch-action: pan-x pan-y;
     position: relative;
-    max-height: 82vh; /* 모바일에서 위아래로 부드러운 스크롤 */
+    max-height: 82vh;
+    /* 모바일에서 위아래로 부드러운 스크롤 */
 }
 
 /* A4 실물 종이 규격 (210mm x 297mm) */
@@ -1064,7 +1076,8 @@ body {
     min-height: 297mm;
     background-color: #ffffff;
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.35);
-    padding: 11mm 14mm 15mm 14mm; /* 상단 여백을 살짝 줄여 대제목을 위로 배치 */
+    padding: 11mm 14mm 15mm 14mm;
+    /* 상단 여백을 살짝 줄여 대제목을 위로 배치 */
     margin: 0 auto;
     position: relative;
     box-sizing: border-box;
@@ -1088,7 +1101,8 @@ body {
 }
 
 .recipe-title {
-    font-size: 15px; /* [사용자 요청] 0.3 규격 */
+    font-size: 15px;
+    /* [사용자 요청] 0.3 규격 */
     font-weight: 700;
     letter-spacing: 2px;
     text-transform: uppercase;
@@ -1165,7 +1179,8 @@ body {
    아래 테이블의 thead th들의 border-top을 제거하여 위 테이블의 3.5px 바닥선만 노출 */
 .recipe-card-frame .main-content-table thead th {
     border-top: none !important;
-    border-bottom: 3.5px solid #000000 !important; /* [첫번째 요청] 소제목(INGREDIENTS, AMOUNT, UN, COOKING TECHNIQUE) 밑줄 3.5px 굵기 적용 */
+    border-bottom: 3.5px solid #000000 !important;
+    /* [첫번째 요청] 소제목(INGREDIENTS, AMOUNT, UN, COOKING TECHNIQUE) 밑줄 3.5px 굵기 적용 */
 }
 
 /* [CAUTION 위쪽 가로선 단일 3.5px 일치]
@@ -1213,7 +1228,8 @@ body {
 
 .recipe-card-frame .photo-info-table tr:last-child th,
 .recipe-card-frame .photo-info-table tr:last-child td {
-    border-bottom: 3.5px solid #000000 !important; /* PORTION 행 바닥선 3.5px */
+    border-bottom: 3.5px solid #000000 !important;
+    /* PORTION 행 바닥선 3.5px */
 }
 
 /* .recipe-card-frame .main-content-table 바닥선은 CAUTION 상단선과 중복 방지를 위해 none 처리됨 */
@@ -1228,10 +1244,14 @@ body {
     min-height: 9.5cm;
     max-height: 9.5cm;
     padding: 0 !important;
-    border-left: none !important;  /* 외곽선 3.5px에 밀착 */
-    border-top: none !important;   /* 위 테이블 바닥선 3.5px 하나만 사용하여 겹침 방지 */
-    border-right: 3.5px solid #000000 !important; /* 사진 우측 3.5px 세로선 */
-    border-bottom: 3.5px solid #000000 !important; /* 사진 하단 3.5px 가로선 */
+    border-left: none !important;
+    /* 외곽선 3.5px에 밀착 */
+    border-top: none !important;
+    /* 위 테이블 바닥선 3.5px 하나만 사용하여 겹침 방지 */
+    border-right: 3.5px solid #000000 !important;
+    /* 사진 우측 3.5px 세로선 */
+    border-bottom: 3.5px solid #000000 !important;
+    /* 사진 하단 3.5px 가로선 */
     position: relative;
     box-sizing: border-box;
     overflow: hidden;
@@ -1278,7 +1298,8 @@ body {
     min-height: 9.5cm;
     max-height: 9.5cm;
     box-sizing: border-box;
-    border: none !important; /* 중복 이중 테두리 완벽 제거 */
+    border: none !important;
+    /* 중복 이중 테두리 완벽 제거 */
     outline: none !important;
     box-shadow: none !important;
     overflow: hidden;
@@ -1292,7 +1313,8 @@ body {
     max-width: 13cm !important;
     max-height: 9.5cm !important;
     object-fit: cover !important;
-    object-position: center center !important; /* 어떤 사진이든 가로 13cm x 세로 9.5cm 정중앙에 꽉 차게 자동 최적화 */
+    object-position: center center !important;
+    /* 어떤 사진이든 가로 13cm x 세로 9.5cm 정중앙에 꽉 차게 자동 최적화 */
     display: block;
 }
 
@@ -1351,17 +1373,44 @@ body {
 }
 
 /* 재료 & 조리법 헤더 (글자 줄바꿈 방지 및 균형 잡힌 폭) */
-.th-ingredients { width: 140px; text-align: center; font-weight: 900 !important; white-space: nowrap; font-size: 13px; letter-spacing: 0.6px; border: 1px solid #000000; }
-.th-amount { width: 75px; text-align: center; font-weight: 900 !important; white-space: nowrap; font-size: 13px; letter-spacing: 0.6px; border: 1px solid #000000; }
-.th-un { width: 55px; text-align: center; font-weight: 900 !important; white-space: nowrap; font-size: 13px; letter-spacing: 0.6px; border: 1px solid #000000; }
+.th-ingredients {
+    width: 140px;
+    text-align: center;
+    font-weight: 900 !important;
+    white-space: nowrap;
+    font-size: 13px;
+    letter-spacing: 0.6px;
+    border: 1px solid #000000;
+}
+
+.th-amount {
+    width: 75px;
+    text-align: center;
+    font-weight: 900 !important;
+    white-space: nowrap;
+    font-size: 13px;
+    letter-spacing: 0.6px;
+    border: 1px solid #000000;
+}
+
+.th-un {
+    width: 55px;
+    text-align: center;
+    font-weight: 900 !important;
+    white-space: nowrap;
+    font-size: 13px;
+    letter-spacing: 0.6px;
+    border: 1px solid #000000;
+}
+
 /* [사용자 요청] 재료(UN)와 조리과정(COOKING TECHNIQUE) 사이 세로 경계선 3.5px 굵은 실선 적용 */
-.th-cooking { 
-    text-align: center; 
-    font-weight: 900 !important; 
-    font-size: 13px; 
-    letter-spacing: 0.6px; 
-    border: 1px solid #000000; 
-    border-left: 3.5px solid #000000 !important; 
+.th-cooking {
+    text-align: center;
+    font-weight: 900 !important;
+    font-size: 13px;
+    letter-spacing: 0.6px;
+    border: 1px solid #000000;
+    border-left: 3.5px solid #000000 !important;
 }
 
 /* [사용자 요청] 재료 행: 사장님 지정 ↕ 0.7cm(약 26.5px) 규격 및 명조체 적용 */
@@ -1438,7 +1487,8 @@ body {
 .cooking-steps-content {
     display: flex;
     flex-direction: column;
-    gap: 5px; /* 딱 좋았던 조리 단계 간격 복원 */
+    gap: 5px;
+    /* 딱 좋았던 조리 단계 간격 복원 */
     flex-grow: 1;
 }
 
@@ -1447,7 +1497,8 @@ body {
     display: flex;
     align-items: flex-start;
     gap: 5px;
-    line-height: 1.45; /* 딱 좋았던 줄간격 복원 */
+    line-height: 1.45;
+    /* 딱 좋았던 줄간격 복원 */
 }
 
 /* [사용자 요청 2번] 숫자 굵고 또렷하게 강조: 16.5px 900 슈퍼 볼드 */
@@ -1537,15 +1588,19 @@ body {
     background-color: transparent;
 }
 
-/* 주의사항 표 */
+/* 주의사항 표: [사용자 요청] 재료 3칸(140+75+55=270px) 세로줄과 CAUTION 오른쪽 세로줄을 칼같이 일치 */
 .th-caution {
-    width: 155px;
-    font-weight: 900 !important; /* 소제목 강력 강조 */
-    text-align: center;
+    width: 270px !important;
+    min-width: 270px !important;
+    max-width: 270px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    vertical-align: middle !important;
     font-size: 14.5px !important;
-    letter-spacing: 0.6px;
+    letter-spacing: 2px !important;
     border: 1px solid #000000;
     color: #000000 !important;
+    box-sizing: border-box !important;
 }
 
 .td-caution {
@@ -1563,7 +1618,7 @@ body {
     .header-main {
         padding: 10px 12px;
     }
-    
+
     .app-title {
         font-size: 1.1rem;
     }
@@ -1582,7 +1637,8 @@ body {
     }
 
     .form-grid-2 {
-        grid-template-columns: 1fr; /* 모바일에서는 1열로 정렬 */
+        grid-template-columns: 1fr;
+        /* 모바일에서는 1열로 정렬 */
     }
 
     .form-group style {
@@ -1600,16 +1656,17 @@ body {
         margin-bottom: 0;
     }
 
-    .card-header-flex > div {
+    .card-header-flex>div {
         display: flex;
         width: 100%;
         gap: 6px;
     }
 
-    .card-header-flex > div > button,
-    .card-header-flex > div > a {
+    .card-header-flex>div>button,
+    .card-header-flex>div>a {
         flex: 1 1 auto;
-        min-height: 42px; /* 스마트폰 엄지손가락 터치 최적화 */
+        min-height: 42px;
+        /* 스마트폰 엄지손가락 터치 최적화 */
         justify-content: center;
         font-size: 0.88rem;
     }
@@ -1624,7 +1681,7 @@ body {
     }
 
     /* 이탈리아어명 온/오프 헤더 모바일 정돈 */
-    #groupItalianoName > div:first-child {
+    #groupItalianoName>div:first-child {
         flex-wrap: wrap;
         gap: 6px;
     }
@@ -1634,8 +1691,8 @@ body {
     }
 
     /* 영어 / 이탈리아어 개별 변환 버튼 모바일 높이 및 터치 타겟 확보 */
-    #wrapItalianoInput > div,
-    .form-group > div:has(#btnTranslateToEn) {
+    #wrapItalianoInput>div,
+    .form-group>div:has(#btnTranslateToEn) {
         display: flex;
         gap: 6px;
         align-items: stretch;
@@ -1780,8 +1837,13 @@ body {
 }
 
 @keyframes rotateRefresh {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* ========================================================
@@ -1921,8 +1983,15 @@ body {
 }
 
 @keyframes modalPop {
-    from { transform: scale(0.95); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .modal-header {
@@ -2089,20 +2158,25 @@ body {
     .paper-wrapper {
         padding: 10px 6px;
     }
+
     .paper-wrapper:not(.fit-mobile-view) .recipe-page {
-        margin: 0 0 !important; /* 왼쪽 잘림 방지! 왼쪽 0부터 스크롤 시작 */
+        margin: 0 0 !important;
+        /* 왼쪽 잘림 방지! 왼쪽 0부터 스크롤 시작 */
     }
+
     .preview-control-bar {
         flex-direction: column;
         align-items: stretch;
         gap: 8px;
     }
+
     .preview-actions-flex {
         display: flex;
         flex-wrap: wrap;
         gap: 8px;
         justify-content: space-between;
     }
+
     .btn-print-main {
         flex: 1;
         min-width: 140px;
@@ -2212,6 +2286,7 @@ body {
         opacity: 0;
         transform: translateY(-6px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -2294,7 +2369,8 @@ body {
     align-items: center;
     user-select: none;
     -webkit-user-select: none;
-    touch-action: pan-y; /* 수직 스크롤은 자연스럽게 허용, 좌우 손끝 드래그 즉각 감지 */
+    touch-action: pan-y;
+    /* 수직 스크롤은 자연스럽게 허용, 좌우 손끝 드래그 즉각 감지 */
 }
 
 /* 2. 실제 양장본 책자 본체 (Book) */
@@ -2319,9 +2395,21 @@ body {
 }
 
 @keyframes shakeBook {
-    0%, 100% { transform: translateX(0); }
-    20%, 60% { transform: translateX(-10px); }
-    40%, 80% { transform: translateX(10px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    20%,
+    60% {
+        transform: translateX(-10px);
+    }
+
+    40%,
+    80% {
+        transform: translateX(10px);
+    }
 }
 
 /* 3. 책장 한 장 (Sheet) - 왼쪽 축을 중심으로 3D 회전 */
@@ -2356,7 +2444,7 @@ body {
     transform: rotateY(0deg) translateZ(1px);
     z-index: 2;
     background-color: #fcfbf9;
-    box-shadow: inset -2px 0 8px rgba(0,0,0,0.06);
+    box-shadow: inset -2px 0 8px rgba(0, 0, 0, 0.06);
 }
 
 /* 뒷면 (180도 회전되어 뒤집혔을 때 비로소 정방향으로 보임!) */
@@ -2364,7 +2452,7 @@ body {
     transform: rotateY(180deg) translateZ(1px);
     z-index: 1;
     background: linear-gradient(135deg, #f7f1e3 0%, #eee5d0 50%, #e5d8be 100%);
-    box-shadow: inset 2px 0 8px rgba(0,0,0,0.12);
+    box-shadow: inset 2px 0 8px rgba(0, 0, 0, 0.12);
 }
 
 /* 책등 음영 (왼쪽 끝 그림자) */
@@ -2374,7 +2462,7 @@ body {
     left: 0;
     width: 28px;
     height: 100%;
-    background: linear-gradient(to right, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.08) 50%, transparent 100%);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.08) 50%, transparent 100%);
     pointer-events: none;
     z-index: 10;
 }
@@ -2385,7 +2473,7 @@ body {
     right: 0;
     width: 28px;
     height: 100%;
-    background: linear-gradient(to left, rgba(0,0,0,0.28) 0%, rgba(0,0,0,0.08) 50%, transparent 100%);
+    background: linear-gradient(to left, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.08) 50%, transparent 100%);
     pointer-events: none;
     z-index: 10;
 }
@@ -2397,7 +2485,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 100% 50%, rgba(0,0,0,0.35) 0%, transparent 75%);
+    background: radial-gradient(circle at 100% 50%, rgba(0, 0, 0, 0.35) 0%, transparent 75%);
     pointer-events: none;
     opacity: 0;
     transition: opacity 0.1s ease;
@@ -2410,7 +2498,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: radial-gradient(circle at 0% 50%, rgba(0,0,0,0.35) 0%, transparent 75%);
+    background: radial-gradient(circle at 0% 50%, rgba(0, 0, 0, 0.35) 0%, transparent 75%);
     pointer-events: none;
     opacity: 0;
     z-index: 9;
@@ -2422,7 +2510,7 @@ body {
 .cover-leather {
     background: radial-gradient(circle at 50% 30%, #3e2723 0%, #1a0f0a 100%) !important;
     padding: 16px;
-    box-shadow: inset 0 0 35px rgba(0,0,0,0.85);
+    box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.85);
 }
 
 .cover-leather-back {
@@ -2441,7 +2529,7 @@ body {
     align-items: center;
     justify-content: space-between;
     text-align: center;
-    box-shadow: inset 0 0 18px rgba(212,175,55,0.2), 0 0 12px rgba(212,175,55,0.3);
+    box-shadow: inset 0 0 18px rgba(212, 175, 55, 0.2), 0 0 12px rgba(212, 175, 55, 0.3);
     background: rgba(0, 0, 0, 0.28);
 }
 
@@ -2465,7 +2553,7 @@ body {
     width: 76px;
     height: 76px;
     object-fit: contain;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.5));
 }
 
 .cover-title {
@@ -2474,7 +2562,7 @@ body {
     color: #fdf6e2;
     letter-spacing: 1.5px;
     margin: 6px 0 0;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8), 0 0 12px rgba(212,175,55,0.4);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8), 0 0 12px rgba(212, 175, 55, 0.4);
 }
 
 .cover-subtitle {
@@ -2507,8 +2595,8 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 6px;
-    background: rgba(212,175,55,0.18);
-    border: 1px dashed rgba(212,175,55,0.45);
+    background: rgba(212, 175, 55, 0.18);
+    border: 1px dashed rgba(212, 175, 55, 0.45);
     padding: 10px 16px;
     border-radius: 8px;
     color: #fef08a;
@@ -2524,13 +2612,29 @@ body {
 }
 
 @keyframes waveHand {
-    0%, 100% { transform: translateX(0); }
-    50% { transform: translateX(-8px); }
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(-8px);
+    }
 }
 
 @keyframes pulseGuide {
-    0%, 100% { transform: scale(1); opacity: 0.95; }
-    50% { transform: scale(1.03); opacity: 1; }
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 0.95;
+    }
+
+    50% {
+        transform: scale(1.03);
+        opacity: 1;
+    }
 }
 
 /* 표지 뒷면 앤틱 양피지 */
@@ -2625,7 +2729,7 @@ body {
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid #cbd5e1;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     margin-bottom: 8px;
     background-color: #e2e8f0;
 }
@@ -2764,13 +2868,13 @@ body {
 .btn-edit-this {
     background: linear-gradient(135deg, #0284c7, #0369a1);
     color: #ffffff;
-    box-shadow: 0 2px 6px rgba(2,132,199,0.35);
+    box-shadow: 0 2px 6px rgba(2, 132, 199, 0.35);
 }
 
 .btn-print-this {
     background: linear-gradient(135deg, #059669, #047857);
     color: #ffffff;
-    box-shadow: 0 2px 6px rgba(5,150,105,0.35);
+    box-shadow: 0 2px 6px rgba(5, 150, 105, 0.35);
 }
 
 .book-page-number {
@@ -2822,15 +2926,17 @@ body {
 
 @keyframes foundPulse {
     0% {
-        box-shadow: 0 0 0 rgba(212,175,55,0);
+        box-shadow: 0 0 0 rgba(212, 175, 55, 0);
         transform: rotateY(0deg) scale(1);
     }
+
     40% {
-        box-shadow: 0 0 45px rgba(212,175,55,0.95), 0 0 15px rgba(212,175,55,0.6);
+        box-shadow: 0 0 45px rgba(212, 175, 55, 0.95), 0 0 15px rgba(212, 175, 55, 0.6);
         transform: rotateY(0deg) scale(1.025);
     }
+
     100% {
-        box-shadow: -2px 0 6px rgba(0,0,0,0.12), 4px 8px 24px rgba(0,0,0,0.22);
+        box-shadow: -2px 0 6px rgba(0, 0, 0, 0.12), 4px 8px 24px rgba(0, 0, 0, 0.22);
         transform: rotateY(0deg) scale(1);
     }
 }
@@ -2845,7 +2951,7 @@ body {
     border-radius: 8px;
     border: none;
     cursor: pointer;
-    box-shadow: 0 4px 12px rgba(212,175,55,0.4);
+    box-shadow: 0 4px 12px rgba(212, 175, 55, 0.4);
     transition: all 0.2s ease;
 }
 

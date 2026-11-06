@@ -315,14 +315,32 @@
         border-left: 3.5px solid #000000 !important;
     }
 
+    /* [사용자 요청] 재료 3칸(140+75+55=270px) 세로줄과 CAUTION 오른쪽 세로줄을 칼같이 일치 */
+    .recipe-card-frame .main-content-table .th-ingredients {
+        width: 140px !important;
+    }
+    .recipe-card-frame .main-content-table .th-amount {
+        width: 75px !important;
+    }
+    .recipe-card-frame .main-content-table .th-un {
+        width: 55px !important;
+    }
+
     .recipe-card-frame .caution-table th.th-caution {
+        width: 270px !important;
+        min-width: 270px !important;
+        max-width: 270px !important;
         border-right: 3.5px solid #000000 !important;
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
         font-weight: 700 !important;
-        font-size: 13.5px !important;
+        font-size: 14px !important;
+        letter-spacing: 2px !important;
+        text-align: center !important;
+        vertical-align: middle !important;
         color: #000000 !important;
         -webkit-text-stroke: none !important;
         padding: 4px 6px !important;
+        box-sizing: border-box !important;
     }
 
     .recipe-card-frame .caution-table td.td-caution {
@@ -334,6 +352,7 @@
         -webkit-text-stroke: none !important;
         line-height: 1.35 !important;
         padding: 4px 8px !important;
+        vertical-align: middle !important;
     }
 
     /* 우측 메타데이터 5개 행 높이를 1.9cm로 고정 (5 x 1.9cm = 사진 세로 9.5cm 일치) */
