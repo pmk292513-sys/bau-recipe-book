@@ -1421,6 +1421,9 @@ body {
 }
 
 .td-ingredient-name {
+    width: 140px !important;
+    min-width: 140px !important;
+    max-width: 140px !important;
     height: 26.5px;
     max-height: 26.5px;
     padding: 1px 8px !important;
