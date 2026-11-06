@@ -14,12 +14,15 @@
     <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
 
-    <!-- 한글·영문·숫자 900(Black) 슈퍼 굵기를 완벽 지원하는 Pretendard 글꼴 로드 -->
+    <!-- 한글·영문 명조체(Noto Serif KR) 및 Pretendard 글꼴 로드 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 
-    <!-- 외부 스타일시트 분리 (모듈화 및 강력 캐시 갱신 버전 10.5 적용) -->
-    <link rel="stylesheet" href="css/style.css?v=11.3">
-    <link rel="stylesheet" href="css/print.css?v=11.3" media="print">
+    <!-- 외부 스타일시트 분리 (모듈화 및 강력 캐시 갱신 버전 11.4 적용) -->
+    <link rel="stylesheet" href="css/style.css?v=11.4">
+    <link rel="stylesheet" href="css/print.css?v=11.4" media="print">
 </head>
 
 <body>
@@ -82,7 +85,7 @@
                     <h3 class="form-card-title">1. 레시피 기본 명칭</h3>
                     <div class="form-group">
                         <label for="formTitle">대제목 (서식 타이틀)</label>
-                        <input type="text" id="formTitle" value="LA MANCHA RECIPE" placeholder="예: LA MANCHA RECIPE">
+                        <input type="text" id="formTitle" value="BAU STANDARD RECIPE" placeholder="예: BAU STANDARD RECIPE">
                     </div>
 
                     <!-- 이탈리아어/원어 명 (체크박스로 온/오프) -->
@@ -468,7 +471,7 @@
 
                     <!-- (1) 대제목 영역 (적당한 간격 띄움) -->
                     <header class="recipe-header">
-                        <h1 class="recipe-title" id="viewTitle">LA MANCHA RECIPE</h1>
+                        <h1 class="recipe-title" id="viewTitle">BAU STANDARD RECIPE</h1>
                     </header>
 
                     <!-- 사방 2.5px 일체형 마스터 프레임 (인쇄 시 선 사라짐 및 틈새 버그 완전 해결) -->
@@ -637,12 +640,12 @@
     </button>
 
     <!-- 모듈화된 자바스크립트 파일 로드 -->
-    <script src="js/units.js?v=11.3"></script>
-    <script src="js/recipe_data.js?v=11.3"></script>
-    <script src="js/translator.js?v=11.3"></script>
-    <script src="js/storage.js?v=11.3"></script>
-    <script src="js/book_flip.js?v=11.3"></script>
-    <script src="js/app.js?v=11.3"></script>
+    <script src="js/units.js?v=11.4"></script>
+    <script src="js/recipe_data.js?v=11.4"></script>
+    <script src="js/translator.js?v=11.4"></script>
+    <script src="js/storage.js?v=11.4"></script>
+    <script src="js/book_flip.js?v=11.4"></script>
+    <script src="js/app.js?v=11.4"></script>
 </body>
 
 </html>

@@ -6,7 +6,7 @@
 
 // 1. 샘플 버섯 파스타 레시피
 const DEFAULT_SAMPLE_RECIPE = {
-    title: "LA MANCHA RECIPE",
+    title: "BAU STANDARD RECIPE",
     italianoName: "Funghi",
     englishName: "Spaghetti With Garlic, Various, Mushroom & Cream Sauce.",
     koreaName: "양송이, 느타리, 표고, 새 송이 등 야채만으로 조리한 버섯 스파게티",
@@ -61,7 +61,7 @@ const DEFAULT_SAMPLE_RECIPE = {
 
 // 2. 사장님의 시그니처 뼈해장국 비법 레시피 (1안 핵심 요약본 적용)
 const BONE_HAEJANGGUK_RECIPE = {
-    title: "BAU SPECIAL RECIPE",
+    title: "BAU STANDARD RECIPE",
     italianoName: "Zuppa di ossa di maiale",
     englishName: "Pork Back-bone Hangover Soup",
     koreaName: "뼈해장국",

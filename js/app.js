@@ -1148,10 +1148,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // A4 재료 및 조리법 통합 테이블 렌더링
             viewIngredientsTbody.innerHTML = "";
-            // [레시피 전체 사이즈 무조건 고정 핵심] 
-            // A4 한 장 전체를 꽉 채우는 고정 세로 규격을 완벽하게 유지하면서,
-            // 재료 칸(1번) 하나하나가 뚱뚱해지지 않고 글자에 꼭 맞는 슬림 규격(22px)을 유지하도록 21칸으로 고정
-            const minRows = 21;
+            // [사용자 요청 ↕ 0.7cm 규격 최적화]
+            // 행 높이 0.7cm(7mm)에 맞춰 우측 조리과정(7단계+토핑+시그니처)과 완벽한 수평 균형을 이루며,
+            // A4 1장에 절대 밀림이나 짤림 없이 100% 쏙 들어가도록 18칸으로 스마트 고정
+            const minRows = 18;
             const totalRows = Math.max(ingredientsData.length, minRows);
 
             for (let index = 0; index < totalRows; index++) {
@@ -2063,7 +2063,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 서비스 워커 등록 (인터넷 없이 오프라인 구동 지원 & 최신 버전 자동 체크)
     if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./sw.js?v=11.3")
+        navigator.serviceWorker.register("./sw.js?v=11.4")
             .then((registration) => {
                 console.log("[PWA] 서비스 워커가 정상 등록되었습니다:", registration.scope);
                 // 앱 실행 시 서버에 새로운 코드가 있는지 즉시 확인

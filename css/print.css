@@ -1,10 +1,11 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700;900&display=swap");
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css");
 
 /**
  * [A4 및 맞춤 용지 인쇄 전용 스타일 - css/print.css]
  * 모바일 및 PC 브라우저에서 인쇄 / 컬러 복사기 출력 시
- * A4 용지 정중앙에 완벽하게 대칭 정렬되고, 주방에서도 한눈에 들어오도록
- * 선명하고 굵은 텍스트(600~900)와 사각 박스 없는 깔끔한 토핑/시그니처를 제공합니다.
+ * A4 용지 정중앙에 완벽하게 대칭 정렬되고, 고급스러운 명조체(Noto Serif KR)와
+ * 0.7cm 재료 행 높이, 0.3 규격 스탠다드 타이틀로 인쇄됩니다.
  */
 
 @page {
@@ -86,23 +87,24 @@
         page-break-after: avoid !important;
         page-break-inside: avoid !important;
         break-inside: avoid !important;
-        font-family: -apple-system, BlinkMacSystemFont, "Pretendard", "Segoe UI", "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", Arial, sans-serif !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
         -webkit-font-smoothing: antialiased !important;
     }
 
-    /* 4. 대제목 간격 및 진한 타이틀 (A4 최상단 정렬) */
+    /* 4. 대제목 간격 및 [사용자 요청] 0.3 크기 스탠다드 타이틀 */
     .recipe-header {
-        margin-top: 0 !important;
-        margin-bottom: 2.5mm !important;
+        margin-top: 1mm !important;
+        margin-bottom: 2mm !important;
         text-align: center !important;
     }
 
     .recipe-title {
-        font-size: 28px !important;
-        font-weight: 800 !important;
-        font-family: "Georgia", "Times New Roman", serif !important;
+        font-size: 0.35cm !important; /* [사용자 요청]: 0.3 규격 스탠다드 타이틀 (약 13~14px) */
+        font-weight: 700 !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
         letter-spacing: 2px !important;
         color: #000000 !important;
+        line-height: 1.2 !important;
     }
 
     /* 5. 일체형 마스터 프레임 (외곽 3.5px 통일 & 사진 3.5px 동일 굵기 적용) */
@@ -130,10 +132,11 @@
         box-sizing: border-box !important;
     }
 
-    /* 데이터 셀: 글자 크기 13.5px, 두께 600으로 선명하고 진하게 강화 */
+    /* 데이터 셀: 명조체, 두께 600으로 깔끔하고 선명하게 */
     .recipe-card-frame table.recipe-table td {
         border: 1px solid #000000 !important;
         color: #000000 !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
         font-weight: 600 !important;
         font-size: 13.5px !important;
         padding: 5px 8px !important;
@@ -143,11 +146,12 @@
         box-sizing: border-box !important;
     }
 
-    /* 헤더 셀: 글자 크기 13px, 두께 900(블랙)으로 묵직하고 뚜렷하게 */
+    /* 헤더 셀: 명조체, 두께 700으로 단정하고 뚜렷하게 */
     .recipe-card-frame table.recipe-table th {
         border: 1px solid #000000 !important;
         color: #000000 !important;
-        font-weight: 900 !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        font-weight: 700 !important;
         font-size: 13px !important;
         letter-spacing: 0.5px !important;
         text-align: center !important;
@@ -219,24 +223,24 @@
         border-bottom: 3.5px solid #000000 !important;
     }
 
-    /* 상단 메뉴명 표: 내용 글자 크기와 굵기를 소제목과 1:1 완벽 일치 (칸 크기는 그대로 유지) */
+    /* 상단 메뉴명 표: 명조체, 깔끔하고 진한 선명도 */
     .name-table th {
-        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
-        font-weight: 900 !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        font-weight: 700 !important;
         font-size: 13px !important;
         letter-spacing: 0.5px !important;
         color: #000000 !important;
-        -webkit-text-stroke: 0.4px #000000 !important;
+        -webkit-text-stroke: none !important;
         padding: 4px 6px !important;
     }
 
     .name-table td {
-        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
-        font-weight: 900 !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        font-weight: 600 !important;
         font-size: 13px !important;
         letter-spacing: 0.5px !important;
         color: #000000 !important;
-        -webkit-text-stroke: 0.4px #000000 !important;
+        -webkit-text-stroke: none !important;
         padding: 4px 8px !important;
     }
 
@@ -255,37 +259,37 @@
         border-bottom: 3.5px solid #000000 !important;
     }
 
-    /* 메타데이터 소제목(info-label)과 값(info-value) 규격 통일 (Pretendard Black 850으로 영문/숫자/한글 모두 묵직하게 두껍게 일치) */
+    /* 메타데이터 소제목(info-label)과 값(info-value) 규격 통일 (명조체 600~700) */
     .info-label {
         width: 85px !important;
         white-space: nowrap !important;
         border: 1px solid #000000 !important;
-        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
-        font-weight: 900 !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        font-weight: 700 !important;
         font-size: 13.5px !important;
         letter-spacing: 0.5px !important;
         text-align: center !important;
         color: #000000 !important;
-        -webkit-text-stroke: 0.4px #000000 !important;
+        -webkit-text-stroke: none !important;
     }
 
     .info-value {
-        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
-        font-weight: 900 !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        font-weight: 600 !important;
         font-size: 13.5px !important;
         letter-spacing: 0.5px !important;
         color: #000000 !important;
         text-align: center !important;
-        -webkit-text-stroke: 0.4px #000000 !important;
+        -webkit-text-stroke: none !important;
     }
 
     .info-value * {
-        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
-        font-weight: 900 !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        font-weight: 600 !important;
         font-size: 13.5px !important;
         letter-spacing: 0.5px !important;
         color: #000000 !important;
-        -webkit-text-stroke: 0.4px #000000 !important;
+        -webkit-text-stroke: none !important;
     }
 
     /* 7. 사진 규격: [사용자 요청] 가로 13.0cm x 세로 9.5cm 완벽 밀착 및 여백 0% 적용 */
@@ -314,20 +318,21 @@
 
     .recipe-card-frame .caution-table th.th-caution {
         border-right: 3.5px solid #000000 !important;
-        font-weight: 900 !important;
-        font-size: 14px !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        font-weight: 700 !important;
+        font-size: 13.5px !important;
         color: #000000 !important;
-        -webkit-text-stroke: 0.4px #000000 !important;
+        -webkit-text-stroke: none !important;
         padding: 4px 6px !important;
     }
 
     .recipe-card-frame .caution-table td.td-caution {
         border-left: 3.5px solid #000000 !important;
-        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
-        font-weight: 900 !important;
-        font-size: 14.5px !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        font-weight: 600 !important;
+        font-size: 14px !important;
         color: #000000 !important;
-        -webkit-text-stroke: 0.4px #000000 !important;
+        -webkit-text-stroke: none !important;
         line-height: 1.35 !important;
         padding: 4px 8px !important;
     }
@@ -446,14 +451,15 @@
         break-inside: avoid !important;
     }
 
-    /* 10. [사용자 요청] 재료 행: A4 1장에 쏙 들어가도록 20.5px 슬림화 & 900 슈퍼 볼드 잉크 부스팅 */
+    /* 10. [사용자 요청] 재료 행: 사장님 지정 ↕ 0.7cm(7mm) 절대 높이 준수 & 깔끔한 명조체 */
     .recipe-card-frame .main-content-table {
         table-layout: fixed !important;
     }
 
     .recipe-card-frame .main-content-table tbody tr {
-        height: 20px !important;
-        max-height: 20px !important;
+        height: 0.7cm !important;
+        min-height: 0.7cm !important;
+        max-height: 0.7cm !important;
         line-height: 1.2 !important;
     }
 
@@ -463,14 +469,15 @@
     .td-ingredient-name,
     .td-ingredient-amount,
     .td-ingredient-un {
-        height: 20px !important;
-        max-height: 20px !important;
+        height: 0.7cm !important;
+        min-height: 0.7cm !important;
+        max-height: 0.7cm !important;
         padding: 0px 6px !important;
-        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
         font-size: 13.5px !important;
-        font-weight: 900 !important;
+        font-weight: 600 !important;
         color: #000000 !important;
-        -webkit-text-stroke: 0.4px #000000 !important;
+        -webkit-text-stroke: none !important;
         line-height: 1.2 !important;
         box-sizing: border-box !important;
         overflow: hidden !important;
@@ -509,13 +516,14 @@
         display: flex !important;
         align-items: flex-start !important;
         gap: 5px !important;
-        line-height: 1.45 !important; /* 딱 좋았던 줄간격 복원 */
+        line-height: 1.45 !important;
     }
 
-    /* [사용자 요청 2번] 조리 순서 번호: 숫자 1. 2. 굵고 선명한 900, 16.5px */
+    /* [사용자 요청] 조리 순서 번호: 명조체 700 볼드, 16px */
     .step-num {
-        font-weight: 900 !important;
-        font-size: 16.5px !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        font-weight: 700 !important;
+        font-size: 16px !important;
         color: #000000 !important;
         flex-shrink: 0 !important;
         min-width: 24px !important;
@@ -524,12 +532,12 @@
         line-height: 1.45 !important;
     }
 
-    /* [사용자 요청 2번] 조리법 본문: 16.5px, 900 슈퍼 볼드로 시원하고 또렷하게 */
+    /* [사용자 요청] 조리법 본문: 명조체 600, 16px 가독성 극대화 */
     .step-desc {
         flex: 1 !important;
-        font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", "맑은 고딕", sans-serif !important;
-        font-size: 16.5px !important;
-        font-weight: 900 !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
         color: #000000 !important;
         line-height: 1.45 !important;
         letter-spacing: -0.2px !important;
@@ -537,20 +545,22 @@
         white-space: pre-wrap !important;
     }
 
-    /* 토핑 및 시그니처: 본문과 균형을 맞춘 선명한 텍스트 */
+    /* 토핑 및 시그니처: 명조체 기반 본문과 조화로운 텍스트 */
     .topping-card-box {
         margin-top: 6px !important;
     }
 
     .topping-card-title {
-        font-size: 14.5px !important;
-        font-weight: 900 !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
         color: #000000 !important;
     }
 
     .topping-card-content {
-        font-size: 15px !important;
-        font-weight: 900 !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        font-size: 14.5px !important;
+        font-weight: 600 !important;
         line-height: 1.45 !important;
         color: #000000 !important;
     }
@@ -560,14 +570,16 @@
     }
 
     .signature-card-title {
-        font-size: 14.5px !important;
-        font-weight: 900 !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        font-size: 14px !important;
+        font-weight: 700 !important;
         color: #000000 !important;
     }
 
     .signature-card-content {
-        font-size: 15px !important;
-        font-weight: 900 !important;
+        font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+        font-size: 14.5px !important;
+        font-weight: 600 !important;
         line-height: 1.45 !important;
         color: #000000 !important;
     }
