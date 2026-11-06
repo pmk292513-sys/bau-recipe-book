@@ -1263,16 +1263,16 @@ body {
     border-left: 3.5px solid #000000 !important;
 }
 
-/* [두번째 요청] CAUTION 헤더 셀의 오른쪽 세로선 및 가로선도 밑부분 외곽선과 동일하게 3.5px 적용 */
+/* [사용자 요청] CAUTION 헤더 셀의 오른쪽 세로선은 INGREDIENTS-AMOUNT 사이의 1px 세로선과 동일하게 1px 적용 */
 .recipe-card-frame .caution-table th.th-caution {
-    border-right: 3.5px solid #000000 !important;
-    font-weight: 900 !important;
-    font-size: 14.5px !important;
+    border-right: 1px solid #000000 !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
     color: #000000 !important;
 }
 
 .recipe-card-frame .caution-table td.td-caution {
-    border-left: 3.5px solid #000000 !important;
+    border-left: 1px solid #000000 !important;
     font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
     font-weight: 900 !important;
     font-size: 15px !important;
@@ -1588,16 +1588,16 @@ body {
     background-color: transparent;
 }
 
-/* 주의사항 표: [사용자 요청] 재료 3칸(140+75+55=270px) 세로줄과 CAUTION 오른쪽 세로줄을 칼같이 일치 */
+/* 주의사항 표: [사용자 요청] INGREDIENTS(140px) 세로줄과 CAUTION 오른쪽 세로줄을 칼같이 140px로 일치 */
 .th-caution {
-    width: 270px !important;
-    min-width: 270px !important;
-    max-width: 270px !important;
+    width: 140px !important;
+    min-width: 140px !important;
+    max-width: 140px !important;
     font-weight: 700 !important;
     text-align: center !important;
     vertical-align: middle !important;
-    font-size: 14.5px !important;
-    letter-spacing: 2px !important;
+    font-size: 14px !important;
+    letter-spacing: 0.5px !important;
     border: 1px solid #000000;
     color: #000000 !important;
     box-sizing: border-box !important;

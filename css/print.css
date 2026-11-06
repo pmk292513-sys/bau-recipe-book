@@ -315,26 +315,35 @@
         border-left: 3.5px solid #000000 !important;
     }
 
-    /* [사용자 요청] 재료 3칸(140+75+55=270px) 세로줄과 CAUTION 오른쪽 세로줄을 칼같이 일치 */
-    .recipe-card-frame .main-content-table .th-ingredients {
+    /* [사용자 요청] INGREDIENTS(140px) 세로줄과 CAUTION 오른쪽 세로줄을 140px로 100% 일치 */
+    .recipe-card-frame .main-content-table .th-ingredients,
+    .recipe-card-frame .main-content-table td.td-ingredient-name {
         width: 140px !important;
+        min-width: 140px !important;
+        max-width: 140px !important;
     }
-    .recipe-card-frame .main-content-table .th-amount {
+    .recipe-card-frame .main-content-table .th-amount,
+    .recipe-card-frame .main-content-table td.td-ingredient-amount {
         width: 75px !important;
+        min-width: 75px !important;
+        max-width: 75px !important;
     }
-    .recipe-card-frame .main-content-table .th-un {
+    .recipe-card-frame .main-content-table .th-un,
+    .recipe-card-frame .main-content-table td.td-ingredient-un {
         width: 55px !important;
+        min-width: 55px !important;
+        max-width: 55px !important;
     }
 
     .recipe-card-frame .caution-table th.th-caution {
-        width: 270px !important;
-        min-width: 270px !important;
-        max-width: 270px !important;
-        border-right: 3.5px solid #000000 !important;
+        width: 140px !important;
+        min-width: 140px !important;
+        max-width: 140px !important;
+        border-right: 1px solid #000000 !important;
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
         font-weight: 700 !important;
-        font-size: 14px !important;
-        letter-spacing: 2px !important;
+        font-size: 13.5px !important;
+        letter-spacing: 0.5px !important;
         text-align: center !important;
         vertical-align: middle !important;
         color: #000000 !important;
@@ -344,7 +353,7 @@
     }
 
     .recipe-card-frame .caution-table td.td-caution {
-        border-left: 3.5px solid #000000 !important;
+        border-left: 1px solid #000000 !important;
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
         font-weight: 600 !important;
         font-size: 14px !important;
