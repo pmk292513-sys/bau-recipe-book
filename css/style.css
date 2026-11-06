@@ -1393,13 +1393,16 @@ body {
     min-width: 75px !important;
     max-width: 75px !important;
     text-align: center !important;
+    padding: 0 !important;
     padding-left: 0 !important;
     padding-right: 0 !important;
+    margin: 0 !important;
     font-weight: 900 !important;
     white-space: nowrap !important;
-    font-size: 13px !important;
-    letter-spacing: 0 !important;
+    font-size: 12px !important;
+    letter-spacing: 0px !important;
     border: 1px solid #000000;
+    box-sizing: border-box !important;
 }
 
 .th-un {
@@ -1412,14 +1415,18 @@ body {
     border: 1px solid #000000;
 }
 
-/* [사용자 요청] 재료(UN)와 조리과정(COOKING TECHNIQUE) 사이 세로 경계선 3.5px 굵은 실선 적용 */
+/* [사용자 요청] 재료(UN)와 조리과정(COOKING TECHNIQUE) 사이 세로 경계선 3.5px 굵은 실선 적용 & [소제목 크기 0.3cm 확대 및 여유있는 자간] */
+.recipe-card-frame .main-content-table .th-cooking,
 .th-cooking {
-    text-align: center;
+    text-align: center !important;
     font-weight: 900 !important;
-    font-size: 13px;
-    letter-spacing: 0.6px;
+    font-size: 15px !important;
+    letter-spacing: 1.2px !important;
+    word-spacing: 16px !important;
     border: 1px solid #000000;
     border-left: 3.5px solid #000000 !important;
+    font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+    color: #000000 !important;
 }
 
 /* [사용자 요청] 재료 행: 사장님 지정 ↕ 0.9cm 규격 (+0.2cm 확대) & 900 슈퍼볼드 굵기 복원 및 폭 맞춤 슬림 명조체 */
@@ -1535,36 +1542,27 @@ body {
     /* 딱 좋았던 줄간격 복원 */
 }
 
-/* [사용자 요청 2번] 숫자 굵고 또렷하게 강조: 16.5px 900 슈퍼 볼드 */
-.step-num {
-    font-weight: 900 !important;
-    font-size: 16.5px !important;
-    color: #000000 !important;
-    flex-shrink: 0;
-    min-width: 24px;
-    letter-spacing: -0.3px;
-    text-align: left;
-    line-height: 1.45;
-}
-
-/* [사용자 요청] 조리법 번호 및 내용: 품격 높은 명조체 적용 */
+/* [사용자 요청] 조리 순서 번호: 세로 크기 0.3cm 확대 및 900 슈퍼볼드 굵기 적용 */
 .step-num {
     font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-    font-weight: 700 !important;
-    font-size: 16px !important;
+    font-weight: 900 !important;
+    font-size: 17.5px !important;
+    -webkit-text-stroke: 0.35px #000000 !important;
     color: #000000 !important;
     flex-shrink: 0;
-    min-width: 24px;
-    letter-spacing: -0.3px;
+    min-width: 26px;
+    letter-spacing: -0.2px;
     text-align: left;
     line-height: 1.45;
 }
 
+/* [사용자 요청] 조리법 본문 내용: 세로 크기 0.3cm 확대 및 굵기 강화 (850 볼드) */
 .step-desc {
     flex: 1;
     font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-    font-size: 16px !important;
-    font-weight: 700 !important;
+    font-size: 17px !important;
+    font-weight: 850 !important;
+    -webkit-text-stroke: 0.25px #000000 !important;
     color: #000000 !important;
     line-height: 1.45;
     letter-spacing: -0.2px;
