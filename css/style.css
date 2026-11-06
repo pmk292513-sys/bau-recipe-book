@@ -1591,7 +1591,8 @@ body {
     background-color: transparent;
 }
 
-/* 주의사항 표: [사용자 요청] INGREDIENTS(140px) 세로줄과 CAUTION 오른쪽 세로줄을 칼같이 140px로 일치 */
+/* 주의사항 표: [사용자 요청] INGREDIENTS(140px) 세로줄과 CAUTION 오른쪽 세로줄을 칼같이 140px로 일치 & 원래의 3.5px 굵은 실선 유지 */
+.recipe-card-frame .caution-table th.th-caution,
 .th-caution {
     width: 140px !important;
     min-width: 140px !important;
@@ -1602,10 +1603,12 @@ body {
     font-size: 14px !important;
     letter-spacing: 0.5px !important;
     border: 1px solid #000000;
+    border-right: 3.5px solid #000000 !important;
     color: #000000 !important;
     box-sizing: border-box !important;
 }
 
+.recipe-card-frame .caution-table td.td-caution,
 .td-caution {
     line-height: 1.48;
     font-family: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif !important;
@@ -1614,6 +1617,7 @@ body {
     color: #000000 !important;
     padding-left: 10px !important;
     border: 1px solid #000000;
+    border-left: 3.5px solid #000000 !important;
 }
 
 /* 8. 모바일 미디어 쿼리 (스마트폰 최적화) */
