@@ -1191,54 +1191,59 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     stepRows.forEach((r, idx) => {
                         const val = r.querySelector(".step-desc-input")?.value.trim() || "";
-                        if (val) {
-                            const stepItem = document.createElement("div");
-                            stepItem.className = "cooking-step-item";
+                        // [사용자 요청] 내용이 비어있어도 조리 단계 번호(1., 2...)가 출력되어 손글씨를 적을 수 있도록 지원!
+                        const stepItem = document.createElement("div");
+                        stepItem.className = "cooking-step-item";
 
-                            const numSpan = document.createElement("span");
-                            numSpan.className = "step-num";
-                            numSpan.textContent = `${idx + 1}.`;
+                        const numSpan = document.createElement("span");
+                        numSpan.className = "step-num";
+                        numSpan.textContent = `${idx + 1}.`;
 
-                            const descSpan = document.createElement("span");
-                            descSpan.className = "step-desc";
-                            descSpan.textContent = val;
-
-                            stepItem.appendChild(numSpan);
-                            stepItem.appendChild(descSpan);
-                            stepsDiv.appendChild(stepItem);
+                        const descSpan = document.createElement("span");
+                        descSpan.className = "step-desc";
+                        descSpan.textContent = val;
+                        if (!val) {
+                            descSpan.style.minHeight = "24px";
+                            descSpan.style.display = "inline-block";
                         }
+
+                        stepItem.appendChild(numSpan);
+                        stepItem.appendChild(descSpan);
+                        stepsDiv.appendChild(stepItem);
                     });
-
-                    // 토핑 독립 칸 (사용자 요청: Topping 제목 + 하단 내용 박스 / 줄 추가 지원)
-                    const toppingBox = document.createElement("div");
-                    toppingBox.className = "topping-card-box";
-
-                    const toppingTitle = document.createElement("div");
-                    toppingTitle.className = "topping-card-title";
-                    toppingTitle.textContent = "TOPPING";
-
-                    const toppingContent = document.createElement("div");
-                    toppingContent.className = "topping-card-content";
-
-                    // 입력된 토핑 줄들 수집
-                    const toppingInputs = toppingItemsContainer.querySelectorAll(".topping-item-input");
-                    const toppingTexts = [];
-                    toppingInputs.forEach(inp => {
-                        const val = inp.value.trim();
-                        if (val) toppingTexts.push(val);
-                    });
-
-                    if (toppingTexts.length > 0) {
-                        toppingContent.innerHTML = toppingTexts.map(t => `<div>${t}</div>`).join("");
-                    } else {
-                        toppingContent.innerHTML = "<span style='color: #888; font-size: 12px;'>(토핑 없음)</span>";
-                    }
-
-                    toppingBox.appendChild(toppingTitle);
-                    toppingBox.appendChild(toppingContent);
 
                     wrapper.appendChild(stepsDiv);
-                    wrapper.appendChild(toppingBox);
+
+                    // ★ [사용자 요청] 시그니처와 100% 동일하게 토핑도 체크박스가 켜져 있을 때만 통째로 생성! (체크 해제 시 아예 안 나옴)
+                    if (formToppingEnable && formToppingEnable.checked) {
+                        const toppingBox = document.createElement("div");
+                        toppingBox.className = "topping-card-box";
+
+                        const toppingTitle = document.createElement("div");
+                        toppingTitle.className = "topping-card-title";
+                        toppingTitle.textContent = "TOPPING";
+
+                        const toppingContent = document.createElement("div");
+                        toppingContent.className = "topping-card-content";
+
+                        // 입력된 토핑 줄들 수집
+                        const toppingInputs = toppingItemsContainer.querySelectorAll(".topping-item-input");
+                        const toppingTexts = [];
+                        toppingInputs.forEach(inp => {
+                            const val = inp.value.trim();
+                            if (val) toppingTexts.push(val);
+                        });
+
+                        if (toppingTexts.length > 0) {
+                            toppingContent.innerHTML = toppingTexts.map(t => `<div>${t}</div>`).join("");
+                        } else {
+                            toppingContent.innerHTML = "&nbsp;";
+                        }
+
+                        toppingBox.appendChild(toppingTitle);
+                        toppingBox.appendChild(toppingContent);
+                        wrapper.appendChild(toppingBox);
+                    }
 
                     // SIGNATURE (시그니처) 독립 칸 (체크 시 토핑 바로 밑에 생성)
                     if (formSignatureEnable && formSignatureEnable.checked) {
@@ -2058,7 +2063,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 서비스 워커 등록 (인터넷 없이 오프라인 구동 지원 & 최신 버전 자동 체크)
     if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./sw.js?v=11.1")
+        navigator.serviceWorker.register("./sw.js?v=11.2")
             .then((registration) => {
                 console.log("[PWA] 서비스 워커가 정상 등록되었습니다:", registration.scope);
                 // 앱 실행 시 서버에 새로운 코드가 있는지 즉시 확인
