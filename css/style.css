@@ -326,6 +326,7 @@ body {
     border-radius: 8px !important;
     background-color: #ffffff !important;
     -moz-appearance: textfield; /* 파이어폭스 화살표 제거 */
+    appearance: textfield;
 }
 
 /* 크롬/엣지/사파리 위아래 화살표를 깔끔히 제거하여 5자리 숫자(10,000)가 시원하게 보이도록 처리 */
@@ -2713,6 +2714,7 @@ body {
     flex-grow: 1;
     display: -webkit-box;
     -webkit-line-clamp: 1;
+    line-clamp: 1;
     -webkit-box-orient: vertical;
     overflow: hidden;
     font-weight: 600;

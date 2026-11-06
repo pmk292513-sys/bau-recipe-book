@@ -20,7 +20,6 @@
     * {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
-        color-adjust: exact !important;
     }
 
     /* 2. 화면 전용 UI(상단바, 네비게이션 탭, 입력 폼, 버튼, 배경 등) 완벽 제거 */
