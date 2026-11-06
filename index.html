@@ -18,8 +18,8 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css">
 
     <!-- 외부 스타일시트 분리 (모듈화 및 강력 캐시 갱신 버전 10.5 적용) -->
-    <link rel="stylesheet" href="css/style.css?v=11.0">
-    <link rel="stylesheet" href="css/print.css?v=11.0" media="print">
+    <link rel="stylesheet" href="css/style.css?v=11.1">
+    <link rel="stylesheet" href="css/print.css?v=11.1" media="print">
 </head>
 
 <body>
@@ -299,30 +299,32 @@
                         <!-- 자바스크립트로 1., 2., 3. 자동 번호가 붙은 단계들이 생성됩니다 -->
                     </div>
 
-                    <!-- 토핑 전용 독립 필드 (줄 추가/삭제 지원) -->
+                    <!-- 토핑 전용 독립 필드 (체크박스 On/Off 지원) -->
                     <div class="form-card highlight-group">
                         <div class="card-header-flex">
-                            <label for="formTopping">
-                                <strong>⭐ TOPPING (토핑 항목 관리)</strong>
+                            <label class="toggle-checkbox-label">
+                                <input type="checkbox" id="formToppingEnable" class="toggle-checkbox" checked>
+                                <strong>⭐ TOPPING (토핑 포함하기)</strong>
                             </label>
-                            <button id="formBtnAddTopping" type="button" class="btn btn-sm btn-primary">➕ 토핑 줄
-                                추가</button>
+                            <button id="formBtnAddTopping" type="button" class="btn btn-sm btn-primary">➕ 토핑 줄 추가</button>
                         </div>
-                        <p class="form-guide-text">요리나 소스에 따라 토핑 항목을 원하는 만큼 추가하거나 삭제할 수 있습니다.</p>
+                        <p class="form-guide-text">체크하면 A4 레시피에 TOPPING 칸이 나타나며, 체크를 해제하면 완전히 숨겨집니다.</p>
 
-                        <!-- 강조 기호 빠른 삽입 바 -->
-                        <div class="symbol-quick-bar" data-target="topping">
-                            <span class="symbol-bar-label">강조 기호:</span>
-                            <button type="button" class="btn-sym" data-sym="★" title="별표">★</button>
-                            <button type="button" class="btn-sym" data-sym="※" title="당구장 마크">※</button>
-                            <button type="button" class="btn-sym" data-sym="💡" title="아이디어/팁">💡</button>
-                            <button type="button" class="btn-sym" data-sym="📌" title="고정/핵심">📌</button>
-                            <button type="button" class="btn-sym" data-sym="✔" title="체크">✔</button>
-                            <button type="button" class="btn-sym" data-sym="▶" title="화살표">▶</button>
-                        </div>
+                        <div id="toppingControlsWrap">
+                            <!-- 강조 기호 빠른 삽입 바 -->
+                            <div class="symbol-quick-bar" data-target="topping">
+                                <span class="symbol-bar-label">강조 기호:</span>
+                                <button type="button" class="btn-sym" data-sym="★" title="별표">★</button>
+                                <button type="button" class="btn-sym" data-sym="※" title="당구장 마크">※</button>
+                                <button type="button" class="btn-sym" data-sym="💡" title="아이디어/팁">💡</button>
+                                <button type="button" class="btn-sym" data-sym="📌" title="고정/핵심">📌</button>
+                                <button type="button" class="btn-sym" data-sym="✔" title="체크">✔</button>
+                                <button type="button" class="btn-sym" data-sym="▶" title="화살표">▶</button>
+                            </div>
 
-                        <div id="toppingItemsContainer" class="topping-items-list">
-                            <!-- 자바스크립트로 토핑 입력 행들이 동적으로 생성됩니다 -->
+                            <div id="toppingItemsContainer" class="topping-items-list">
+                                <!-- 자바스크립트로 토핑 입력 행들이 동적으로 생성됩니다 -->
+                            </div>
                         </div>
                     </div>
 
@@ -635,12 +637,12 @@
     </button>
 
     <!-- 모듈화된 자바스크립트 파일 로드 -->
-    <script src="js/units.js?v=11.0"></script>
-    <script src="js/recipe_data.js?v=11.0"></script>
-    <script src="js/translator.js?v=11.0"></script>
-    <script src="js/storage.js?v=11.0"></script>
-    <script src="js/book_flip.js?v=11.0"></script>
-    <script src="js/app.js?v=11.0"></script>
+    <script src="js/units.js?v=11.1"></script>
+    <script src="js/recipe_data.js?v=11.1"></script>
+    <script src="js/translator.js?v=11.1"></script>
+    <script src="js/storage.js?v=11.1"></script>
+    <script src="js/book_flip.js?v=11.1"></script>
+    <script src="js/app.js?v=11.1"></script>
 </body>
 
 </html>

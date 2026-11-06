@@ -53,6 +53,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const cookingStepsContainer = document.getElementById("cookingStepsContainer");
     const formBtnAddCookingStep = document.getElementById("formBtnAddCookingStep");
     const btnSummarizeCooking = document.getElementById("btnSummarizeCooking");
+    const formToppingEnable = document.getElementById("formToppingEnable");
+    const toppingControlsWrap = document.getElementById("toppingControlsWrap");
     const toppingItemsContainer = document.getElementById("toppingItemsContainer");
     const formBtnAddTopping = document.getElementById("formBtnAddTopping");
     const formSignatureEnable = document.getElementById("formSignatureEnable");
@@ -836,6 +838,15 @@ document.addEventListener("DOMContentLoaded", () => {
         syncFormToPreview();
     }
 
+    if (formToppingEnable) {
+        formToppingEnable.addEventListener("change", () => {
+            const isEnabled = formToppingEnable.checked;
+            if (formBtnAddTopping) formBtnAddTopping.style.display = isEnabled ? "inline-flex" : "none";
+            if (toppingControlsWrap) toppingControlsWrap.style.display = isEnabled ? "block" : "none";
+            syncFormToPreview();
+        });
+    }
+
     if (formBtnAddTopping) {
         formBtnAddTopping.addEventListener("click", () => {
             addToppingRow("");
@@ -1469,13 +1480,13 @@ document.addEventListener("DOMContentLoaded", () => {
         currentPhotoData = recipe.photoData || "sample_images/funghi_pasta.jpg";
         formPhotoPreview.src = currentPhotoData;
 
-        // 조리 순서 채우기 (1., 2., 3... 자동 번호 매김)
+        // 조리 순서 채우기 (1., 2., 3... 자동 번호 매김 및 빈 단계 보존)
         cookingStepsContainer.innerHTML = "";
         let stepsList = [];
         if (Array.isArray(recipe.cookingTechnique)) {
             stepsList = recipe.cookingTechnique;
-        } else if (typeof recipe.cookingTechnique === "string" && recipe.cookingTechnique.trim()) {
-            stepsList = recipe.cookingTechnique.split("\n").map(s => s.trim()).filter(Boolean);
+        } else if (typeof recipe.cookingTechnique === "string" && recipe.cookingTechnique) {
+            stepsList = recipe.cookingTechnique.split("\n").map(s => s.trim());
         }
 
         if (stepsList.length === 0) {
@@ -1486,20 +1497,26 @@ document.addEventListener("DOMContentLoaded", () => {
             stepsList.forEach(step => addCookingStepRow(step));
         }
         
-        // 토핑 목록 채우기 (다중 줄 지원)
+        // 토핑 목록 채우기 및 체크박스 On/Off 복원
         toppingItemsContainer.innerHTML = "";
         let toppingList = [];
         if (Array.isArray(recipe.topping)) {
             toppingList = recipe.topping;
         } else if (typeof recipe.topping === "string" && recipe.topping.trim()) {
-            // 줄바꿈이 있으면 줄바꿈으로 나누고, 없으면 1개 항목으로 등록
             toppingList = recipe.topping.includes("\n") 
                 ? recipe.topping.split("\n").map(s => s.trim()).filter(Boolean)
                 : [recipe.topping.trim()];
         }
 
+        const isTopEnabled = recipe.toppingEnabled !== undefined ? !!recipe.toppingEnabled : (toppingList.length > 0 && toppingList.some(t => t.trim()));
+        if (formToppingEnable) {
+            formToppingEnable.checked = isTopEnabled;
+            if (formBtnAddTopping) formBtnAddTopping.style.display = isTopEnabled ? "inline-flex" : "none";
+            if (toppingControlsWrap) toppingControlsWrap.style.display = isTopEnabled ? "block" : "none";
+        }
+
         if (toppingList.length === 0) {
-            addToppingRow(""); // 기본 빈 줄 1개 제공
+            addToppingRow("");
         } else {
             toppingList.forEach(t => addToppingRow(t));
         }
@@ -1574,15 +1591,16 @@ document.addEventListener("DOMContentLoaded", () => {
                 }
             });
 
-            // 조리 순서 목록 수집
+            // 조리 순서 목록 수집 (빈 단계 번호도 온전히 보존)
             const stepRows = cookingStepsContainer.querySelectorAll(".cooking-step-row");
             const stepsData = [];
             stepRows.forEach(r => {
                 const val = r.querySelector(".step-desc-input")?.value.trim() || "";
-                if (val) stepsData.push(val);
+                stepsData.push(val);
             });
 
-            // 토핑 목록 수집
+            // 토핑 On/Off 및 목록 수집
+            const topEnabled = formToppingEnable ? formToppingEnable.checked : false;
             const toppingInputs = toppingItemsContainer.querySelectorAll(".topping-item-input");
             const toppingData = [];
             toppingInputs.forEach(inp => {
@@ -1629,6 +1647,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 portion: portionCombined,
                 ingredients: ingredientsData,
                 cookingTechnique: stepsData,
+                toppingEnabled: topEnabled,
                 topping: toppingData,
                 signatureEnabled: sigEnabled,
                 signature: sigData,
@@ -2039,7 +2058,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // 서비스 워커 등록 (인터넷 없이 오프라인 구동 지원 & 최신 버전 자동 체크)
     if ("serviceWorker" in navigator) {
-        navigator.serviceWorker.register("./sw.js?v=11.0")
+        navigator.serviceWorker.register("./sw.js?v=11.1")
             .then((registration) => {
                 console.log("[PWA] 서비스 워커가 정상 등록되었습니다:", registration.scope);
                 // 앱 실행 시 서버에 새로운 코드가 있는지 즉시 확인
