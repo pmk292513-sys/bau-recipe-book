@@ -478,15 +478,15 @@
         break-inside: avoid !important;
     }
 
-    /* 10. [사용자 요청] 재료 행: 사장님 지정 ↕ 0.7cm(7mm) 절대 높이 준수 & 깔끔한 명조체 */
+    /* 10. [사용자 요청] 재료 행: 사장님 지정 ↕ 0.9cm(9mm, +0.2cm 확대) 절대 높이 준수 & 900 슈퍼볼드 명조체 */
     .recipe-card-frame .main-content-table {
         table-layout: fixed !important;
     }
 
     .recipe-card-frame .main-content-table tbody tr {
-        height: 0.7cm !important;
-        min-height: 0.7cm !important;
-        max-height: 0.7cm !important;
+        height: 0.9cm !important;
+        min-height: 0.9cm !important;
+        max-height: 0.9cm !important;
         line-height: 1.2 !important;
     }
 
@@ -496,18 +496,18 @@
     .td-ingredient-name,
     .td-ingredient-amount,
     .td-ingredient-un {
-        height: 0.7cm !important;
-        min-height: 0.7cm !important;
-        max-height: 0.7cm !important;
+        height: 0.9cm !important;
+        min-height: 0.9cm !important;
+        max-height: 0.9cm !important;
         padding: 0px 6px !important;
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-        font-size: 14.5px !important;
-        font-weight: 700 !important;
+        font-size: 15.5px !important;
+        font-weight: 900 !important;
         letter-spacing: -0.3px !important;
         white-space: nowrap !important;
         text-overflow: ellipsis !important;
         color: #000000 !important;
-        -webkit-text-stroke: 0.2px #000000 !important;
+        -webkit-text-stroke: 0.35px #000000 !important;
         line-height: 1.2 !important;
         box-sizing: border-box !important;
         overflow: hidden !important;
