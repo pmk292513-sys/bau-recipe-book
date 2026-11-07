@@ -1093,20 +1093,22 @@ body {
     transition: transform 0.15s ease-out;
 }
 
-/* 대제목 영역: [사용자 요청] 0.3 규격 스탠다드 타이틀 */
+/* 대제목 영역: [사용자 요청] 대제목 사이즈 확대(20px/약 0.5cm) 및 900 슈퍼볼드 진하게 강화 */
 .recipe-header {
     text-align: center;
     margin-top: 0px;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .recipe-title {
-    font-size: 15px;
-    /* [사용자 요청] 0.3 규격 */
-    font-weight: 700;
-    letter-spacing: 2px;
+    font-size: 20px !important;
+    font-weight: 900 !important;
+    -webkit-text-stroke: 0.5px #000000 !important;
+    letter-spacing: 2.5px !important;
     text-transform: uppercase;
-    font-family: "Noto Serif KR", "AppleMyungjo", "Batang", "바탕", serif;
+    font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
+    color: #000000 !important;
+    line-height: 1.25 !important;
 }
 
 /* ========================================================

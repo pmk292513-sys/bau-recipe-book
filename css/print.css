@@ -90,7 +90,7 @@
         -webkit-font-smoothing: antialiased !important;
     }
 
-    /* 4. 대제목 간격 및 [사용자 요청] 0.3 크기 스탠다드 타이틀 */
+    /* 4. 대제목 간격 및 [사용자 요청] 대제목 사이즈 확대(20px/약 0.5cm) 및 900 슈퍼볼드 진하게 강화 */
     .recipe-header {
         margin-top: 1mm !important;
         margin-bottom: 2mm !important;
@@ -98,12 +98,13 @@
     }
 
     .recipe-title {
-        font-size: 0.35cm !important; /* [사용자 요청]: 0.3 규격 스탠다드 타이틀 (약 13~14px) */
-        font-weight: 700 !important;
+        font-size: 20px !important;
+        font-weight: 900 !important;
+        -webkit-text-stroke: 0.5px #000000 !important;
         font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-        letter-spacing: 2px !important;
+        letter-spacing: 2.5px !important;
         color: #000000 !important;
-        line-height: 1.2 !important;
+        line-height: 1.25 !important;
     }
 
     /* 5. 일체형 마스터 프레임 (외곽 3.5px 통일 & 사진 3.5px 동일 굵기 적용) */
