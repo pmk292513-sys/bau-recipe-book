@@ -1076,8 +1076,8 @@ body {
     min-height: 297mm;
     background-color: #ffffff;
     box-shadow: 0 4px 25px rgba(0, 0, 0, 0.35);
-    padding: 11mm 14mm 15mm 14mm;
-    /* 상단 여백을 살짝 줄여 대제목을 위로 배치 */
+    padding: 6mm 14mm 15mm 14mm;
+    /* [사용자 요청] 상단 여백을 6mm로 바짝 줄여 대제목을 위로 배치 */
     margin: 0 auto;
     position: relative;
     box-sizing: border-box;
@@ -1093,11 +1093,12 @@ body {
     transition: transform 0.15s ease-out;
 }
 
-/* 대제목 영역: [사용자 요청] 대제목 사이즈 확대(20px/약 0.5cm) 및 900 슈퍼볼드 진하게 강화 */
+/* 대제목 영역: [사용자 요청] 대제목 위치 상향 배치 및 900 슈퍼볼드 진하게 강화 */
 .recipe-header {
     text-align: center;
     margin-top: 0px;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    padding-top: 0px;
 }
 
 .recipe-title {

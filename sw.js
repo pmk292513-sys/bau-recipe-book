@@ -4,7 +4,7 @@
  * 버전: v70 (네트워크 우선 전략으로 변경하여 최신 코드 즉각 반영)
  */
 
-const CACHE_NAME = "bau-recipe-book-cache-v126";
+const CACHE_NAME = "bau-recipe-book-cache-v127";
 
 // 인터넷 없이도 오프라인에서 구동할 필수 리소스 목록
 const ASSETS_TO_CACHE = [
