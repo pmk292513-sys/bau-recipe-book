@@ -1428,14 +1428,14 @@ body {
     border: 1px solid #000000;
 }
 
-/* [사용자 요청] 재료(UN)와 조리과정(COOKING TECHNIQUE) 사이 세로 경계선 3.5px 굵은 실선 적용 & [소제목 14px 900 슈퍼볼드 통일] */
+/* [사용자 요청] 재료(UN)와 조리과정(COOKING TECHNIQUE) 사이 세로 경계선 3.5px 굵은 실선 적용 & [소제목 14px 900 슈퍼볼드 자연스러운 적정 간격] */
 .recipe-card-frame .main-content-table .th-cooking,
 .th-cooking {
     text-align: center !important;
     font-weight: 900 !important;
     font-size: 14px !important;
-    letter-spacing: 1.2px !important;
-    word-spacing: 16px !important;
+    letter-spacing: 0.5px !important;
+    word-spacing: 4px !important;
     -webkit-text-stroke: 0.35px #000000 !important;
     border: 1px solid #000000;
     border-left: 3.5px solid #000000 !important;
@@ -1556,27 +1556,27 @@ body {
     /* 딱 좋았던 줄간격 복원 */
 }
 
-/* [사용자 요청] 조리 순서 번호: 14px 900 슈퍼볼드 통일 */
+/* [사용자 요청] 조리 순서 번호: 16px 900 슈퍼볼드 확대 */
 .step-num {
     font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
     font-weight: 900 !important;
-    font-size: 14px !important;
+    font-size: 16px !important;
     -webkit-text-stroke: 0.35px #000000 !important;
     color: #000000 !important;
     flex-shrink: 0;
-    min-width: 22px;
+    min-width: 24px;
     letter-spacing: -0.2px;
     text-align: left;
     line-height: 1.45;
 }
 
-/* [사용자 요청] 조리법 본문 내용: 14px 900 슈퍼볼드 통일 */
+/* [사용자 요청] 조리법 본문 내용: 15.5px 850 볼드 확대 */
 .step-desc {
     flex: 1;
     font-family: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "나눔명조", "Batang", "바탕", serif !important;
-    font-size: 14px !important;
-    font-weight: 900 !important;
-    -webkit-text-stroke: 0.35px #000000 !important;
+    font-size: 15.5px !important;
+    font-weight: 850 !important;
+    -webkit-text-stroke: 0.25px #000000 !important;
     color: #000000 !important;
     line-height: 1.45;
     letter-spacing: -0.2px;
